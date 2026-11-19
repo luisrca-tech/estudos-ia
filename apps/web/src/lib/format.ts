@@ -106,3 +106,20 @@ export function formatSessionWhen(value: DateInput): string {
   const weekday = WEEKDAY_NAMES[calendarDay(`${parts.year}-${parts.month}-${parts.day}`).getUTCDay()];
   return `Sessão de ${weekday}, ${parts.day}/${parts.month}, ${parts.hour}:${parts.minute}`;
 }
+
+function spDayKey(value: DateInput): string {
+  const parts = Object.fromEntries(spParts.formatToParts(new Date(value)).map((part) => [part.type, part.value]));
+  return `${parts.year}-${parts.month}-${parts.day}`;
+}
+
+/** Last session column of the module map: "hoje, 09:40", "ter, 17/11" within 6 days, else "12/11". */
+export function formatLastSession(value: DateInput | null, now: Date): string {
+  if (!value) return "–";
+  const day = spDayKey(value);
+  const todayKey = spDayKey(now);
+  if (day === todayKey) return `hoje, ${formatTime(value)}`;
+  const days = Math.round((calendarDay(todayKey).getTime() - calendarDay(day).getTime()) / 86_400_000);
+  const dayMonth = `${day.slice(8, 10)}/${day.slice(5, 7)}`;
+  if (days > 0 && days <= 6) return `${WEEKDAY_NAMES[calendarDay(day).getUTCDay()]!.slice(0, 3)}, ${dayMonth}`;
+  return dayMonth;
+}

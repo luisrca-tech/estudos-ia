@@ -2,65 +2,47 @@
 
 import { cn } from "@estudos-ia/ui/lib/utils";
 
-const STEPS = [1, 2, 3, 4, 5] as const;
-const BAR_HEIGHT = ["h-1.5", "h-2.5", "h-3.5", "h-[1.125rem]", "h-[1.375rem]"] as const;
-
-/** Mastery (0–5) drawn as five rising bars: the ladder of the method. */
-function StepLadder({ level, label, className }: { level: number; label?: string; className?: string }) {
-  return (
-    <span
-      role="img"
-      aria-label={label ?? `Degrau ${level} de 5`}
-      data-slot="step-ladder"
-      className={cn("inline-flex items-end gap-0.5", className)}
-    >
-      {STEPS.map((step, index) => (
-        <span
-          key={step}
-          className={cn("w-1.5 rounded-[1px]", BAR_HEIGHT[index], step <= level ? "bg-accent" : "bg-line-strong/60")}
-        />
-      ))}
-    </span>
-  );
-}
-
-type StepSelectorProps = {
+type StaircaseProps = {
   level: number;
-  onLevelChange: (level: number) => void;
   /** Labels for steps 1 to 5. */
   labels: readonly [string, string, string, string, string];
-  descriptions?: readonly [string, string, string, string, string];
+  onLevelChange: (level: number) => void;
   disabled?: boolean;
   className?: string;
 };
 
-/** Pick the mastery step. Choosing the current step again goes one step back. */
-function StepSelector({ level, onLevelChange, labels, descriptions, disabled, className }: StepSelectorProps) {
+/**
+ * The mastery ladder drawn as stairs (board "Escada"): done steps in
+ * accent-soft, the current one filled, the next one dashed. Choosing the
+ * current step again goes one step down.
+ */
+function Staircase({ level, labels, onLevelChange, disabled, className }: StaircaseProps) {
   return (
-    <div role="group" aria-label="Degrau de domínio" data-slot="step-selector" className={cn("grid grid-cols-5 items-start gap-1.5", className)}>
-      {STEPS.map((step, index) => {
-        const reached = step <= level;
+    <div role="group" aria-label="Degrau de domínio" className={cn("flex flex-col gap-1", className)}>
+      {[5, 4, 3, 2, 1].map((step) => {
+        const current = step === level;
+        const next = step === level + 1;
+        const done = step < level;
         return (
           <button
             key={step}
             type="button"
+            aria-pressed={current}
             disabled={disabled}
-            aria-pressed={reached}
-            title={descriptions?.[index]}
-            onClick={() => onLevelChange(step === level ? step - 1 : step)}
-            className="group flex cursor-pointer flex-col gap-1.5 rounded-sm text-left disabled:cursor-not-allowed disabled:opacity-60"
+            onClick={() => onLevelChange(current ? step - 1 : step)}
+            style={{ marginLeft: `${(step - 1) * 12}px` }}
+            className={cn(
+              "flex min-h-9 cursor-pointer items-center gap-2.5 rounded-sm border px-2.5 text-left text-sm transition-colors duration-150 disabled:cursor-progress",
+              current && "border-accent bg-accent font-medium text-accent-foreground",
+              next && "border-dashed border-accent font-medium text-foreground hover:bg-accent-soft",
+              done && "border-line bg-accent-soft text-foreground",
+              !current && !next && !done && "border-line text-muted-foreground hover:border-accent",
+            )}
           >
-            <span className="flex h-9 items-end">
-              <span
-                className={cn(
-                  "block w-full rounded-sm border transition-colors",
-                  reached ? "border-accent bg-accent" : "border-line-strong/70 bg-surface-sunken group-hover:border-accent",
-                )}
-                style={{ height: `${0.5 + index * 0.4}rem` }}
-              />
-            </span>
-            <span className={cn("text-xs leading-tight sm:text-sm", reached ? "font-medium text-foreground" : "text-muted-foreground")}>
-              <span className="tabular-nums">{step}</span> {labels[index]}
+            <span className="font-mono text-xs">{step}</span>
+            {labels[step - 1]}
+            <span className={cn("ml-auto text-xs", current ? "text-accent-foreground/85" : "text-muted-foreground")}>
+              {current ? "você está aqui" : next ? "próximo" : ""}
             </span>
           </button>
         );
@@ -69,4 +51,4 @@ function StepSelector({ level, onLevelChange, labels, descriptions, disabled, cl
   );
 }
 
-export { StepLadder, StepSelector };
+export { Staircase };

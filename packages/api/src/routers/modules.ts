@@ -6,7 +6,7 @@ import {
   studySession,
 } from "@estudos-ia/db/schema/index";
 import { TRPCError } from "@trpc/server";
-import { asc, desc, eq, isNull, sql } from "drizzle-orm";
+import { and, asc, desc, eq, isNull, sql } from "drizzle-orm";
 import { z } from "zod";
 
 import { publicProcedure, router } from "../index";
@@ -84,6 +84,21 @@ export const modulesRouter = router({
       .orderBy(desc(moduleContentVersion.createdAt))
       .limit(1);
 
+    const changed = contentChanged(progress?.lastSeenContentHash, module.contentHash);
+    // The version the user last saw, so the page can mark what changed since then.
+    const [seenVersion] = changed
+      ? await ctx.db
+          .select({ content: moduleContentVersion.content })
+          .from(moduleContentVersion)
+          .where(
+            and(
+              eq(moduleContentVersion.moduleId, module.id),
+              eq(moduleContentVersion.hash, progress!.lastSeenContentHash!),
+            ),
+          )
+          .limit(1)
+      : [];
+
     return {
       id: module.id,
       slug: module.slug,
@@ -98,7 +113,8 @@ export const modulesRouter = router({
         // Null until the first visit: the page then marks the content as seen.
         lastSeenContentHash: progress?.lastSeenContentHash ?? null,
       },
-      contentChanged: contentChanged(progress?.lastSeenContentHash, module.contentHash),
+      contentChanged: changed,
+      seenContent: seenVersion?.content ?? null,
       contentUpdatedAt: latestVersion?.createdAt ?? module.updatedAt,
     };
   }),
