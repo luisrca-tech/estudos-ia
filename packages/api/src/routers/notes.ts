@@ -1,7 +1,7 @@
 import { gradeSchema } from "@estudos-ia/db/content/schema";
 import { note, reviewSchedule, studyModule, studySession } from "@estudos-ia/db/schema/index";
 import { TRPCError } from "@trpc/server";
-import { and, desc, eq, sql } from "drizzle-orm";
+import { and, desc, eq, ilike, sql } from "drizzle-orm";
 import { z } from "zod";
 
 import { publicProcedure, router } from "../index";
@@ -48,6 +48,19 @@ const noteColumns = {
 };
 
 export const notesRouter = router({
+  /** Notes by title, newest first; used by the command palette. */
+  search: publicProcedure
+    .input(z.object({ query: z.string().trim().max(200).default(""), limit: z.number().int().min(1).max(50).default(8) }))
+    .query(({ ctx, input }) =>
+      ctx.db
+        .select({ id: note.id, title: note.title, type: note.type, createdAt: note.createdAt, module: moduleRef })
+        .from(note)
+        .innerJoin(studyModule, eq(studyModule.id, note.moduleId))
+        .where(input.query ? ilike(note.title, `%${input.query.replace(/[%_\\]/g, "\\$&")}%`) : undefined)
+        .orderBy(desc(note.createdAt))
+        .limit(input.limit),
+    ),
+
   listByModule: publicProcedure
     .input(z.object({ moduleId: z.uuid(), type: noteTypeSchema.optional() }))
     .query(({ ctx, input }) =>

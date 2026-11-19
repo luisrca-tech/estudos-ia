@@ -64,3 +64,19 @@ export function formatPeriod(cadence: Cadence, key: string): string {
   if (cadence === "weekly") return `Semana ${key}`;
   return capitalize(monthYear.format(calendarDay(`${key}-15`)));
 }
+
+/** "Módulo 5 · Ferramentas e a interface agente-computador"; non-numbered sections keep their kicker. */
+export function moduleLabel(kicker: string, title: string): string {
+  const number = kicker.split(" · ")[0] ?? kicker;
+  return `${number} · ${title}`;
+}
+
+/** "Módulo 5" or the kicker of a section without a number. */
+export function moduleNumber(kicker: string): string {
+  return kicker.split(" · ")[0] ?? kicker;
+}
+
+/** "09:40" in São Paulo time. */
+export function formatTime(value: DateInput): string {
+  return time.format(new Date(value));
+}

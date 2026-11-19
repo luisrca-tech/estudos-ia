@@ -2,17 +2,19 @@ import { cn } from "@estudos-ia/ui/lib/utils";
 import * as React from "react";
 
 type PageShellProps = React.ComponentProps<"main"> & {
-  /** `reading` for long text (45rem); `wide` for lists and the dashboard (65rem). */
-  width?: "reading" | "wide";
+  /** `page` (1120 px) for lists and dashboards, `reading` (680 px) for long text, `focus` (720 px) for one-task pages. */
+  width?: "page" | "reading" | "focus";
 };
 
-function PageShell({ width = "wide", className, ...props }: PageShellProps) {
+const WIDTH = { page: "max-w-page", reading: "max-w-reading", focus: "max-w-focus" } as const;
+
+function PageShell({ width = "page", className, ...props }: PageShellProps) {
   return (
     <main
       data-slot="page-shell"
       className={cn(
-        "mx-auto flex w-full flex-col gap-12 px-4 pt-8 pb-24 sm:px-6",
-        width === "reading" ? "max-w-reading" : "max-w-wide",
+        "mx-auto flex w-full flex-col gap-10 px-4 pt-8 pb-24 sm:px-8 sm:pt-12",
+        WIDTH[width],
         className,
       )}
       {...props}

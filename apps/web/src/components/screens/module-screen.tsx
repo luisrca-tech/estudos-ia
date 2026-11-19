@@ -212,7 +212,7 @@ function Notes({ module }: { module: Module }) {
     <Section
       title="Notas"
       actions={
-        <Link href={routes.newNote(module.slug)} className={buttonVariants({ variant: "secondary", size: "sm" })}>
+        <Link href={routes.newNote(module.slug)} className={buttonVariants({ variant: "outline", size: "sm" })}>
           <PlusIcon />
           Nova nota
         </Link>

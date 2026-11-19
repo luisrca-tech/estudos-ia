@@ -1,32 +1,50 @@
 "use client";
 
+import { Kbd } from "@estudos-ia/ui/components/button";
 import { cn } from "@estudos-ia/ui/lib/utils";
+import { useQuery } from "@tanstack/react-query";
+import { SearchIcon } from "lucide-react";
 import type { Route } from "next";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { GlobalTimer } from "./global-timer";
+import { uiActions } from "@/lib/ui-store";
+import { useTRPC } from "@/utils/trpc";
+
 import { ModeToggle } from "./mode-toggle";
 
-const LINKS: ReadonlyArray<{ href: Route; label: string; match: (path: string) => boolean }> = [
+const LINKS: ReadonlyArray<{ href: Route; label: string; match: (path: string) => boolean; reviews?: true }> = [
   { href: "/", label: "Hoje", match: (path) => path === "/" },
   { href: "/modules", label: "Módulos", match: (path) => path.startsWith("/modules") || path.startsWith("/notes") },
-  { href: "/reviews", label: "Revisões", match: (path) => path.startsWith("/reviews") },
+  { href: "/reviews", label: "Revisões", match: (path) => path.startsWith("/reviews"), reviews: true },
   { href: "/routines", label: "Rotinas", match: (path) => path.startsWith("/routines") },
   { href: "/sessions", label: "Sessões", match: (path) => path.startsWith("/sessions") },
   { href: "/import", label: "Importar", match: (path) => path.startsWith("/import") },
 ];
 
+/** The stairs of the method, used as the wordmark icon. */
+function StairsIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" aria-hidden>
+      <path d="M3 20h4v-4h4v-4h4V8h4V4" />
+    </svg>
+  );
+}
+
 export default function Header() {
   const pathname = usePathname();
+  const trpc = useTRPC();
+  const due = useQuery(trpc.reviews.due.queryOptions(undefined, { refetchInterval: 60_000 }));
+  const dueCount = due.data?.length ?? 0;
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-background/95 backdrop-blur-sm">
-      <div className="mx-auto flex w-full max-w-wide flex-wrap items-center gap-x-4 px-4 sm:flex-nowrap sm:px-6">
-        <Link href="/" className="mr-auto shrink-0 py-2 font-serif text-lg font-semibold sm:mr-0 sm:py-3">
-          Estudos de IA
+    <header className="sticky top-0 z-40 border-b border-line bg-surface">
+      <div className="mx-auto flex min-h-header w-full max-w-page flex-wrap items-stretch gap-x-6 px-4 sm:px-8 lg:flex-nowrap">
+        <Link href="/" className="mr-auto flex items-center gap-2 font-serif text-[17px] font-semibold text-foreground no-underline lg:mr-0">
+          <StairsIcon />
+          estudos-ia
         </Link>
-        <nav aria-label="Principal" className="order-last -mx-3 flex w-full min-w-0 gap-1 overflow-x-auto sm:order-none sm:mx-0 sm:w-auto sm:flex-1">
+        <nav aria-label="Principal" className="order-last -mx-3 flex w-full min-w-0 items-stretch overflow-x-auto lg:order-none lg:mx-0 lg:w-auto lg:flex-1">
           {LINKS.map((link) => {
             const active = link.match(pathname);
             return (
@@ -35,20 +53,42 @@ export default function Header() {
                 href={link.href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "border-b-2 px-3 py-2 text-base sm:py-3.5 whitespace-nowrap transition-colors -outline-offset-2",
+                  "flex min-h-11 items-center gap-1.5 px-3 whitespace-nowrap no-underline -outline-offset-2 lg:min-h-header",
                   active
-                    ? "border-accent font-medium text-foreground"
-                    : "border-transparent text-muted-foreground hover:text-foreground",
+                    ? "font-medium text-foreground shadow-[inset_0_-2px_0_var(--foreground)]"
+                    : "text-muted-foreground hover:text-foreground",
                 )}
               >
                 {link.label}
+                {link.reviews && dueCount > 0 ? (
+                  <span
+                    aria-label={`${dueCount} para hoje`}
+                    className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-accent-soft px-1.5 text-xs font-semibold text-accent"
+                  >
+                    {dueCount}
+                  </span>
+                ) : null}
               </Link>
             );
           })}
         </nav>
-        <ModeToggle />
+        <div className="flex items-center gap-1">
+          <button
+            type="button"
+            onClick={() => uiActions.setPaletteOpen(true)}
+            aria-keyshortcuts="Meta+K Control+K"
+            className="inline-flex h-9 cursor-pointer items-center gap-3 rounded-sm border border-line bg-background pr-2 pl-3 text-sm text-muted-foreground hover:text-foreground"
+          >
+            <span className="inline-flex items-center gap-2">
+              <SearchIcon aria-hidden className="size-[15px]" />
+              <span className="hidden sm:inline">Ir para…</span>
+              <span className="sr-only sm:hidden">Ir para</span>
+            </span>
+            <Kbd className="bg-surface">⌘K</Kbd>
+          </button>
+          <ModeToggle />
+        </div>
       </div>
-      <GlobalTimer />
     </header>
   );
 }

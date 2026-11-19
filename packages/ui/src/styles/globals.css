@@ -30,6 +30,8 @@
   --focus: #2a47c2;
   --highlight: #ffe35a;
   --highlight-ink: #3d3200;
+  --elevation-floating: 0 8px 24px rgb(23 33 43 / 0.12);
+  --elevation-dock: 0 -8px 24px rgb(23 33 43 / 0.08);
 
   --radius: 0.5rem;
 }
@@ -54,6 +56,8 @@
   --focus: #b9c6ff;
   --highlight: #e8cc45;
   --highlight-ink: #2b2400;
+  --elevation-floating: 0 8px 24px rgb(0 0 0 / 0.4);
+  --elevation-dock: 0 -8px 24px rgb(0 0 0 / 0.35);
 }
 
 @theme inline {
@@ -119,8 +123,14 @@
   --text-4xl: 2.375rem;
   --text-4xl--line-height: 1.15;
 
-  --container-reading: 45rem;
-  --container-wide: 65rem;
+  /* Layout widths (docs/design/tokens.json): page, reading column, focus pages. */
+  --container-page: 70rem;
+  --container-reading: 42.5rem;
+  --container-focus: 45rem;
+  --spacing-header: 3.5rem;
+
+  --shadow-floating: var(--elevation-floating);
+  --shadow-dock: var(--elevation-dock);
 }
 
 @layer base {
@@ -131,7 +141,8 @@
   html {
     @apply font-sans;
     color-scheme: light;
-    scroll-padding-top: 9rem;
+    scroll-padding-top: 5rem;
+    scroll-padding-bottom: 6rem;
   }
 
   html.dark {
