@@ -7,8 +7,6 @@ const longDate = new Intl.DateTimeFormat(LOCALE, { weekday: "long", day: "numeri
 const dayMonth = new Intl.DateTimeFormat(LOCALE, { day: "2-digit", month: "2-digit", timeZone: TZ });
 const dayMonthYear = new Intl.DateTimeFormat(LOCALE, { day: "2-digit", month: "2-digit", year: "numeric", timeZone: TZ });
 const time = new Intl.DateTimeFormat(LOCALE, { hour: "2-digit", minute: "2-digit", timeZone: TZ });
-const weekdayShort = new Intl.DateTimeFormat(LOCALE, { weekday: "short", timeZone: "UTC" });
-const monthYear = new Intl.DateTimeFormat(LOCALE, { month: "long", year: "numeric", timeZone: "UTC" });
 
 /** A YYYY-MM-DD calendar day as a date that formats to that same day in UTC. */
 function calendarDay(day: string): Date {
@@ -54,16 +52,6 @@ export function plural(count: number, one: string, many: string): string {
 }
 
 export type Cadence = "daily" | "weekly" | "monthly";
-
-/** Label of a routine period key: "19/11 (qui.)", "Semana 2026-W47", "Novembro de 2026". */
-export function formatPeriod(cadence: Cadence, key: string): string {
-  if (cadence === "daily") {
-    const day = calendarDay(key);
-    return `${key.slice(8, 10)}/${key.slice(5, 7)} (${weekdayShort.format(day)})`;
-  }
-  if (cadence === "weekly") return `Semana ${key}`;
-  return capitalize(monthYear.format(calendarDay(`${key}-15`)));
-}
 
 /** "Módulo 5 · Ferramentas e a interface agente-computador"; non-numbered sections keep their kicker. */
 export function moduleLabel(kicker: string, title: string): string {

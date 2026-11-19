@@ -84,7 +84,7 @@ export async function loadSummaryNotes(db: Db, moduleIds: string[]): Promise<Ale
     .where(and(inArray(note.moduleId, moduleIds), eq(note.type, "summary"), eq(note.source, "app")));
 }
 
-/** Sessions with their derived summary state (spec 6.1). */
+/** Sessions with their derived summary state (spec 6.1) and the summary linked to each one. */
 export async function listSessionsWithSummary(
   db: Db,
   now: Date,
@@ -92,7 +92,29 @@ export async function listSessionsWithSummary(
 ) {
   const sessions = await listSessions(db, options);
   const notes = await loadSummaryNotes(db, [...new Set(sessions.map((session) => session.moduleId))]);
-  return sessions.map((session) => ({ ...session, summary: summaryStatus(session, notes, now) }));
+  const linked =
+    sessions.length > 0
+      ? await db
+          .select({ id: note.id, sessionId: note.sessionId })
+          .from(note)
+          .where(
+            and(
+              inArray(
+                note.sessionId,
+                sessions.map((session) => session.id),
+              ),
+              eq(note.type, "summary"),
+            ),
+          )
+          .orderBy(desc(note.createdAt))
+      : [];
+  const noteBySession = new Map<string, string>();
+  for (const row of linked) if (row.sessionId && !noteBySession.has(row.sessionId)) noteBySession.set(row.sessionId, row.id);
+  return sessions.map((session) => ({
+    ...session,
+    summary: summaryStatus(session, notes, now),
+    summaryNoteId: noteBySession.get(session.id) ?? null,
+  }));
 }
 
 /** Counting sessions inside the alert window that still lack a summary. */

@@ -65,19 +65,27 @@ async function prepareImport(db: Db, text: string, now: Date) {
   return { modules, parsed, plan: planImport(parsed, modules, existing, now) };
 }
 
+async function loadMastery(db: Db): Promise<Map<string, number>> {
+  const rows = await db
+    .select({ moduleId: moduleProgress.moduleId, level: moduleProgress.masteryLevel })
+    .from(moduleProgress);
+  return new Map(rows.map((row) => [row.moduleId, row.level]));
+}
+
 export const importerRouter = router({
   preview: publicProcedure.input(importInput).mutation(async ({ ctx, input }) => {
     const { modules, parsed, plan } = await prepareImport(ctx.db, input.text, new Date());
     const moduleByKey = new Map(modules.map((module) => [module.key, module]));
     const duplicates = new Set(plan.skipped.map((entry) => entry.moduleKey));
 
+    const masteryByModule = await loadMastery(ctx.db);
     return {
       format: parsed.format,
       warnings: parsed.warnings,
       toCreate: plan.create.length,
       toSkip: plan.skipped.length,
+      // Every section, so the preview shows what is ignored too.
       rows: parsed.sections
-        .filter((section) => section.body || section.done)
         .map((section) => {
           const module = moduleByKey.get(section.moduleKey)!;
           return {
@@ -88,6 +96,7 @@ export const importerRouter = router({
             characters: section.body.length,
             done: section.done,
             duplicate: duplicates.has(module.key),
+            currentMastery: masteryByModule.get(module.id) ?? 0,
           };
         }),
     };
@@ -96,7 +105,8 @@ export const importerRouter = router({
   commit: publicProcedure.input(importInput).mutation(async ({ ctx, input }) => {
     const now = new Date();
     return ctx.db.transaction(async (tx) => {
-      const { parsed, plan } = await prepareImport(tx, input.text, now);
+      const { modules, parsed, plan } = await prepareImport(tx, input.text, now);
+      const masteryBefore = await loadMastery(tx);
 
       const [batch] = await tx
         .insert(importBatch)
@@ -149,7 +159,25 @@ export const importerRouter = router({
         masteryUpdated += raised.length;
       }
 
+      // Per module, for the result step: notes created and the step change.
+      const touched = new Set([...plan.create.map((entry) => entry.moduleId), ...plan.masteryModuleIds]);
+      const perModule = modules
+        .filter((module) => touched.has(module.id))
+        .map((module) => {
+          const before = masteryBefore.get(module.id) ?? 0;
+          const raised = plan.masteryModuleIds.includes(module.id) && before < DONE_MASTERY_LEVEL;
+          return {
+            moduleKey: module.key,
+            moduleSlug: module.slug,
+            kicker: module.kicker,
+            created: plan.create.filter((entry) => entry.moduleId === module.id).length,
+            masteryBefore: before,
+            masteryAfter: raised ? DONE_MASTERY_LEVEL : before,
+          };
+        });
+
       return {
+        modules: perModule,
         created: plan.create.length,
         skipped: plan.skipped.length,
         masteryUpdated,

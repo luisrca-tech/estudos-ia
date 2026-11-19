@@ -29,10 +29,6 @@ export const LADDER_DESCRIPTIONS = [
   "Argumento com evidência graduada e reconheço o que me faria mudar de ideia.",
 ] as const;
 
-export function ladderLabel(level: number): string {
-  return level === 0 ? "Ainda não comecei" : `Degrau ${level}: ${LADDER_LABELS[level - 1]}`;
-}
-
 /** Evidence grades of the method. */
 export const GRADES: ReadonlyArray<{ value: Grade; meaning: string }> = [
   { value: "A", meaning: "medi no meu sistema, com baseline" },
@@ -49,9 +45,6 @@ export const BODY_PLACEHOLDERS: Record<NoteType, string> = {
   evidence: "O que a fonte afirma, como eles sabem e o que isso muda no seu sistema.",
 };
 
-export const SESSION_PRESETS = [15, 25, 45] as const;
 export const DEFAULT_SESSION_MINUTES = 25;
-export const MIN_SESSION_MINUTES = 5;
-export const MAX_SESSION_MINUTES = 180;
 
 export const DB_HINT = "Confira se o Docker está aberto e o banco de pé (npm run db:start).";

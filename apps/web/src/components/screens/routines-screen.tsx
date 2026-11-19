@@ -1,127 +1,132 @@
 "use client";
 
-import { Badge } from "@estudos-ia/ui/components/badge";
-import { Card } from "@estudos-ia/ui/components/card";
 import { EmptyState } from "@estudos-ia/ui/components/empty-state";
 import { ErrorState } from "@estudos-ia/ui/components/error-state";
-import { PageHeader, PageShell } from "@estudos-ia/ui/components/page";
-import { Skeleton, SkeletonLines } from "@estudos-ia/ui/components/skeleton";
+import { Skeleton } from "@estudos-ia/ui/components/skeleton";
+import { cn } from "@estudos-ia/ui/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 
 import { RoutineChecklist } from "@/components/routine-checklist";
-import { formatPeriod, type Cadence } from "@/lib/format";
+import type { Cadence } from "@/lib/format";
 import { DB_HINT } from "@/lib/labels";
+import { historyLabel, periodHeading } from "@/lib/routine-labels";
 import { useTRPC, type RouterOutputs } from "@/utils/trpc";
 
 type Routine = RouterOutputs["routines"]["current"]["daily"];
 
-const COLUMNS: ReadonlyArray<{ cadence: Cadence; title: string; complete: string; history: string; current: (key: string) => string }> = [
-  { cadence: "daily", title: "Diária", complete: "dia completo", history: "Últimos 30 dias", current: (key) => `Hoje, ${formatPeriod("daily", key)}` },
-  { cadence: "weekly", title: "Semanal", complete: "semana completa", history: "Últimas 12 semanas", current: (key) => formatPeriod("weekly", key) },
-  { cadence: "monthly", title: "Mensal", complete: "mês completo", history: "Últimos 12 meses", current: (key) => formatPeriod("monthly", key) },
+/** How many past periods each card shows under "Antes". */
+const COLUMNS: ReadonlyArray<{ cadence: Cadence; title: string; past: number }> = [
+  { cadence: "daily", title: "Diária", past: 5 },
+  { cadence: "weekly", title: "Semanal", past: 3 },
+  { cadence: "monthly", title: "Mensal", past: 2 },
 ];
 
-function History({ cadence, title, currentKey }: { cadence: Cadence; title: string; currentKey: string }) {
+function History({ cadence, routine, past }: { cadence: Cadence; routine: Routine; past: number }) {
   const trpc = useTRPC();
   const history = useQuery(trpc.routines.history.queryOptions({ cadence }));
 
-  if (history.isPending) return <SkeletonLines lines={4} />;
+  if (history.isPending) return <Skeleton className="h-20" />;
   if (history.isError) {
     return (
-      <ErrorState title="Não foi possível carregar o histórico." onRetry={() => history.refetch()}>
+      <ErrorState title="O banco local não respondeu." onRetry={() => history.refetch()}>
         {DB_HINT}
       </ErrorState>
     );
   }
 
   // The current period is the checklist above; history starts at the previous one.
-  const past = history.data.filter((entry) => entry.periodKey !== currentKey);
-  const withChecks = past.filter((entry) => entry.done > 0).length;
+  const rows = history.data.filter((entry) => entry.periodKey !== routine.periodKey).slice(0, past);
+  if (rows.length === 0) return <p className="text-[13px] text-muted-foreground">Nenhum período anterior ainda.</p>;
 
   return (
-    <div className="flex flex-col gap-2">
-      <h3 className="flex items-baseline justify-between gap-2 text-sm font-medium">
-        {title}
-        <span className="font-normal text-muted-foreground">
-          {withChecks === 0 ? "nada marcado ainda" : `${withChecks} com itens feitos`}
-        </span>
-      </h3>
-      <ul className="max-h-80 divide-y divide-line overflow-y-auto rounded-sm border border-line" tabIndex={0} aria-label={title}>
-        {past.map((entry) => (
-          <li key={entry.periodKey} className="px-3 py-2">
-            <div className="flex items-center justify-between gap-3 text-sm">
-              <span className={entry.done === 0 ? "text-muted-foreground" : undefined}>{formatPeriod(cadence, entry.periodKey)}</span>
-              <Badge tone={entry.complete ? "success" : entry.done > 0 ? "warning" : "neutral"} className="tabular-nums">
-                {entry.done}/{entry.total}
-              </Badge>
-            </div>
-            {entry.done > 0 && !entry.complete ? (
-              <p className="mt-1 text-xs text-muted-foreground">Feito: {entry.checkedLabels.map((label) => label.replaceAll("**", "")).join("; ")}</p>
-            ) : null}
+    <ul className="flex flex-col gap-2">
+      {rows.map((entry) => {
+        const cells = routine.items.map((item) => entry.checkedLabels.includes(item.label));
+        return (
+          <li key={entry.periodKey} className="flex items-center gap-3 text-[13px]">
+            <span className="w-[5.75rem] flex-none text-muted-foreground">{historyLabel(cadence, entry.periodKey)}</span>
+            <span role="img" aria-label={`${entry.done} de ${entry.total} feitos`} className="inline-flex gap-[3px]">
+              {cells.map((done, index) => (
+                <span key={index} className={cn("size-3.5 rounded-[2px]", done ? "bg-success" : "bg-surface-sunken")} />
+              ))}
+            </span>
+            <span className={cn("ml-auto font-mono", entry.complete ? "text-success" : "text-muted-foreground")}>
+              {entry.done}/{entry.total}
+            </span>
           </li>
-        ))}
-      </ul>
-    </div>
+        );
+      })}
+    </ul>
   );
 }
 
-function RoutineColumn({ column, routine }: { column: (typeof COLUMNS)[number]; routine: Routine }) {
+function RoutineCard({ column, routine, now }: { column: (typeof COLUMNS)[number]; routine: Routine; now: Date }) {
   const done = routine.items.filter((item) => item.checked).length;
-  const hint = routine.items[0]?.hint;
+  // The daily rhythm carries its time ("30–45 min") on the items.
+  const time = column.cadence === "daily" ? routine.items[0]?.hint : null;
 
   return (
-    <Card className="flex flex-col gap-5">
-      <div>
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <h2 className="font-serif text-2xl font-semibold">{column.title}</h2>
-          <Badge tone={routine.complete ? "success" : "neutral"}>
-            {routine.complete ? column.complete : `${done} de ${routine.items.length}`}
-          </Badge>
+    <section aria-labelledby={`routine-${column.cadence}`} className="flex flex-col rounded-lg border border-line bg-surface">
+      <div className="flex items-start justify-between gap-3 px-5 pt-5 pb-3">
+        <div className="flex flex-col gap-0.5">
+          <h2 id={`routine-${column.cadence}`} className="font-serif text-[22px] font-semibold">
+            {column.title}
+          </h2>
+          <span className="text-[13px] text-muted-foreground">
+            {periodHeading(column.cadence, now)}
+            {time ? ` · ${time}` : ""}
+          </span>
         </div>
-        <p className="mt-1 text-sm text-muted-foreground">
-          {column.current(routine.periodKey)}
-          {hint ? `, ${hint}` : ""}
-        </p>
+        <span
+          aria-label={`${done} de ${routine.items.length} feitos`}
+          className={cn("font-mono text-[22px] font-medium", routine.complete ? "text-success" : "text-foreground")}
+        >
+          {done}/{routine.items.length}
+        </span>
       </div>
-      {routine.items.length === 0 ? (
-        <EmptyState title="Nenhum item nesta rotina.">Os itens vêm de content/routines.json; rode npm run db:seed.</EmptyState>
-      ) : (
-        <RoutineChecklist items={routine.items} />
-      )}
-      <div className="border-t border-line pt-4">
-        <History cadence={column.cadence} title={column.history} currentKey={routine.periodKey} />
+      <div className="px-5 pb-2">
+        {routine.items.length === 0 ? (
+          <EmptyState title="Nenhum item nesta rotina.">Os itens vêm de content/routines.json; rode npm run db:seed.</EmptyState>
+        ) : (
+          <RoutineChecklist items={routine.items} hints divided />
+        )}
       </div>
-    </Card>
+      <div className="flex flex-col gap-2 rounded-b-lg border-t border-line bg-background px-5 pt-3.5 pb-[1.125rem]">
+        <span className="text-xs font-medium text-muted-foreground">Antes</span>
+        <History cadence={column.cadence} routine={routine} past={column.past} />
+      </div>
+    </section>
   );
 }
 
 export function RoutinesScreen() {
   const trpc = useTRPC();
   const routines = useQuery(trpc.routines.current.queryOptions(undefined, { refetchInterval: 60_000 }));
+  const now = new Date();
 
   return (
-    <PageShell>
-      <PageHeader
-        title="Rotinas"
-        description="Três ritmos: um pouco todo dia, um exercício por semana e uma síntese por mês. Períodos passados ficam como histórico e não mudam."
-      />
+    <main className="mx-auto flex w-full max-w-page flex-col gap-8 px-4 pt-8 pb-24 sm:px-8 sm:pt-12">
+      <header className="flex flex-col gap-1.5">
+        <h1 className="font-serif text-3xl font-semibold sm:text-[2.375rem] sm:leading-[1.15]">Rotinas</h1>
+        <p className="text-muted-foreground">Três ritmos do método. Cada período fecha sozinho; o que ficou aberto vai para o histórico.</p>
+      </header>
       {routines.isPending ? (
-        <div className="grid gap-6 lg:grid-cols-3" role="status" aria-label="Carregando rotinas">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(290px,1fr))] gap-5" role="status" aria-label="Carregando rotinas">
           {COLUMNS.map((column) => (
-            <Skeleton key={column.cadence} className="h-96 rounded-md" />
+            <Skeleton key={column.cadence} className="h-96 rounded-lg" />
           ))}
         </div>
       ) : routines.isError ? (
-        <ErrorState title="Não foi possível carregar as rotinas." onRetry={() => routines.refetch()}>
+        <ErrorState title="O banco local não respondeu." onRetry={() => routines.refetch()}>
           {DB_HINT}
         </ErrorState>
       ) : (
-        <div className="grid items-start gap-6 lg:grid-cols-3">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(min(290px,100%),1fr))] items-start gap-5">
           {COLUMNS.map((column) => (
-            <RoutineColumn key={column.cadence} column={column} routine={routines.data[column.cadence]} />
+            <RoutineCard key={column.cadence} column={column} routine={routines.data[column.cadence]} now={now} />
           ))}
         </div>
       )}
-    </PageShell>
+    </main>
   );
 }
