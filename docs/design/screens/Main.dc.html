@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Tokens do estudos-ia</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=Literata:opsz,wght@7..72,400;7..72,600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#2a47c2}a:hover{color:#17212b}
+</style>
+</helmet>
+<div style="{{vars}} width: 1440px; box-sizing: border-box; padding: 72px 80px 96px; background: var(--bg); color: var(--fg); font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 15px; line-height: 1.5; display: flex; flex-direction: column; gap: 72px">
+
+  <header style="display: flex; flex-direction: column; gap: 16px; max-width: 760px">
+    <p style="margin: 0; font-size: 14px; color: var(--mu)">estudos-ia · caderno de engenharia</p>
+    <h1 style="margin: 0; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 38px; line-height: 1.15">Tokens</h1>
+    <p style="margin: 0; font-family: 'Literata', Georgia, serif; font-size: 17px; line-height: 1.7">Papel frio, tinta de caneta azul e um amarelo de marca-texto só para o que mudou. A hierarquia vem de tipografia, linha e espaço. Cards são planos, com linha de 1 px; sombra só no que flutua. Os valores abaixo são os de <code style="font-family: 'IBM Plex Mono', monospace; font-size: 14px">packages/ui/src/styles/globals.css</code>.</p>
+  </header>
+
+  <section style="display: flex; flex-direction: column; gap: 24px">
+    <h2 style="margin: 0; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 24px; line-height: 1.25">Cores</h2>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px">
+      <sc-for list="{{themes}}" as="th" hint-placeholder-count="2">
+        <div style="{{th.vars}} background: var(--bg); color: var(--fg); border: 1px solid var(--ln); border-radius: 8px; padding: 32px; display: flex; flex-direction: column; gap: 28px">
+          <div style="display: flex; justify-content: space-between; align-items: baseline">
+            <h3 style="margin: 0; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 20px">{{th.name}}</h3>
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--mu)">{{th.selector}}</span>
+          </div>
+          <sc-for list="{{th.groups}}" as="g" hint-placeholder-count="5">
+            <div style="display: flex; flex-direction: column; gap: 12px">
+              <p style="margin: 0; font-size: 14px; font-weight: 600">{{g.name}}</p>
+              <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 20px">
+                <sc-for list="{{g.tokens}}" as="t" hint-placeholder-count="4">
+                  <div style="display: flex; gap: 12px; align-items: center">
+                    <div style="width: 44px; height: 44px; flex: none; border-radius: 4px; border: 1px solid var(--ln); background: {{t.hex}}"></div>
+                    <div style="display: flex; flex-direction: column; min-width: 0">
+                      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px">{{t.name}}</span>
+                      <span style="font-size: 12px; color: var(--mu)">{{t.hex}} · {{t.use}}</span>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+          <div style="display: flex; flex-direction: column; gap: 12px; border-top: 1px solid var(--ln); padding-top: 20px">
+            <p style="margin: 0; font-size: 14px; font-weight: 600">Estados, sempre com ícone e texto</p>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap">
+              <span style="display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-radius: 999px; background: var(--oks); color: var(--ok); font-size: 12px; font-weight: 500"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 3 3 5-6"></path></svg>Em dia</span>
+              <span style="display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-radius: 999px; background: var(--was); color: var(--wa); font-size: 12px; font-weight: 500"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>Faltam 21 h</span>
+              <span style="display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-radius: 999px; background: var(--das); color: var(--da); font-size: 12px; font-weight: 500"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg>Atrasado</span>
+              <span style="display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 999px; background: var(--hl); color: var(--hli); font-size: 12px; font-weight: 500">Conteúdo atualizado</span>
+            </div>
+            <p style="margin: 0; font-family: 'Literata', Georgia, serif; font-size: 17px; line-height: 1.7">Texto de leitura sobre o fundo, com <a href="#" style="color: var(--ac)">um link na cor do acento</a> e <span style="background: var(--hl); color: var(--hli); padding: 0 2px">um trecho marcado</span>.</p>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="display: flex; flex-direction: column; gap: 24px">
+    <h2 style="margin: 0; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 24px; line-height: 1.25">Tipografia</h2>
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px">
+      <div style="background: var(--sf); border: 1px solid var(--ln); border-radius: 8px; padding: 24px; display: flex; flex-direction: column; gap: 12px">
+        <span style="font-size: 12px; color: var(--mu)">Leitura e títulos</span>
+        <span style="font-family: 'Literata', Georgia, serif; font-size: 38px; font-weight: 600; line-height: 1.1">Literata</span>
+        <span style="font-size: 14px; color: var(--mu)">Conteúdo dos módulos, notas, perguntas de revisão e títulos de página. 400 e 600.</span>
+      </div>
+      <div style="background: var(--sf); border: 1px solid var(--ln); border-radius: 8px; padding: 24px; display: flex; flex-direction: column; gap: 12px">
+        <span style="font-size: 12px; color: var(--mu)">Interface</span>
+        <span style="font-size: 38px; font-weight: 500; line-height: 1.1">IBM Plex Sans</span>
+        <span style="font-size: 14px; color: var(--mu)">Navegação, botões, rótulos e metadados. 400, 500 e 600.</span>
+      </div>
+      <div style="background: var(--sf); border: 1px solid var(--ln); border-radius: 8px; padding: 24px; display: flex; flex-direction: column; gap: 12px">
+        <span style="font-size: 12px; color: var(--mu)">Escrita e medida</span>
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 38px; font-weight: 500; line-height: 1.1; font-variant-numeric: tabular-nums">18:42</span>
+        <span style="font-size: 14px; color: var(--mu)">Textarea do editor e dígitos do cronômetro, com algarismos tabulares.</span>
+      </div>
+    </div>
+    <div style="background: var(--sf); border: 1px solid var(--ln); border-radius: 8px; display: flex; flex-direction: column">
+      <sc-for list="{{scale}}" as="s" hint-placeholder-count="8">
+        <div style="display: flex; gap: 32px; align-items: baseline; padding: 18px 24px; border-bottom: 1px solid var(--ln)">
+          <span style="width: 180px; flex: none; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--mu)">{{s.spec}}</span>
+          <span style="{{s.style}}">{{s.sample}}</span>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px">
+      <div style="display: flex; flex-direction: column; gap: 8px">
+        <span style="font-size: 12px; color: var(--mu)">Prosa: 17 px, entrelinha 1,7, no máximo 68 caracteres por linha</span>
+        <p style="margin: 0; max-width: 68ch; font-family: 'Literata', Georgia, serif; font-size: 17px; line-height: 1.7">A definição de uma ferramenta é parte do prompt. Ferramentas ruins fazem um bom modelo parecer burro. Ferramenta boa é desenhada para o agente, não espelhada da API interna.</p>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px">
+        <span style="font-size: 12px; color: var(--mu)">Regras</span>
+        <p style="margin: 0; font-size: 15px; line-height: 1.6">Títulos em Literata 600 com <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13px">text-wrap: balance</code>. Rótulos em caixa normal, sem versalete e sem espaçamento de letras. Interface em 15 px; metadados em 14 ou 12 px. Escala de razão próxima de 1,2.</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px">
+    <div style="display: flex; flex-direction: column; gap: 24px">
+      <h2 style="margin: 0; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 24px; line-height: 1.25">Espaço</h2>
+      <div style="display: flex; flex-direction: column; gap: 10px">
+        <sc-for list="{{spaces}}" as="sp" hint-placeholder-count="8">
+          <div style="display: flex; align-items: center; gap: 16px">
+            <span style="width: 40px; font-family: 'IBM Plex Mono', monospace; font-size: 13px">{{sp.v}}</span>
+            <div style="height: 16px; border-radius: 2px; background: var(--ac); width: {{sp.w}}"></div>
+            <span style="font-size: 13px; color: var(--mu)">{{sp.use}}</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 10px; border-top: 1px solid var(--ln); padding-top: 20px">
+        <p style="margin: 0; font-size: 14px; font-weight: 600">Larguras de página</p>
+        <div style="display: flex; align-items: center; gap: 16px"><span style="width: 64px; font-family: 'IBM Plex Mono', monospace; font-size: 13px">720 px</span><div style="height: 10px; width: 216px; background: var(--acs); border: 1px solid var(--ac); border-radius: 2px"></div><span style="font-size: 13px; color: var(--mu)">leitura: módulo, nota, revisão, importar</span></div>
+        <div style="display: flex; align-items: center; gap: 16px"><span style="width: 64px; font-family: 'IBM Plex Mono', monospace; font-size: 13px">1040 px</span><div style="height: 10px; width: 312px; background: var(--acs); border: 1px solid var(--ac); border-radius: 2px"></div><span style="font-size: 13px; color: var(--mu)">listas e Hoje</span></div>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 24px">
+      <h2 style="margin: 0; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 24px; line-height: 1.25">Raio, foco e movimento</h2>
+      <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px">
+        <div style="display: flex; flex-direction: column; gap: 8px"><div style="height: 72px; background: var(--sf); border: 1px solid var(--ls); border-radius: 4px"></div><span style="font-size: 13px"><b style="font-weight: 600">4 px</b> controles</span></div>
+        <div style="display: flex; flex-direction: column; gap: 8px"><div style="height: 72px; background: var(--sf); border: 1px solid var(--ls); border-radius: 8px"></div><span style="font-size: 13px"><b style="font-weight: 600">8 px</b> superfícies</span></div>
+        <div style="display: flex; flex-direction: column; gap: 8px"><div style="height: 72px; background: var(--sf); border: 1px solid var(--ls); border-radius: 12px"></div><span style="font-size: 13px"><b style="font-weight: 600">12 px</b> cronômetro</span></div>
+        <div style="display: flex; flex-direction: column; gap: 8px"><div style="height: 72px; display: flex; align-items: center; justify-content: center"><div style="height: 28px; width: 100%; background: var(--sf); border: 1px solid var(--ls); border-radius: 999px"></div></div><span style="font-size: 13px"><b style="font-weight: 600">total</b> selos</span></div>
+      </div>
+      <div style="display: flex; gap: 24px; align-items: center; border-top: 1px solid var(--ln); padding-top: 20px">
+        <button type="button" style="min-height: 44px; padding: 0 18px; border-radius: 4px; border: 1px solid var(--ls); background: var(--sf); color: var(--fg); font: 500 15px 'IBM Plex Sans', sans-serif; outline: 2px solid var(--fo); outline-offset: 2px">Com foco</button>
+        <p style="margin: 0; font-size: 14px; color: var(--mu)">Contorno de 2 px em <code style="font-family: 'IBM Plex Mono', monospace">focus</code>, afastado 2 px, em todo elemento interativo.</p>
+      </div>
+      <p style="margin: 0; font-size: 14px; line-height: 1.6">Movimento só responde a uma ação (marcar, revelar, trocar de aba) ou mostra o tempo passando na régua, em 150 ms <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13px">ease-out</code>. Com <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13px">prefers-reduced-motion</code>, nada se move.</p>
+      <p style="margin: 0; font-size: 14px; line-height: 1.6">Sombra só no que flutua (menu, toast): <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13px">0 8px 24px rgb(23 33 43 / 0.12)</code> no claro e <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13px">0 8px 24px rgb(0 0 0 / 0.4)</code> no escuro.</p>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2600}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var P = {
+      claro: { background: '#f2f4f1', surface: '#fbfcfb', 'surface-sunken': '#e9ece8', foreground: '#17212b', 'muted-foreground': '#57626c', line: '#d3d9d4', 'line-strong': '#aeb7b1', accent: '#2a47c2', 'accent-foreground': '#ffffff', 'accent-soft': '#e3e8fa', success: '#1c7548', 'success-soft': '#ddefe4', warning: '#8f5600', 'warning-soft': '#f6e9cf', danger: '#b4271f', 'danger-soft': '#f8e0dd', focus: '#2a47c2', highlight: '#ffe35a', 'highlight-ink': '#3d3200' },
+      escuro: { background: '#11161b', surface: '#192027', 'surface-sunken': '#0c1014', foreground: '#e3e8e5', 'muted-foreground': '#98a3ab', line: '#2a343d', 'line-strong': '#44505a', accent: '#93a8ff', 'accent-foreground': '#0e1630', 'accent-soft': '#1f2a52', success: '#62cb93', 'success-soft': '#163626', warning: '#e8b657', 'warning-soft': '#3a2c10', danger: '#ff8f85', 'danger-soft': '#45191a', focus: '#b9c6ff', highlight: '#e8cc45', 'highlight-ink': '#2b2400' }
+    };
+    var short = { bg: 'background', sf: 'surface', sk: 'surface-sunken', fg: 'foreground', mu: 'muted-foreground', ln: 'line', ls: 'line-strong', ac: 'accent', acf: 'accent-foreground', acs: 'accent-soft', ok: 'success', oks: 'success-soft', wa: 'warning', was: 'warning-soft', da: 'danger', das: 'danger-soft', fo: 'focus', hl: 'highlight', hli: 'highlight-ink' };
+    function vars(t) { return Object.keys(short).map(function (k) { return '--' + k + ':' + P[t][short[k]]; }).join(';') + ';'; }
+    var uses = { background: 'fundo da página', surface: 'cards, campos, cabeçalho', 'surface-sunken': 'trilho da régua, código', line: 'divisórias', 'line-strong': 'bordas de controle', foreground: 'texto principal', 'muted-foreground': 'metadados', accent: 'ação, link, progresso', 'accent-foreground': 'texto sobre o acento', 'accent-soft': 'seleção, régua percorrida', focus: 'contorno de foco', success: 'em dia, coberto', 'success-soft': 'fundo de ok', warning: 'pendente com prazo', 'warning-soft': 'fundo de pendente', danger: 'atrasado, erro', 'danger-soft': 'fundo de alerta', highlight: 'conteúdo atualizado', 'highlight-ink': 'texto sobre marca-texto' };
+    var groups = [
+      ['Superfícies', ['background', 'surface', 'surface-sunken', 'line', 'line-strong']],
+      ['Texto', ['foreground', 'muted-foreground']],
+      ['Ação', ['accent', 'accent-foreground', 'accent-soft', 'focus']],
+      ['Estados', ['success', 'success-soft', 'warning', 'warning-soft', 'danger', 'danger-soft']],
+      ['Marca-texto', ['highlight', 'highlight-ink']]
+    ];
+    function themed(t, name, selector) {
+      return { name: name, selector: selector, vars: vars(t), groups: groups.map(function (g) { return { name: g[0], tokens: g[1].map(function (k) { return { name: k, hex: P[t][k].toUpperCase(), use: uses[k] }; }) }; }) };
+    }
+    var serif = "font-family: 'Literata', Georgia, serif;";
+    var sans = "font-family: 'IBM Plex Sans', sans-serif;";
+    return {
+      vars: vars('claro'),
+      themes: [themed('claro', 'Claro', ':root'), themed('escuro', 'Escuro', '.dark')],
+      scale: [
+        { spec: '38 / 1,15 · Literata 600', style: serif + 'font-size: 38px; font-weight: 600; line-height: 1.15', sample: 'Título de página' },
+        { spec: '30 / 1,2 · Literata 600', style: serif + 'font-size: 30px; font-weight: 600; line-height: 1.2', sample: 'Pergunta em revisão' },
+        { spec: '24 / 1,25 · Literata 600', style: serif + 'font-size: 24px; font-weight: 600; line-height: 1.25', sample: 'Título de seção' },
+        { spec: '20 / 1,35 · Literata 600', style: serif + 'font-size: 20px; font-weight: 600; line-height: 1.35', sample: 'Título de card' },
+        { spec: '17 / 1,7 · Literata 400', style: serif + 'font-size: 17px; line-height: 1.7', sample: 'Prosa de módulos e notas' },
+        { spec: '15 / 1,5 · Plex Sans 400–500', style: sans + 'font-size: 15px; line-height: 1.5', sample: 'Base da interface: botões, campos, navegação' },
+        { spec: '14 / 1,45 · Plex Sans 400', style: sans + 'font-size: 14px; line-height: 1.45', sample: 'Metadados e descrições curtas' },
+        { spec: '12 / 1,4 · Plex Sans 500', style: sans + 'font-size: 12px; font-weight: 500; line-height: 1.4', sample: 'Selos e rótulos pequenos' }
+      ],
+      spaces: [
+        { v: '4', w: '4px', use: 'ícone e texto' },
+        { v: '8', w: '8px', use: 'entre controles próximos' },
+        { v: '12', w: '12px', use: 'linhas de lista' },
+        { v: '16', w: '16px', use: 'dentro de card compacto' },
+        { v: '24', w: '24px', use: 'dentro de card, entre blocos' },
+        { v: '32', w: '32px', use: 'margem lateral da página' },
+        { v: '48', w: '48px', use: 'entre seções' },
+        { v: '64', w: '64px', use: 'topo da página' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

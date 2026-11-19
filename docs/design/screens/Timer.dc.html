@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Barra de sessão</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=Literata:opsz,wght@7..72,400;7..72,600&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<section role="timer" aria-label="Sessão em andamento" style="{{vars}} width: 100%; background: var(--sf); border-top: 1px solid var(--ln); box-shadow: {{shadow}}; color: var(--fg); font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 15px; line-height: 1.5">
+  <div aria-hidden="true" style="position: relative; height: 6px; background: var(--sk)">
+    <div style="position: absolute; left: 0; top: 0; bottom: 0; width: {{pct}}; background: {{fill}}"></div>
+    <sc-for list="{{ticks}}" as="t" hint-placeholder-count="24">
+      <div style="position: absolute; top: 0; width: 1px; left: {{t.left}}; height: {{t.h}}; background: var(--sf); opacity: 0.9"></div>
+    </sc-for>
+  </div>
+  <div style="max-width: 1120px; margin: 0 auto; padding: 10px 32px 12px; box-sizing: border-box; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 24px">
+    <div style="display: flex; align-items: baseline; gap: 8px; flex: none">
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 24px; font-weight: 500; line-height: 1; font-variant-numeric: tabular-nums; color: {{digits}}">{{restante}}</span>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--mu)">/ 25:00</span>
+    </div>
+    <div style="flex: 1 1 260px; min-width: 0; display: flex; flex-direction: column">
+      <span style="font-size: 13px; font-weight: 500; color: {{statusColor}}">{{status}}</span>
+      <a href="#" style="font-size: 14px; color: var(--fg); text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Módulo 5 · Ferramentas e a interface agente-computador</a>
+    </div>
+    <sc-if value="{{rodando}}" hint-placeholder-val="{{ true }}">
+      <div style="display: flex; gap: 8px; flex: none; align-items: center">
+        <button type="button" style="min-height: 40px; padding: 0 14px; border-radius: 4px; border: 1px solid var(--ls); background: var(--sf); color: var(--fg); font: 500 14px 'IBM Plex Sans', sans-serif; cursor: pointer; display: inline-flex; align-items: center; gap: 8px">Concluir</button>
+        <button type="button" style="min-height: 40px; padding: 0 12px; border-radius: 4px; border: 0; background: transparent; color: var(--mu); font: 500 14px 'IBM Plex Sans', sans-serif; cursor: pointer">Cancelar</button>
+      </div>
+    </sc-if>
+    <sc-if value="{{fim}}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; gap: 8px; flex: none; align-items: center; flex-wrap: wrap">
+        <button type="button" style="min-height: 44px; padding: 0 18px; border-radius: 4px; border: 1px solid var(--ac); background: var(--ac); color: var(--acf); font: 500 15px 'IBM Plex Sans', sans-serif; cursor: pointer">Escrever resumo agora</button>
+        <button type="button" style="min-height: 44px; padding: 0 14px; border-radius: 4px; border: 1px solid var(--ls); background: transparent; color: var(--fg); font: 500 14px 'IBM Plex Sans', sans-serif; cursor: pointer">Concluir, resumo depois</button>
+      </div>
+    </sc-if>
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"tema":{"editor":"enum","options":["claro","escuro"],"default":"claro"},"fase":{"editor":"enum","options":["correndo","ultimo","fim"],"default":"correndo"},"$preview":{"width":1280,"height":72}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var P = {
+      claro: '--bg:#f2f4f1;--sf:#fbfcfb;--sk:#e9ece8;--fg:#17212b;--mu:#57626c;--ln:#d3d9d4;--ls:#aeb7b1;--ac:#2a47c2;--acf:#ffffff;--acs:#e3e8fa;--ok:#1c7548;--oks:#ddefe4;--wa:#8f5600;--was:#f6e9cf;--da:#b4271f;--das:#f8e0dd;--fo:#2a47c2;--hl:#ffe35a;--hli:#3d3200;',
+      escuro: '--bg:#11161b;--sf:#192027;--sk:#0c1014;--fg:#e3e8e5;--mu:#98a3ab;--ln:#2a343d;--ls:#44505a;--ac:#93a8ff;--acf:#0e1630;--acs:#1f2a52;--ok:#62cb93;--oks:#163626;--wa:#e8b657;--was:#3a2c10;--da:#ff8f85;--das:#45191a;--fo:#b9c6ff;--hl:#e8cc45;--hli:#2b2400;'
+    };
+    var tema = this.props.tema === 'escuro' ? 'escuro' : 'claro';
+    var fase = this.props.fase ?? 'correndo';
+    var F = {
+      correndo: { restante: '18:42', pct: 25.2, status: 'Sessão em andamento', statusColor: 'var(--mu)', digits: 'var(--fg)', fill: 'var(--ac)' },
+      ultimo: { restante: '00:47', pct: 96.9, status: 'Último minuto: feche a fonte', statusColor: 'var(--wa)', digits: 'var(--wa)', fill: 'var(--wa)' },
+      fim: { restante: '00:00', pct: 100, status: 'Tempo esgotado. Escreva enquanto está fresco.', statusColor: 'var(--fg)', digits: 'var(--ac)', fill: 'var(--ac)' }
+    }[fase];
+    var ticks = [];
+    for (var m = 1; m < 25; m++) ticks.push({ left: (m * 4) + '%', h: m % 5 === 0 ? '6px' : '3px' });
+    return {
+      vars: P[tema],
+      shadow: tema === 'escuro' ? '0 -8px 24px rgb(0 0 0 / 0.35)' : '0 -8px 24px rgb(23 33 43 / 0.08)',
+      restante: F.restante, pct: F.pct + '%', status: F.status, statusColor: F.statusColor, digits: F.digits, fill: F.fill,
+      ticks: ticks,
+      rodando: fase !== 'fim',
+      fim: fase === 'fim'
+    };
+  }
+}
+</script>
+</body>
+</html>

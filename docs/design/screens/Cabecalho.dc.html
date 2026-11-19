@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Cabeçalho</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=Literata:opsz,wght@7..72,400;7..72,600&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<header style="{{vars}} width: 100%; background: var(--sf); border-bottom: 1px solid var(--ln); color: var(--fg); font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 15px; line-height: 1.5">
+  <div style="max-width: 1120px; margin: 0 auto; padding: 0 32px; min-height: 56px; display: flex; flex-wrap: wrap; align-items: stretch; column-gap: 24px">
+    <a href="#" style="display: flex; align-items: center; gap: 8px; color: var(--fg); text-decoration: none; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 17px">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M3 20h4v-4h4v-4h4V8h4V4"></path></svg>
+      estudos-ia
+    </a>
+    <nav aria-label="Principal" style="flex: 1 1 auto; display: flex; align-items: stretch; overflow-x: auto">
+      <sc-for list="{{nav}}" as="n" hint-placeholder-count="6">
+        <a href="#" aria-current="{{n.current}}" style="display: flex; align-items: center; gap: 6px; padding: 0 12px; min-height: 56px; text-decoration: none; white-space: nowrap; font-weight: {{n.weight}}; color: {{n.color}}; box-shadow: {{n.bar}}">{{n.label}}<sc-if value="{{n.count}}" hint-placeholder-val="{{ false }}"><span style="min-width: 20px; height: 20px; padding: 0 6px; box-sizing: border-box; border-radius: 999px; background: var(--acs); color: var(--ac); font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center">{{n.count}}</span></sc-if></a>
+      </sc-for>
+    </nav>
+    <div style="display: flex; align-items: center; gap: 4px">
+      <button type="button" style="height: 36px; padding: 0 8px 0 12px; border-radius: 4px; border: 1px solid var(--ln); background: var(--bg); color: var(--mu); font: 400 14px 'IBM Plex Sans', sans-serif; display: inline-flex; align-items: center; gap: 12px; cursor: pointer">
+        <span style="display: inline-flex; align-items: center; gap: 8px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>Ir para…</span>
+        <kbd style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; padding: 1px 6px; border-radius: 4px; border: 1px solid var(--ln); background: var(--sf); color: var(--mu)">⌘K</kbd>
+      </button>
+      <button type="button" aria-label="{{themeLabel}}" style="width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; border: 0; border-radius: 4px; background: transparent; color: var(--mu); cursor: pointer">
+        <sc-if value="{{dark}}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.9 4.9 1.4 1.4"></path><path d="m17.7 17.7 1.4 1.4"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m4.9 19.1 1.4-1.4"></path><path d="m17.7 6.3 1.4-1.4"></path></svg></sc-if>
+        <sc-if value="{{light}}" hint-placeholder-val="{{ true }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"></path></svg></sc-if>
+      </button>
+    </div>
+  </div>
+</header>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"tema":{"editor":"enum","options":["claro","escuro"],"default":"claro"},"ativo":{"editor":"enum","options":["hoje","modulos","revisoes","rotinas","sessoes","importar"],"default":"hoje"},"$preview":{"width":1280,"height":57}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var P = {
+      claro: '--bg:#f2f4f1;--sf:#fbfcfb;--sk:#e9ece8;--fg:#17212b;--mu:#57626c;--ln:#d3d9d4;--ls:#aeb7b1;--ac:#2a47c2;--acf:#ffffff;--acs:#e3e8fa;--ok:#1c7548;--oks:#ddefe4;--wa:#8f5600;--was:#f6e9cf;--da:#b4271f;--das:#f8e0dd;--fo:#2a47c2;--hl:#ffe35a;--hli:#3d3200;',
+      escuro: '--bg:#11161b;--sf:#192027;--sk:#0c1014;--fg:#e3e8e5;--mu:#98a3ab;--ln:#2a343d;--ls:#44505a;--ac:#93a8ff;--acf:#0e1630;--acs:#1f2a52;--ok:#62cb93;--oks:#163626;--wa:#e8b657;--was:#3a2c10;--da:#ff8f85;--das:#45191a;--fo:#b9c6ff;--hl:#e8cc45;--hli:#2b2400;'
+    };
+    var tema = this.props.tema === 'escuro' ? 'escuro' : 'claro';
+    var ativo = this.props.ativo ?? 'hoje';
+    var items = [['hoje', 'Hoje'], ['modulos', 'Módulos'], ['revisoes', 'Revisões', 8], ['rotinas', 'Rotinas'], ['sessoes', 'Sessões'], ['importar', 'Importar']];
+    return {
+      vars: P[tema] + 'color-scheme:' + (tema === 'escuro' ? 'dark' : 'light') + ';',
+      dark: tema === 'escuro',
+      light: tema !== 'escuro',
+      themeLabel: tema === 'escuro' ? 'Usar tema claro' : 'Usar tema escuro',
+      nav: items.map(function (i) {
+        var on = i[0] === ativo;
+        return { label: i[1], count: i[2] || false, current: on ? 'page' : 'false', weight: on ? '500' : '400', color: on ? 'var(--fg)' : 'var(--mu)', bar: on ? 'inset 0 -2px 0 var(--fg)' : 'none' };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

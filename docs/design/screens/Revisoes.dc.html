@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Revisões</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=Literata:opsz,wght@7..72,400;7..72,600&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="{{vars}} min-height: 100vh; background: var(--bg); color: var(--fg); font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 15px; line-height: 1.5">
+  <dc-import name="Cabecalho" tema="{{tema}}" ativo="revisoes" hint-size="100%,57px"></dc-import>
+  <main style="max-width: 720px; margin: 0 auto; padding: 40px 32px 96px; box-sizing: border-box; display: flex; flex-direction: column; gap: 28px">
+
+    <div style="display: flex; flex-direction: column; gap: 10px">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px">
+        <span style="font-size: 14px"><span style="font-family: 'IBM Plex Mono', monospace; font-weight: 500">3 de 8</span><span style="color: var(--mu)"> · 2 lembradas</span></span>
+        <a href="#" style="font-size: 14px; color: var(--mu); min-height: 32px; display: inline-flex; align-items: center">Parar por hoje</a>
+      </div>
+      <div role="progressbar" aria-valuemin="0" aria-valuemax="8" aria-valuenow="2" aria-label="Revisões feitas" style="display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 3px">
+        <span style="height: 4px; border-radius: 1px; background: var(--ok)"></span>
+        <span style="height: 4px; border-radius: 1px; background: var(--ok)"></span>
+        <span style="height: 4px; border-radius: 1px; background: var(--ac)"></span>
+        <span style="height: 4px; border-radius: 1px; background: var(--sk)"></span>
+        <span style="height: 4px; border-radius: 1px; background: var(--sk)"></span>
+        <span style="height: 4px; border-radius: 1px; background: var(--sk)"></span>
+        <span style="height: 4px; border-radius: 1px; background: var(--sk)"></span>
+        <span style="height: 4px; border-radius: 1px; background: var(--sk)"></span>
+      </div>
+    </div>
+
+    <article style="display: flex; flex-direction: column; gap: 24px">
+      <div style="display: flex; flex-wrap: wrap; gap: 6px 12px; font-size: 13px; color: var(--mu)">
+        <span>Módulo 4 · Recuperação</span><span aria-hidden="true">·</span><span>Resumo de 11/11</span><span aria-hidden="true">·</span><span>revisão de 7 dias</span>
+        <span style="display: inline-flex; align-items: center; height: 20px; padding: 0 7px; border-radius: 999px; background: var(--das); color: var(--da); font-size: 12px; font-weight: 500">atrasada 1 dia</span>
+      </div>
+      <h1 style="margin: 0; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 30px; line-height: 1.3; text-wrap: balance">Por que medir a recuperação separada da resposta final num RAG?</h1>
+
+      <sc-if value="{{oculta}}" hint-placeholder-val="{{ true }}">
+        <div style="display: flex; flex-direction: column; gap: 16px">
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <label for="resp" style="font-size: 14px; font-weight: 500">Sua resposta, de cabeça <span style="font-weight: 400; color: var(--mu)">(opcional, não é salva)</span></label>
+            <textarea id="resp" rows="4" style="padding: 12px 14px; border-radius: 4px; border: 1px solid var(--ls); background: var(--sf); color: var(--fg); font: 16px/1.6 'Literata', Georgia, serif; resize: vertical">Porque se a busca não trouxe o trecho certo, a resposta erra por falta de contexto e eu culpo o prompt</textarea>
+          </div>
+          <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap">
+            <button type="button" onClick="{{revelar}}" style="min-height: 48px; padding: 0 22px; border-radius: 4px; border: 1px solid var(--ac); background: var(--ac); color: var(--acf); font: 500 16px 'IBM Plex Sans', sans-serif; display: inline-flex; align-items: center; gap: 12px; cursor: pointer">Revelar nota<kbd style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; padding: 0 5px; border-radius: 3px; border: 1px solid color-mix(in srgb, var(--acf) 40%, transparent)">Espaço</kbd></button>
+            <span style="font-size: 14px; color: var(--mu)">Reconhecer não é lembrar. Tente antes.</span>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{revelada}}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-direction: column; gap: 20px">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px">
+            <div style="padding: 16px; border-radius: 8px; background: var(--sk); display: flex; flex-direction: column; gap: 6px">
+              <span style="font-size: 12px; font-weight: 500; color: var(--mu)">Você respondeu</span>
+              <p style="margin: 0; font-family: 'Literata', Georgia, serif; font-size: 16px; line-height: 1.65">Porque se a busca não trouxe o trecho certo, a resposta erra por falta de contexto e eu culpo o prompt.</p>
+            </div>
+            <div style="padding: 16px; border-radius: 8px; border: 1px solid var(--ln); background: var(--sf); display: flex; flex-direction: column; gap: 6px">
+              <span style="font-size: 12px; font-weight: 500; color: var(--mu)">Sua nota</span>
+              <p style="margin: 0; font-family: 'Literata', Georgia, serif; font-size: 16px; line-height: 1.65">A resposta é limitada pelo que a busca trouxe. Medindo separado, sei se o erro está em achar (recall dos trechos) ou em usar (fidelidade ao contexto). Sem isso, mudo o prompt quando o problema é o índice.</p>
+            </div>
+          </div>
+          <a href="#" style="align-self: flex-start; font-size: 14px; color: var(--ac)">Abrir nota completa</a>
+          <div style="display: flex; gap: 12px; flex-wrap: wrap; padding-top: 16px; border-top: 1px solid var(--ln)">
+            <button type="button" style="flex: 1 1 200px; min-height: 64px; padding: 8px 18px; border-radius: 4px; border: 1px solid var(--ls); background: transparent; color: var(--fg); font: 500 16px 'IBM Plex Sans', sans-serif; display: flex; align-items: center; justify-content: space-between; gap: 12px; cursor: pointer">
+              <span style="display: flex; flex-direction: column; align-items: flex-start"><span>Não lembrei</span><span style="font-size: 13px; font-weight: 400; color: var(--mu)">volta amanhã</span></span>
+              <kbd style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; padding: 0 6px; border-radius: 3px; border: 1px solid var(--ln); color: var(--mu)">1</kbd>
+            </button>
+            <button type="button" style="flex: 1 1 200px; min-height: 64px; padding: 8px 18px; border-radius: 4px; border: 1px solid var(--ac); background: var(--ac); color: var(--acf); font: 500 16px 'IBM Plex Sans', sans-serif; display: flex; align-items: center; justify-content: space-between; gap: 12px; cursor: pointer">
+              <span style="display: flex; flex-direction: column; align-items: flex-start"><span>Lembrei</span><span style="font-size: 13px; font-weight: 400; opacity: 0.85">próxima em 21 dias</span></span>
+              <kbd style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; padding: 0 6px; border-radius: 3px; border: 1px solid color-mix(in srgb, var(--acf) 40%, transparent)">2</kbd>
+            </button>
+          </div>
+        </div>
+      </sc-if>
+    </article>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"tema":{"editor":"enum","options":["claro","escuro"],"default":"claro"},"revelada":{"editor":"boolean","default":false},"$preview":{"width":1280,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var self = this;
+    var P = {
+      claro: '--bg:#f2f4f1;--sf:#fbfcfb;--sk:#e9ece8;--fg:#17212b;--mu:#57626c;--ln:#d3d9d4;--ls:#aeb7b1;--ac:#2a47c2;--acf:#ffffff;--acs:#e3e8fa;--ok:#1c7548;--oks:#ddefe4;--wa:#8f5600;--was:#f6e9cf;--da:#b4271f;--das:#f8e0dd;--fo:#2a47c2;--hl:#ffe35a;--hli:#3d3200;',
+      escuro: '--bg:#11161b;--sf:#192027;--sk:#0c1014;--fg:#e3e8e5;--mu:#98a3ab;--ln:#2a343d;--ls:#44505a;--ac:#93a8ff;--acf:#0e1630;--acs:#1f2a52;--ok:#62cb93;--oks:#163626;--wa:#e8b657;--was:#3a2c10;--da:#ff8f85;--das:#45191a;--fo:#b9c6ff;--hl:#e8cc45;--hli:#2b2400;'
+    };
+    var tema = this.props.tema === 'escuro' ? 'escuro' : 'claro';
+    var revelada = (this.state && this.state.revelada) || !!this.props.revelada;
+    return {
+      vars: P[tema] + 'color-scheme:' + (tema === 'escuro' ? 'dark' : 'light') + ';',
+      tema: tema,
+      revelada: revelada,
+      oculta: !revelada,
+      revelar: function () { self.setState({ revelada: true }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

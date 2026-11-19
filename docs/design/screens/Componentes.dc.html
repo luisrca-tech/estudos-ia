@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Componentes</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=Literata:opsz,wght@7..72,400;7..72,600&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="{{vars}} width: 1280px; box-sizing: border-box; padding: 64px; background: var(--bg); color: var(--fg); font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 15px; line-height: 1.5; display: flex; flex-direction: column; gap: 56px">
+
+  <header style="display: flex; justify-content: space-between; align-items: baseline">
+    <h1 style="margin: 0; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 38px; line-height: 1.15">Componentes</h1>
+    <span style="font-size: 14px; color: var(--mu)">Tema {{temaNome}}</span>
+  </header>
+
+  <section style="display: flex; flex-direction: column; gap: 16px">
+    <div style="display: flex; flex-direction: column; gap: 4px">
+      <h2 style="margin: 0; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 24px">Passo da fila</h2>
+      <p style="margin: 0; font-size: 14px; color: var(--mu)">A unidade da tela Hoje. A ordem segue o método: dívida, lembrar, estudar, escrever, rotina. Só o próximo passo vem aberto.</p>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">
+      <sc-for list="{{passos}}" as="p" hint-placeholder-count="4">
+        <div style="padding: 20px; border-radius: 8px; border: 1px solid var(--ln); background: var(--sf); display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 16px">
+          <span style="width: 28px; height: 28px; box-sizing: border-box; border-radius: 999px; border: {{p.border}}; background: {{p.bg}}; color: {{p.fg}}; font: 600 13px 'IBM Plex Mono', monospace; display: flex; align-items: center; justify-content: center">{{p.mark}}</span>
+          <div style="display: flex; flex-direction: column; gap: 4px">
+            <span style="font-size: 12px; color: var(--mu)">{{p.estado}}</span>
+            <span style="font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 19px; color: {{p.titleColor}}; text-decoration: {{p.deco}}">{{p.titulo}}</span>
+            <span style="font-size: 14px; color: var(--mu)">{{p.meta}}</span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="display: flex; flex-direction: column; gap: 16px">
+    <div style="display: flex; flex-direction: column; gap: 4px">
+      <h2 style="margin: 0; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 24px">Barra de sessão</h2>
+      <p style="margin: 0; font-size: 14px; color: var(--mu)">Fica no rodapé de qualquer página. A borda de cima é a régua: uma marca por minuto, maior a cada 5. No fim, a barra leva direto ao resumo.</p>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 16px; margin: 0 -64px">
+      <dc-import name="Timer" tema="{{tema}}" fase="correndo" hint-size="100%,72px"></dc-import>
+      <dc-import name="Timer" tema="{{tema}}" fase="ultimo" hint-size="100%,72px"></dc-import>
+      <dc-import name="Timer" tema="{{tema}}" fase="fim" hint-size="100%,76px"></dc-import>
+    </div>
+  </section>
+
+  <section style="display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 32px">
+    <div style="display: flex; flex-direction: column; gap: 16px">
+      <h2 style="margin: 0; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 24px">Linha do mapa</h2>
+      <div style="border-top: 1px solid var(--ls)">
+        <sc-for list="{{linhas}}" as="m" hint-placeholder-count="3">
+          <div style="display: flex; align-items: center; gap: 20px; min-height: 64px; padding: 10px 8px; border-bottom: 1px solid var(--ln); background: {{m.bg}}">
+            <span style="width: 24px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--mu); text-align: right">{{m.num}}</span>
+            <span style="flex: 1; display: flex; flex-direction: column"><span style="font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 16px">{{m.titulo}}</span><span style="font-size: 12px; color: var(--mu)">{{m.estado}}</span></span>
+            <span style="width: 110px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 3px"><sc-for list="{{m.cells}}" as="c" hint-placeholder-count="5"><span style="height: 8px; border-radius: 1px; background: {{c}}"></span></sc-for></span>
+          </div>
+        </sc-for>
+      </div>
+      <p style="margin: 0; font-size: 13px; color: var(--mu)">Casas em acento até o degrau 2; em verde a partir do 3, a meta. A linha do módulo da sessão atual ganha fundo de acento suave.</p>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 16px">
+      <h2 style="margin: 0; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 24px">Escada</h2>
+      <div style="padding: 20px; border-radius: 8px; border: 1px solid var(--ln); background: var(--sf); display: flex; flex-direction: column; gap: 4px">
+        <sc-for list="{{escada}}" as="e" hint-placeholder-count="5">
+          <span style="margin-left: {{e.indent}}; min-height: 34px; padding: 0 10px; border-radius: 4px; border: 1px {{e.bs}} {{e.bd}}; background: {{e.bg}}; color: {{e.fg}}; font-size: 14px; display: flex; align-items: center; gap: 10px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px">{{e.n}}</span>{{e.label}}<span style="margin-left: auto; font-size: 11px; opacity: 0.8">{{e.tag}}</span></span>
+        </sc-for>
+      </div>
+      <p style="margin: 0; font-size: 13px; color: var(--mu)">Degraus feitos em acento suave, o atual cheio, o próximo tracejado com a ação para chegar lá.</p>
+    </div>
+  </section>
+
+  <section style="display: flex; flex-direction: column; gap: 16px">
+    <h2 style="margin: 0; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 24px">Botão e atalho</h2>
+    <div style="background: var(--sf); border: 1px solid var(--ln); border-radius: 8px; padding: 24px; display: flex; flex-direction: column; gap: 14px">
+      <div style="display: grid; grid-template-columns: 110px repeat(6, minmax(0, 1fr)); gap: 12px; font-size: 12px; color: var(--mu)">
+        <span></span><span>Padrão</span><span>Hover</span><span>Pressionado</span><span>Foco</span><span>Desabilitado</span><span>Carregando</span>
+      </div>
+      <sc-for list="{{buttonRows}}" as="r" hint-placeholder-count="5">
+        <div style="display: grid; grid-template-columns: 110px repeat(6, minmax(0, 1fr)); gap: 12px; align-items: center">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--mu)">{{r.name}}</span>
+          <sc-for list="{{r.cells}}" as="c" hint-placeholder-count="6">
+            <div><button type="button" aria-busy="{{c.busy}}" style="{{c.style}}"><sc-if value="{{c.loading}}" hint-placeholder-val="{{ false }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-6.2-8.6"></path></svg></sc-if>{{c.label}}</button></div>
+          </sc-for>
+        </div>
+      </sc-for>
+      <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; border-top: 1px solid var(--ln); padding-top: 16px; font-size: 14px">
+        <span style="width: 110px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--mu)">atalhos</span>
+        <sc-for list="{{atalhos}}" as="a" hint-placeholder-count="7">
+          <span style="display: inline-flex; align-items: center; gap: 6px; color: var(--mu)"><kbd style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; padding: 1px 6px; border-radius: 3px; border: 1px solid var(--ln); border-bottom-width: 2px; background: var(--sf); color: var(--fg)">{{a.k}}</kbd>{{a.d}}</span>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px">
+    <div style="display: flex; flex-direction: column; gap: 16px">
+      <h2 style="margin: 0; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 24px">Guia do modelo</h2>
+      <div style="padding: 20px; border-radius: 8px; border: 1px solid var(--ln); background: var(--sf); display: flex; flex-wrap: wrap; gap: 6px">
+        <sc-for list="{{guia}}" as="g" hint-placeholder-count="8">
+          <span style="display: inline-flex; align-items: center; gap: 4px; height: 26px; padding: 0 9px; border-radius: 999px; border: 1px solid {{g.bd}}; background: {{g.bg}}; color: {{g.fg}}; font-size: 12px; font-weight: 500">{{g.mark}} {{g.nome}}</span>
+        </sc-for>
+      </div>
+      <p style="margin: 0; font-size: 13px; color: var(--mu)">Lê os títulos em negrito do markdown e marca as seções do modelo que já têm texto. Não bloqueia salvar.</p>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 16px">
+      <h2 style="margin: 0; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 24px">Segmentado e etapas</h2>
+      <div style="padding: 20px; border-radius: 8px; border: 1px solid var(--ln); background: var(--sf); display: flex; flex-direction: column; gap: 20px">
+        <div role="radiogroup" aria-label="Tipo de nota" style="display: inline-flex; align-self: flex-start; padding: 3px; gap: 2px; border-radius: 6px; background: var(--sk)">
+          <button type="button" role="radio" aria-checked="true" style="min-height: 36px; padding: 0 12px; border-radius: 4px; border: 1px solid var(--ln); background: var(--sf); color: var(--fg); font: 500 14px 'IBM Plex Sans', sans-serif">Resumo</button>
+          <button type="button" role="radio" aria-checked="false" style="min-height: 36px; padding: 0 12px; border-radius: 4px; border: 1px solid transparent; background: transparent; color: var(--mu); font: 400 14px 'IBM Plex Sans', sans-serif">Pergunta</button>
+          <button type="button" role="radio" aria-checked="false" style="min-height: 36px; padding: 0 12px; border-radius: 4px; border: 1px solid transparent; background: transparent; color: var(--mu); font: 400 14px 'IBM Plex Sans', sans-serif">Decisão</button>
+          <button type="button" role="radio" aria-checked="false" style="min-height: 36px; padding: 0 12px; border-radius: 4px; border: 1px solid transparent; background: transparent; color: var(--mu); font: 400 14px 'IBM Plex Sans', sans-serif">Evidência</button>
+        </div>
+        <ol style="list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+          <li style="display: flex; flex-direction: column; gap: 6px"><span style="height: 3px; border-radius: 2px; background: var(--ac)"></span><span style="font-size: 13px">1 · Arquivo</span></li>
+          <li aria-current="step" style="display: flex; flex-direction: column; gap: 6px"><span style="height: 3px; border-radius: 2px; background: var(--ac)"></span><span style="font-size: 13px; font-weight: 600">2 · Prévia</span></li>
+          <li style="display: flex; flex-direction: column; gap: 6px"><span style="height: 3px; border-radius: 2px; background: var(--sk)"></span><span style="font-size: 13px; color: var(--mu)">3 · Resultado</span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px">
+    <div style="display: flex; flex-direction: column; gap: 16px">
+      <h2 style="margin: 0; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 24px">Campo</h2>
+      <div style="padding: 20px; border-radius: 8px; border: 1px solid var(--ln); background: var(--sf); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px">
+        <div style="display: flex; flex-direction: column; gap: 6px"><label for="f1" style="font-size: 14px; font-weight: 500">Padrão</label><input id="f1" value="Ferramenta resolve intenção" style="height: 44px; padding: 0 12px; border-radius: 4px; border: 1px solid var(--ls); background: var(--sf); color: var(--fg); font: 15px 'IBM Plex Sans', sans-serif"></div>
+        <div style="display: flex; flex-direction: column; gap: 6px"><label for="f2" style="font-size: 14px; font-weight: 500">Foco</label><input id="f2" value="Ferramenta resolve" style="height: 44px; padding: 0 12px; border-radius: 4px; border: 1px solid var(--ac); background: var(--sf); color: var(--fg); font: 15px 'IBM Plex Sans', sans-serif; outline: 2px solid var(--fo); outline-offset: 2px"></div>
+        <div style="display: flex; flex-direction: column; gap: 6px"><label for="f3" style="font-size: 14px; font-weight: 500">Pergunta de revisão</label><input id="f3" aria-invalid="true" aria-describedby="f3e" value="" style="height: 44px; padding: 0 12px; border-radius: 4px; border: 1px solid var(--da); background: var(--sf); color: var(--fg); font: 15px 'IBM Plex Sans', sans-serif"><span id="f3e" style="font-size: 12px; color: var(--da)">Sem pergunta, a nota não entra nas revisões.</span></div>
+        <div style="display: flex; flex-direction: column; gap: 6px"><label for="f4" style="font-size: 14px; font-weight: 500; color: var(--mu)">Desabilitado</label><input id="f4" disabled value="" placeholder="Só para evidência" style="height: 44px; padding: 0 12px; border-radius: 4px; border: 1px solid var(--ln); background: var(--sk); color: var(--mu); font: 15px 'IBM Plex Sans', sans-serif"></div>
+        <div style="grid-column: 1 / -1; display: flex; flex-direction: column; gap: 6px"><label for="f5" style="font-size: 14px; font-weight: 500">Título de nota</label><input id="f5" value="Ferramenta resolve intenção, não espelha a API" style="height: 48px; padding: 0 2px; border: 0; border-bottom: 1px solid var(--ls); background: transparent; color: var(--fg); font: 600 22px 'Literata', Georgia, serif"></div>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 16px">
+      <h2 style="margin: 0; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 24px">Checklist e histórico</h2>
+      <div style="border-radius: 8px; border: 1px solid var(--ln); background: var(--sf)">
+        <div style="padding: 8px 20px">
+          <label style="display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--ln)"><input type="checkbox" style="width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--ac)"><span style="display: flex; flex-direction: column"><span>Desmarcado</span><span style="font-size: 12px; color: var(--mu)">dica de duração</span></span></label>
+          <label style="display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--ln)"><input type="checkbox" checked="{{ true }}" style="width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--ac)"><span style="color: var(--mu); text-decoration: line-through">Marcado</span></label>
+          <label style="display: flex; gap: 12px; align-items: flex-start; padding: 10px 0"><input type="checkbox" style="width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--ac); outline: 2px solid var(--fo); outline-offset: 2px"><span>Foco</span></label>
+        </div>
+        <div style="padding: 14px 20px; background: var(--bg); border-top: 1px solid var(--ln); border-radius: 0 0 8px 8px; display: flex; flex-direction: column; gap: 8px; font-size: 13px">
+          <div style="display: flex; align-items: center; gap: 12px"><span style="width: 92px; color: var(--mu)">qua, 18/11</span><span style="display: inline-flex; gap: 3px"><span style="width: 14px; height: 14px; border-radius: 2px; background: var(--ok)"></span><span style="width: 14px; height: 14px; border-radius: 2px; background: var(--ok)"></span><span style="width: 14px; height: 14px; border-radius: 2px; background: var(--ok)"></span></span><span style="margin-left: auto; font-family: 'IBM Plex Mono', monospace; color: var(--ok)">3/3</span></div>
+          <div style="display: flex; align-items: center; gap: 12px"><span style="width: 92px; color: var(--mu)">ter, 17/11</span><span style="display: inline-flex; gap: 3px"><span style="width: 14px; height: 14px; border-radius: 2px; background: var(--ok)"></span><span style="width: 14px; height: 14px; border-radius: 2px; background: var(--ok)"></span><span style="width: 14px; height: 14px; border-radius: 2px; background: var(--sk)"></span></span><span style="margin-left: auto; font-family: 'IBM Plex Mono', monospace; color: var(--mu)">2/3</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+    <div style="display: flex; flex-direction: column; gap: 12px">
+      <h2 style="margin: 0; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 20px">Selos e marca-texto</h2>
+      <div style="padding: 20px; border-radius: 8px; border: 1px solid var(--ln); background: var(--sf); display: flex; flex-wrap: wrap; gap: 8px; align-items: center">
+        <span style="display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border-radius: 999px; background: var(--acs); color: var(--ac); font-size: 12px; font-weight: 500">Em andamento</span>
+        <span style="display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border-radius: 999px; background: var(--oks); color: var(--ok); font-size: 12px; font-weight: 500">Escrito</span>
+        <span style="display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border-radius: 999px; background: var(--was); color: var(--wa); font-size: 12px; font-weight: 500">Faltam 21 h</span>
+        <span style="display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border-radius: 999px; background: var(--das); color: var(--da); font-size: 12px; font-weight: 500">Atrasado</span>
+        <span style="display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border-radius: 999px; background: var(--sk); color: var(--mu); font-size: 12px; font-weight: 500">Cancelada</span>
+        <p style="margin: 4px 0 0; font-family: 'Literata', Georgia, serif; font-size: 16px; line-height: 1.6">Trecho <span style="background: color-mix(in srgb, var(--hl) 55%, transparent); padding: 0 2px">que mudou na trilha</span> fica marcado até você dar "Ok, li".</p>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 12px">
+      <h2 style="margin: 0; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 20px">Vazio e erro</h2>
+      <div style="padding: 20px; border-radius: 8px; border: 1px solid var(--ln); background: var(--sf); display: flex; flex-direction: column; gap: 6px">
+        <strong style="font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 18px">Nenhuma nota neste módulo.</strong>
+        <span style="font-size: 14px; color: var(--mu)">Depois de uma sessão, escreva o resumo de memória.</span>
+      </div>
+      <div role="alert" style="padding: 20px; border-radius: 8px; border: 1px solid var(--da); background: var(--sf); display: flex; flex-direction: column; gap: 6px">
+        <strong style="font-weight: 600; color: var(--da)">O banco local não respondeu.</strong>
+        <span style="font-size: 14px; color: var(--mu)">Rode <code style="font-family: 'IBM Plex Mono', monospace">npm run db:start</code> e tente de novo.</span>
+        <button type="button" style="align-self: flex-start; margin-top: 6px; min-height: 40px; padding: 0 14px; border-radius: 4px; border: 1px solid var(--ls); background: transparent; color: var(--fg); font: 500 14px 'IBM Plex Sans', sans-serif">Tentar de novo</button>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 12px">
+      <h2 style="margin: 0; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 20px">Carregando e aviso</h2>
+      <div aria-busy="true" style="padding: 20px; border-radius: 8px; border: 1px solid var(--ln); background: var(--sf); display: flex; flex-direction: column; gap: 10px">
+        <span style="height: 12px; width: 35%; border-radius: 3px; background: var(--sk)"></span>
+        <span style="height: 20px; width: 85%; border-radius: 3px; background: var(--sk)"></span>
+        <span style="height: 12px; width: 60%; border-radius: 3px; background: var(--sk)"></span>
+      </div>
+      <div role="status" style="padding: 12px 16px; border-radius: 8px; border: 1px solid var(--ln); background: var(--sf); box-shadow: {{shadow}}; display: flex; align-items: center; gap: 10px; font-size: 14px">
+        <span style="color: var(--ok)">✓</span>Resumo salvo. A pergunta volta amanhã.<button type="button" style="margin-left: auto; min-height: 32px; padding: 0 8px; border: 0; background: transparent; color: var(--ac); font: 500 14px 'IBM Plex Sans', sans-serif">Desfazer</button>
+      </div>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"tema":{"editor":"enum","options":["claro","escuro"],"default":"claro"},"$preview":{"width":1280,"height":3000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var P = {
+      claro: '--bg:#f2f4f1;--sf:#fbfcfb;--sk:#e9ece8;--fg:#17212b;--mu:#57626c;--ln:#d3d9d4;--ls:#aeb7b1;--ac:#2a47c2;--acf:#ffffff;--acs:#e3e8fa;--ok:#1c7548;--oks:#ddefe4;--wa:#8f5600;--was:#f6e9cf;--da:#b4271f;--das:#f8e0dd;--fo:#2a47c2;--hl:#ffe35a;--hli:#3d3200;',
+      escuro: '--bg:#11161b;--sf:#192027;--sk:#0c1014;--fg:#e3e8e5;--mu:#98a3ab;--ln:#2a343d;--ls:#44505a;--ac:#93a8ff;--acf:#0e1630;--acs:#1f2a52;--ok:#62cb93;--oks:#163626;--wa:#e8b657;--was:#3a2c10;--da:#ff8f85;--das:#45191a;--fo:#b9c6ff;--hl:#e8cc45;--hli:#2b2400;'
+    };
+    var tema = this.props.tema === 'escuro' ? 'escuro' : 'claro';
+    function mix(a, b, p) { return 'color-mix(in srgb, ' + a + ', ' + b + ' ' + p + '%)'; }
+    var V = {
+      primary: { label: 'Iniciar sessão', bg: 'var(--ac)', fg: 'var(--acf)', bd: 'var(--ac)', hover: mix('var(--ac)', 'var(--fg)', 14), press: mix('var(--ac)', 'var(--fg)', 26) },
+      outline: { label: 'Começar revisão', bg: 'transparent', fg: 'var(--fg)', bd: 'var(--ls)', hover: 'var(--sk)', press: mix('var(--sk)', 'var(--fg)', 8) },
+      ghost: { label: 'Cancelar', bg: 'transparent', fg: 'var(--mu)', bd: 'transparent', hover: 'var(--sk)', press: mix('var(--sk)', 'var(--fg)', 8) },
+      danger: { label: 'Apagar nota', bg: 'transparent', fg: 'var(--da)', bd: 'var(--da)', hover: 'var(--das)', press: mix('var(--das)', 'var(--da)', 15) },
+      link: { label: 'Abrir rotinas', bg: 'transparent', fg: 'var(--ac)', bd: 'transparent', hover: 'transparent', press: 'transparent', link: true }
+    };
+    var states = ['default', 'hover', 'press', 'focus', 'disabled', 'loading'];
+    var buttonRows = Object.keys(V).map(function (k) {
+      var v = V[k];
+      return {
+        name: k,
+        cells: states.map(function (s) {
+          var bg = s === 'hover' ? v.hover : s === 'press' ? v.press : v.bg;
+          var st = 'display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 ' + (v.link ? '2px' : '16px') + '; border-radius: 4px; border: 1px solid ' + v.bd + '; background: ' + bg + '; color: ' + v.fg + "; font: 500 15px 'IBM Plex Sans', sans-serif; white-space: nowrap; cursor: pointer;";
+          if (v.link) st += ' text-decoration: underline; text-underline-offset: 3px;' + (s === 'hover' || s === 'press' ? ' text-decoration-thickness: 2px;' : '');
+          if (s === 'focus') st += ' outline: 2px solid var(--fo); outline-offset: 2px;';
+          if (s === 'disabled') st += ' opacity: 0.45; cursor: not-allowed;';
+          if (s === 'press' && !v.link) st += ' transform: translateY(1px);';
+          return { style: st, label: s === 'loading' ? 'Salvando…' : v.label, loading: s === 'loading', busy: s === 'loading' ? 'true' : 'false' };
+        })
+      };
+    });
+    var L = ['Reconheço', 'Explico', 'Decido', 'Apliquei e medi', 'Defendo e ensino'];
+    var level = 2;
+    function cells(lvl) { return [1, 2, 3, 4, 5].map(function (i) { return i <= lvl ? (lvl >= 3 ? 'var(--ok)' : 'var(--ac)') : 'var(--sk)'; }); }
+    var secoes = ['Afirmação', 'Mecanismo', 'Use quando', 'Não use quando', 'Alternativa mais simples', 'Evidência', 'Como eu verificaria', 'Pergunta de revisão'];
+    return {
+      vars: P[tema],
+      tema: tema,
+      temaNome: tema,
+      shadow: tema === 'escuro' ? '0 8px 24px rgb(0 0 0 / 0.4)' : '0 8px 24px rgb(23 33 43 / 0.12)',
+      passos: [
+        { mark: '1', estado: 'Próximo · aberto, com ação', titulo: 'Escrever 2 resumos atrasados', meta: 'Lista de sessões devendo resumo', border: '0', bg: 'var(--fg)', fg: 'var(--bg)', titleColor: 'var(--fg)', deco: 'none' },
+        { mark: '2', estado: 'Pendente · compacto', titulo: 'Responder 8 perguntas de cabeça', meta: '2 atrasadas · atalho R', border: '1.5px solid var(--ls)', bg: 'transparent', fg: 'var(--mu)', titleColor: 'var(--fg)', deco: 'none' },
+        { mark: '✓', estado: 'Feito · recolhe e desce para o fim', titulo: 'Sessão de 25 min', meta: '09:40, Módulo 5', border: '0', bg: 'var(--oks)', fg: 'var(--ok)', titleColor: 'var(--mu)', deco: 'line-through' },
+        { mark: '!', estado: 'Atrasado · selo vermelho e sobe para o topo', titulo: 'Resumir a sessão de terça', meta: 'Módulo 3 · há 43 h', border: '1.5px solid var(--da)', bg: 'var(--das)', fg: 'var(--da)', titleColor: 'var(--fg)', deco: 'none' }
+      ],
+      linhas: [
+        { num: '5', titulo: 'Ferramentas e a interface agente-computador', estado: 'Sessão atual · degrau 1', cells: cells(1), bg: 'color-mix(in srgb, var(--acs) 45%, transparent)' },
+        { num: '1', titulo: 'O que o modelo é e o que ele não é', estado: 'Degrau 3 · meta atingida', cells: cells(3), bg: 'transparent' },
+        { num: '7', titulo: 'Harness e confiabilidade', estado: 'Não comecei', cells: cells(0), bg: 'transparent' }
+      ],
+      escada: [5, 4, 3, 2, 1].map(function (n) {
+        var atual = n === level, prox = n === level + 1, feito = n < level;
+        return { n: n, label: L[n - 1], indent: ((n - 1) * 12) + 'px', tag: atual ? 'atual' : prox ? 'próximo' : '', bs: prox ? 'dashed' : 'solid', bd: atual || prox ? 'var(--ac)' : 'var(--ln)', bg: atual ? 'var(--ac)' : feito ? 'var(--acs)' : 'transparent', fg: atual ? 'var(--acf)' : n > level + 1 ? 'var(--mu)' : 'var(--fg)' };
+      }),
+      atalhos: [{ k: '⌘K', d: 'ir para' }, { k: 'S', d: 'iniciar sessão' }, { k: 'R', d: 'revisar' }, { k: 'N', d: 'nova nota' }, { k: 'Espaço', d: 'revelar' }, { k: '1 / 2', d: 'não lembrei / lembrei' }, { k: '⌘S', d: 'salvar' }],
+      guia: secoes.map(function (s, i) {
+        var ok = i < 5;
+        return { nome: s, mark: ok ? '✓' : '○', bd: ok ? 'transparent' : 'var(--ls)', bg: ok ? 'var(--oks)' : 'transparent', fg: ok ? 'var(--ok)' : 'var(--mu)' };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

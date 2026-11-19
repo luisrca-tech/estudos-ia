@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Rotinas</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=Literata:opsz,wght@7..72,400;7..72,600&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="{{vars}} min-height: 100vh; background: var(--bg); color: var(--fg); font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 15px; line-height: 1.5">
+  <dc-import name="Cabecalho" tema="{{tema}}" ativo="rotinas" hint-size="100%,57px"></dc-import>
+  <main style="max-width: 1120px; margin: 0 auto; padding: 48px 32px 96px; box-sizing: border-box; display: flex; flex-direction: column; gap: 32px">
+    <header style="display: flex; flex-direction: column; gap: 6px">
+      <h1 style="margin: 0; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 38px; line-height: 1.15">Rotinas</h1>
+      <p style="margin: 0; color: var(--mu)">Três ritmos do método. Cada período fecha sozinho; o que ficou aberto vai para o histórico.</p>
+    </header>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 20px; align-items: start">
+      <sc-for list="{{colunas}}" as="c" hint-placeholder-count="3">
+        <section style="border: 1px solid var(--ln); border-radius: 8px; background: var(--sf); display: flex; flex-direction: column">
+          <div style="padding: 20px 20px 12px; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px">
+            <div style="display: flex; flex-direction: column; gap: 2px">
+              <h2 style="margin: 0; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 22px">{{c.nome}}</h2>
+              <span style="font-size: 13px; color: var(--mu)">{{c.periodo}}</span>
+            </div>
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 500; color: {{c.fracColor}}">{{c.frac}}</span>
+          </div>
+          <div style="padding: 0 20px 8px; display: flex; flex-direction: column">
+            <sc-for list="{{c.itens}}" as="i" hint-placeholder-count="3">
+              <label style="display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-top: 1px solid var(--ln); cursor: pointer">
+                <input type="checkbox" checked="{{i.done}}" style="flex: none; width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--ac)">
+                <span style="display: flex; flex-direction: column">
+                  <span style="color: {{i.color}}; text-decoration: {{i.deco}}">{{i.label}}</span>
+                  <span style="font-size: 12px; color: var(--mu)">{{i.hint}}</span>
+                </span>
+              </label>
+            </sc-for>
+          </div>
+          <div style="padding: 14px 20px 18px; background: var(--bg); border-top: 1px solid var(--ln); border-radius: 0 0 8px 8px; display: flex; flex-direction: column; gap: 8px">
+            <span style="font-size: 12px; font-weight: 500; color: var(--mu)">Antes</span>
+            <sc-for list="{{c.hist}}" as="h" hint-placeholder-count="5">
+              <div style="display: flex; align-items: center; gap: 12px; font-size: 13px">
+                <span style="width: 92px; color: var(--mu)">{{h.label}}</span>
+                <span role="img" aria-label="{{h.aria}}" style="display: inline-flex; gap: 3px"><sc-for list="{{h.cells}}" as="x" hint-placeholder-count="3"><span style="width: 14px; height: 14px; border-radius: 2px; background: {{x}}"></span></sc-for></span>
+                <span style="margin-left: auto; font-family: 'IBM Plex Mono', monospace; color: {{h.color}}">{{h.frac}}</span>
+              </div>
+            </sc-for>
+          </div>
+        </section>
+      </sc-for>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"tema":{"editor":"enum","options":["claro","escuro"],"default":"claro"},"$preview":{"width":1280,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var P = {
+      claro: '--bg:#f2f4f1;--sf:#fbfcfb;--sk:#e9ece8;--fg:#17212b;--mu:#57626c;--ln:#d3d9d4;--ls:#aeb7b1;--ac:#2a47c2;--acf:#ffffff;--acs:#e3e8fa;--ok:#1c7548;--oks:#ddefe4;--wa:#8f5600;--was:#f6e9cf;--da:#b4271f;--das:#f8e0dd;--fo:#2a47c2;--hl:#ffe35a;--hli:#3d3200;',
+      escuro: '--bg:#11161b;--sf:#192027;--sk:#0c1014;--fg:#e3e8e5;--mu:#98a3ab;--ln:#2a343d;--ls:#44505a;--ac:#93a8ff;--acf:#0e1630;--acs:#1f2a52;--ok:#62cb93;--oks:#163626;--wa:#e8b657;--was:#3a2c10;--da:#ff8f85;--das:#45191a;--fo:#b9c6ff;--hl:#e8cc45;--hli:#2b2400;'
+    };
+    var tema = this.props.tema === 'escuro' ? 'escuro' : 'claro';
+    function itens(list, done) {
+      return list.map(function (it, i) { return { label: it[0], hint: it[1], done: done[i], color: done[i] ? 'var(--mu)' : 'var(--fg)', deco: done[i] ? 'line-through' : 'none' }; });
+    }
+    function hist(rows) {
+      return rows.map(function (r) {
+        var n = r[1].filter(Boolean).length;
+        return { label: r[0], cells: r[1].map(function (d) { return d ? 'var(--ok)' : 'var(--sk)'; }), frac: n + '/3', aria: n + ' de 3 feitos', color: n === 3 ? 'var(--ok)' : 'var(--mu)' };
+      });
+    }
+    function col(nome, periodo, list, done, h) {
+      var n = done.filter(Boolean).length;
+      return { nome: nome, periodo: periodo, frac: n + '/3', fracColor: n === 3 ? 'var(--ok)' : 'var(--fg)', itens: itens(list, done), hist: hist(h) };
+    }
+    return {
+      vars: P[tema] + 'color-scheme:' + (tema === 'escuro' ? 'dark' : 'light') + ';',
+      tema: tema,
+      colunas: [
+        col('Diária', 'Quinta, 19/11 · 30–45 min', [
+          ['Responder de cabeça 3 perguntas de revisão', '5 min'],
+          ['Ler ou assistir uma seção de uma fonte', '15–20 min'],
+          ['Fechar a fonte e escrever uma nota de conceito', '10–15 min']
+        ], [true, false, false], [
+          ['qua, 18/11', [true, true, true]], ['ter, 17/11', [true, true, false]], ['seg, 16/11', [true, true, true]], ['dom, 15/11', [false, false, false]], ['sáb, 14/11', [true, false, false]]
+        ]),
+        col('Semanal', '16 a 22/11 · termina domingo', [
+          ['Um exercício prático do módulo da semana num projeto real', '2–3 h'],
+          ['Uma ficha de decisão sobre algo que você escolheu ou vai escolher', '2–3 h'],
+          ['Rever as notas e cortar o que não usaria', '2–3 h']
+        ], [true, false, false], [
+          ['9 a 15/11', [true, true, false]], ['2 a 8/11', [true, true, true]], ['26/10 a 1/11', [false, true, false]]
+        ]),
+        col('Mensal', 'Novembro · faltam 11 dias', [
+          ['Escrever um texto de síntese', 'meio dia'],
+          ['Pedir uma revisão cega a um agente', 'meio dia'],
+          ['Atualizar o guia "por onde começar" com o que aprendeu', 'meio dia']
+        ], [false, false, false], [
+          ['outubro', [true, true, false]], ['setembro', [true, false, false]]
+        ])
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

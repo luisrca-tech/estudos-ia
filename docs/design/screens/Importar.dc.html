@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Importar</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=Literata:opsz,wght@7..72,400;7..72,600&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="{{vars}} min-height: 100vh; background: var(--bg); color: var(--fg); font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 15px; line-height: 1.5">
+  <dc-import name="Cabecalho" tema="{{tema}}" ativo="importar" hint-size="100%,57px"></dc-import>
+  <main style="max-width: 760px; margin: 0 auto; padding: 48px 32px 96px; box-sizing: border-box; display: flex; flex-direction: column; gap: 32px">
+    <header style="display: flex; flex-direction: column; gap: 6px">
+      <h1 style="margin: 0; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 38px; line-height: 1.15">Importar anotações</h1>
+      <p style="margin: 0; color: var(--mu)">Traga o <code style="font-family: 'IBM Plex Mono', monospace; font-size: 14px">anotacoes-trilha-ia.md</code> exportado do HTML da trilha. Nada é gravado antes de você confirmar a prévia.</p>
+    </header>
+
+    <ol aria-label="Etapas" style="list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+      <sc-for list="{{etapas}}" as="e" hint-placeholder-count="3">
+        <li aria-current="{{e.current}}" style="display: flex; flex-direction: column; gap: 8px">
+          <span style="height: 3px; border-radius: 2px; background: {{e.bar}}"></span>
+          <span style="font-size: 13px; color: {{e.color}}; font-weight: {{e.weight}}"><span style="font-family: 'IBM Plex Mono', monospace">{{e.n}}</span> · {{e.label}}</span>
+        </li>
+      </sc-for>
+    </ol>
+
+    <sc-if value="{{isUpload}}" hint-placeholder-val="{{ true }}">
+      <section style="display: flex; flex-direction: column; gap: 16px">
+        <label for="arquivo" style="padding: 56px 24px; border-radius: 8px; border: 1.5px dashed var(--ls); background: var(--sf); display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; cursor: pointer">
+          <span style="color: var(--mu)"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V4"></path><path d="m7 9 5-5 5 5"></path><path d="M4 15v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4"></path></svg></span>
+          <span style="font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 20px">Solte o arquivo .md aqui</span>
+          <span style="font-size: 14px; color: var(--mu)">ou</span>
+          <span style="min-height: 44px; padding: 0 18px; border-radius: 4px; background: var(--ac); color: var(--acf); font-weight: 500; display: inline-flex; align-items: center">Escolher arquivo</span>
+          <input id="arquivo" type="file" accept=".md,text/markdown" style="position: absolute; width: 1px; height: 1px; opacity: 0">
+        </label>
+        <p style="margin: 0; font-size: 14px; color: var(--mu)">Notas importadas recebem a origem "HTML da trilha". Reimportar o mesmo arquivo não duplica nada.</p>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{isPrevia}}" hint-placeholder-val="{{ false }}">
+      <section style="display: flex; flex-direction: column; gap: 20px">
+        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 12px 16px; border-radius: 8px; border: 1px solid var(--ln); background: var(--sf)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: var(--mu)"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8Z"></path><path d="M14 3v5h5"></path></svg>
+          <span style="flex: 1; font-family: 'IBM Plex Mono', monospace; font-size: 14px">anotacoes-trilha-ia.md · 14 KB · 15 seções</span>
+          <button type="button" style="min-height: 36px; padding: 0 10px; border: 0; background: transparent; color: var(--ac); font: 500 14px 'IBM Plex Sans', sans-serif">Trocar</button>
+        </div>
+        <div style="overflow-x: auto">
+          <table style="width: 100%; min-width: 560px; border-collapse: collapse; font-size: 14px">
+            <thead><tr style="text-align: left; font-size: 12px; color: var(--mu)"><th scope="col" style="padding: 8px 0; font-weight: 500">Seção</th><th scope="col" style="padding: 8px; font-weight: 500">Notas</th><th scope="col" style="padding: 8px; font-weight: 500">Marcado ✓</th><th scope="col" style="padding: 8px 0; font-weight: 500">O que acontece</th></tr></thead>
+            <tbody>
+              <sc-for list="{{previa}}" as="r" hint-placeholder-count="4">
+                <tr style="border-top: 1px solid var(--ln); color: {{r.color}}">
+                  <td style="padding: 12px 0">{{r.secao}}</td>
+                  <td style="padding: 12px 8px; font-family: 'IBM Plex Mono', monospace">{{r.notas}}</td>
+                  <td style="padding: 12px 8px">{{r.check}}</td>
+                  <td style="padding: 12px 0"><span style="display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border-radius: 999px; background: {{r.bBg}}; color: {{r.bFg}}; font-size: 12px; font-weight: 500">{{r.acao}}</span></td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding-top: 16px; border-top: 1px solid var(--ln)">
+          <span style="flex: 1 1 240px; font-size: 14px; color: var(--mu)">3 notas novas · Módulo 1 sobe para o degrau 3 · 13 seções ignoradas, vazias ou já importadas.</span>
+          <button type="button" style="min-height: 44px; padding: 0 14px; border-radius: 4px; border: 0; background: transparent; color: var(--mu); font: 500 15px 'IBM Plex Sans', sans-serif">Cancelar</button>
+          <button type="button" style="min-height: 44px; padding: 0 18px; border-radius: 4px; border: 1px solid var(--ac); background: var(--ac); color: var(--acf); font: 500 15px 'IBM Plex Sans', sans-serif">Importar 3 notas</button>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{isResultado}}" hint-placeholder-val="{{ false }}">
+      <section role="status" style="display: flex; flex-direction: column; gap: 20px">
+        <div style="display: flex; gap: 14px; align-items: flex-start">
+          <span style="color: var(--ok)"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 3 3 5-6"></path></svg></span>
+          <div style="display: flex; flex-direction: column; gap: 4px">
+            <h2 style="margin: 0; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 26px">3 notas importadas</h2>
+            <p style="margin: 0; color: var(--mu)">Elas já entram na revisão espaçada a partir de amanhã.</p>
+          </div>
+        </div>
+        <ul style="margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--ln)">
+          <li style="display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 12px 0; border-bottom: 1px solid var(--ln)"><span>Módulo 1 · Fundamentos</span><span style="color: var(--mu)">2 notas · degrau 2 → 3</span><a href="#" style="color: var(--ac)">Abrir módulo</a></li>
+          <li style="display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 12px 0; border-bottom: 1px solid var(--ln)"><span>No mundo real</span><span style="color: var(--mu)">1 nota</span><a href="#" style="color: var(--ac)">Abrir módulo</a></li>
+        </ul>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap">
+          <a href="#" style="min-height: 44px; padding: 0 18px; border-radius: 4px; background: var(--ac); color: var(--acf); font-weight: 500; text-decoration: none; display: inline-flex; align-items: center">Voltar para Hoje</a>
+          <button type="button" style="min-height: 44px; padding: 0 16px; border-radius: 4px; border: 1px solid var(--ls); background: transparent; color: var(--fg); font: 500 15px 'IBM Plex Sans', sans-serif">Importar outro arquivo</button>
+        </div>
+      </section>
+    </sc-if>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"tema":{"editor":"enum","options":["claro","escuro"],"default":"claro"},"etapa":{"editor":"enum","options":["upload","previa","resultado"],"default":"upload"},"$preview":{"width":1280,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var P = {
+      claro: '--bg:#f2f4f1;--sf:#fbfcfb;--sk:#e9ece8;--fg:#17212b;--mu:#57626c;--ln:#d3d9d4;--ls:#aeb7b1;--ac:#2a47c2;--acf:#ffffff;--acs:#e3e8fa;--ok:#1c7548;--oks:#ddefe4;--wa:#8f5600;--was:#f6e9cf;--da:#b4271f;--das:#f8e0dd;--fo:#2a47c2;--hl:#ffe35a;--hli:#3d3200;',
+      escuro: '--bg:#11161b;--sf:#192027;--sk:#0c1014;--fg:#e3e8e5;--mu:#98a3ab;--ln:#2a343d;--ls:#44505a;--ac:#93a8ff;--acf:#0e1630;--acs:#1f2a52;--ok:#62cb93;--oks:#163626;--wa:#e8b657;--was:#3a2c10;--da:#ff8f85;--das:#45191a;--fo:#b9c6ff;--hl:#e8cc45;--hli:#2b2400;'
+    };
+    var tema = this.props.tema === 'escuro' ? 'escuro' : 'claro';
+    var etapa = this.props.etapa ?? 'upload';
+    var idx = { upload: 0, previa: 1, resultado: 2 }[etapa];
+    function r(secao, notas, check, acao, kind) {
+      var K = { cria: ['var(--oks)', 'var(--ok)'], ignora: ['var(--sk)', 'var(--mu)'] }[kind];
+      return { secao: secao, notas: notas, check: check, acao: acao, bBg: K[0], bFg: K[1], color: kind === 'ignora' ? 'var(--mu)' : 'var(--fg)' };
+    }
+    return {
+      vars: P[tema] + 'color-scheme:' + (tema === 'escuro' ? 'dark' : 'light') + ';',
+      tema: tema,
+      isUpload: etapa === 'upload', isPrevia: etapa === 'previa', isResultado: etapa === 'resultado',
+      etapas: ['Arquivo', 'Prévia', 'Resultado'].map(function (l, i) {
+        return { n: i + 1, label: l, current: i === idx ? 'step' : 'false', bar: i <= idx ? 'var(--ac)' : 'var(--sk)', color: i <= idx ? 'var(--fg)' : 'var(--mu)', weight: i === idx ? '600' : '400' };
+      }),
+      previa: [
+        r('Módulo 1 · Fundamentos', '2', 'sim', 'Cria 2 notas, degrau 3', 'cria'),
+        r('No mundo real', '1', '–', 'Cria 1 nota', 'cria'),
+        r('Módulo 2 · Controle do trabalho', '1', '–', 'Já importada, ignora', 'ignora'),
+        r('Módulo 3 · Contexto e memória', '0', '–', 'Sem anotações, ignora', 'ignora')
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

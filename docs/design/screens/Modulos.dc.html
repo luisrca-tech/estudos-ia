@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Módulos</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=Literata:opsz,wght@7..72,400;7..72,600&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="{{vars}} min-height: 100vh; display: flex; flex-direction: column; background: var(--bg); color: var(--fg); font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 15px; line-height: 1.5">
+  <dc-import name="Cabecalho" tema="{{tema}}" ativo="modulos" hint-size="100%,57px"></dc-import>
+  <main style="flex: 1; width: 100%; max-width: 1120px; margin: 0 auto; padding: 48px 32px 96px; box-sizing: border-box; display: flex; flex-direction: column; gap: 40px">
+    <header style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px">
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <h1 style="margin: 0; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 38px; line-height: 1.15">Mapa da trilha</h1>
+        <p style="margin: 0; color: var(--mu)">Meta: degrau 3 em todos e degrau 4 em dois ou três, nos seus projetos.</p>
+      </div>
+      <div style="flex: 0 1 360px; display: flex; flex-direction: column; gap: 6px">
+        <div style="display: flex; justify-content: space-between; font-size: 13px"><span style="font-weight: 500">2 de 15 no degrau 3</span><span style="color: var(--mu)">1 no degrau 4</span></div>
+        <div role="img" aria-label="2 de 15 módulos no degrau 3 ou acima" style="display: grid; grid-template-columns: repeat(15, minmax(0, 1fr)); gap: 2px">
+          <sc-for list="{{meta}}" as="x" hint-placeholder-count="15"><span style="height: 8px; border-radius: 1px; background: {{x.c}}"></span></sc-for>
+        </div>
+      </div>
+    </header>
+
+    <sc-for list="{{partes}}" as="p" hint-placeholder-count="2">
+      <section style="display: flex; flex-direction: column">
+        <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 24px; padding-bottom: 8px; border-bottom: 1px solid var(--ls)">
+          <h2 style="flex: 1 1 200px; margin: 0; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 22px">{{p.nome}}</h2>
+          <span style="width: 132px; font-size: 12px; color: var(--mu)">Degrau</span>
+          <span style="width: 64px; font-size: 12px; color: var(--mu); text-align: right">Notas</span>
+          <span style="width: 120px; font-size: 12px; color: var(--mu); text-align: right">Última sessão</span>
+          <span style="width: 16px"></span>
+        </div>
+        <sc-for list="{{p.mods}}" as="m" hint-placeholder-count="5">
+          <a href="#" style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 24px; min-height: 64px; padding: 10px 0; box-sizing: border-box; border-bottom: 1px solid var(--ln); color: var(--fg); text-decoration: none; background: {{m.rowBg}}">
+            <div style="flex: 1 1 320px; min-width: 0; display: flex; align-items: baseline; gap: 16px">
+              <span style="width: 28px; flex: none; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--mu); text-align: right">{{m.num}}</span>
+              <span style="display: flex; flex-direction: column; min-width: 0">
+                <span style="font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 17px; line-height: 1.35">{{m.titulo}}<sc-if value="{{m.novo}}" hint-placeholder-val="{{ false }}"><span style="margin-left: 8px; vertical-align: 2px; display: inline-flex; align-items: center; height: 20px; padding: 0 7px; border-radius: 999px; background: var(--hl); color: var(--hli); font: 500 11px 'IBM Plex Sans', sans-serif">Atualizado</span></sc-if></span>
+                <span style="font-size: 13px; color: var(--mu)">{{m.kicker}}</span>
+              </span>
+            </div>
+            <span style="width: 132px; display: flex; flex-direction: column; gap: 4px">
+              <span role="img" aria-label="{{m.aria}}" style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 3px"><sc-for list="{{m.cells}}" as="c" hint-placeholder-count="5"><span style="height: 8px; border-radius: 1px; background: {{c}}"></span></sc-for></span>
+              <span style="font-size: 12px; color: {{m.levelColor}}">{{m.degrau}}</span>
+            </span>
+            <span style="width: 64px; text-align: right; font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: {{m.notasColor}}">{{m.notas}}</span>
+            <span style="width: 120px; text-align: right; font-size: 14px; color: var(--mu)">{{m.ultima}}</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: var(--mu)"><path d="m9 6 6 6-6 6"></path></svg>
+          </a>
+        </sc-for>
+      </section>
+    </sc-for>
+
+    <button type="button" aria-expanded="false" style="align-self: flex-start; min-height: 44px; padding: 0; border: 0; background: transparent; color: var(--mu); font: 500 14px 'IBM Plex Sans', sans-serif; display: inline-flex; align-items: center; gap: 8px; cursor: pointer">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"></path></svg>1 módulo arquivado</button>
+  </main>
+  <div style="position: sticky; bottom: 0">
+    <dc-import name="Timer" tema="{{tema}}" fase="correndo" hint-size="100%,72px"></dc-import>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"tema":{"editor":"enum","options":["claro","escuro"],"default":"claro"},"$preview":{"width":1280,"height":1600}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var P = {
+      claro: '--bg:#f2f4f1;--sf:#fbfcfb;--sk:#e9ece8;--fg:#17212b;--mu:#57626c;--ln:#d3d9d4;--ls:#aeb7b1;--ac:#2a47c2;--acf:#ffffff;--acs:#e3e8fa;--ok:#1c7548;--oks:#ddefe4;--wa:#8f5600;--was:#f6e9cf;--da:#b4271f;--das:#f8e0dd;--fo:#2a47c2;--hl:#ffe35a;--hli:#3d3200;',
+      escuro: '--bg:#11161b;--sf:#192027;--sk:#0c1014;--fg:#e3e8e5;--mu:#98a3ab;--ln:#2a343d;--ls:#44505a;--ac:#93a8ff;--acf:#0e1630;--acs:#1f2a52;--ok:#62cb93;--oks:#163626;--wa:#e8b657;--was:#3a2c10;--da:#ff8f85;--das:#45191a;--fo:#b9c6ff;--hl:#e8cc45;--hli:#2b2400;'
+    };
+    var tema = this.props.tema === 'escuro' ? 'escuro' : 'claro';
+    var L = ['Reconheço', 'Explico', 'Decido', 'Apliquei e medi', 'Defendo e ensino'];
+    var all = [];
+    function mod(num, k, t, lvl, n, ultima, extra) {
+      extra = extra || {};
+      var c = lvl >= 3 ? 'var(--ok)' : 'var(--ac)';
+      var m = {
+        num: num, kicker: k, titulo: t, novo: !!extra.novo,
+        rowBg: extra.atual ? 'color-mix(in srgb, var(--acs) 45%, transparent)' : 'transparent',
+        degrau: lvl === 0 ? 'Não comecei' : lvl + ' · ' + L[lvl - 1],
+        aria: 'Degrau ' + lvl + ' de 5',
+        levelColor: lvl >= 3 ? 'var(--ok)' : lvl === 0 ? 'var(--mu)' : 'var(--fg)',
+        cells: [1, 2, 3, 4, 5].map(function (i) { return i <= lvl ? c : 'var(--sk)'; }),
+        notas: String(n), notasColor: n === 0 ? 'var(--mu)' : 'var(--fg)',
+        ultima: ultima, lvl: lvl
+      };
+      all.push(m);
+      return m;
+    }
+    var p1 = [
+      mod('1', 'Fundamentos', 'O que o modelo é e o que ele não é', 3, 6, '12/11'),
+      mod('2', 'Controle do trabalho', 'Padrões de controle: quem decide o próximo passo', 4, 9, '05/11'),
+      mod('3', 'O que o modelo vê', 'Contexto e memória', 2, 4, 'ter, 17/11'),
+      mod('4', 'Buscar a verdade', 'Recuperação: RAG de verdade', 2, 5, 'qua, 18/11'),
+      mod('5', 'Como o modelo age', 'Ferramentas e a interface agente-computador', 1, 2, 'hoje, 09:40', { novo: true, atual: true }),
+      mod('6', 'O mais importante', 'Avaliação: a habilidade que separa engenharia de achismo', 1, 3, '09/11'),
+      mod('7', 'Sobreviver ao erro', 'Harness e confiabilidade', 0, 0, '–'),
+      mod('8', 'Proteger', 'Segurança de sistemas com agentes', 0, 0, '–'),
+      mod('9', 'Operar', 'Observabilidade e operação', 0, 1, '–'),
+      mod('10', 'Custo e escala', 'Economia de inferência e multiagentes', 0, 0, '–')
+    ];
+    var p2 = [
+      mod('11', 'Adaptação e dados', 'Ajustar o modelo, e os dados que isso exige', 0, 0, '–'),
+      mod('12', 'Inferência e latência', 'Inferência, latência e saída estruturada', 0, 0, '–'),
+      mod('13', 'Produto e feedback', 'Produto, UX de IA e o ciclo de feedback', 0, 0, '–'),
+      mod('14', 'Governança e ciclo de vida', 'Governança, dados pessoais e ciclo de vida', 0, 0, '–'),
+      mod('◆', 'No mundo real', 'Como as empresas aplicam estes conceitos', 1, 2, '02/11')
+    ];
+    return {
+      vars: P[tema] + 'color-scheme:' + (tema === 'escuro' ? 'dark' : 'light') + ';',
+      tema: tema,
+      meta: all.slice().sort(function (a, b) { return b.lvl - a.lvl; }).map(function (m) { return { c: m.lvl >= 3 ? 'var(--ok)' : m.lvl > 0 ? 'var(--ls)' : 'var(--sk)' }; }),
+      partes: [{ nome: 'Parte 1', mods: p1 }, { nome: 'Parte 2', mods: p2 }]
+    };
+  }
+}
+</script>
+</body>
+</html>

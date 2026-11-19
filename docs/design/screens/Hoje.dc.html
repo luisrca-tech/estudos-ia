@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Hoje</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=Literata:opsz,wght@7..72,400;7..72,600&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="{{vars}} min-height: 100vh; background: var(--bg); color: var(--fg); font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 15px; line-height: 1.5">
+  <dc-import name="Cabecalho" tema="{{tema}}" ativo="hoje" hint-size="100%,57px"></dc-import>
+  <div style="max-width: 1120px; margin: 0 auto; padding: 48px 32px 96px; box-sizing: border-box; display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-start">
+
+    <main style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 32px">
+      <header style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap">
+        <h1 style="margin: 0; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 38px; line-height: 1.15">Quinta, 19 de novembro</h1>
+        <span style="font-size: 14px; color: var(--mu)">{{resumoDia}}</span>
+      </header>
+
+      <sc-if value="{{cheio}}" hint-placeholder-val="{{ true }}">
+        <ol aria-label="Fila do dia" style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column">
+
+          <li style="display: grid; grid-template-columns: 32px minmax(0, 1fr); column-gap: 16px">
+            <div style="display: flex; flex-direction: column; align-items: center">
+              <span style="width: 28px; height: 28px; border-radius: 999px; background: var(--fg); color: var(--bg); font: 600 13px 'IBM Plex Mono', monospace; display: flex; align-items: center; justify-content: center">1</span>
+              <span style="flex: 1; width: 1px; background: var(--ln); margin: 4px 0"></span>
+            </div>
+            <div style="padding-bottom: 28px; display: flex; flex-direction: column; gap: 12px">
+              <div style="display: flex; flex-direction: column; gap: 2px">
+                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap">
+                  <span style="font-size: 12px; font-weight: 600; color: var(--fg)">Próximo</span>
+                  <span style="display: inline-flex; align-items: center; gap: 4px; height: 22px; padding: 0 8px; border-radius: 999px; background: var(--das); color: var(--da); font-size: 12px; font-weight: 500"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M12 8v5"></path><path d="M12 16.5h.01"></path><circle cx="12" cy="12" r="9"></circle></svg>Atrasado</span>
+                </div>
+                <h2 style="margin: 0; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 22px; line-height: 1.3">Escrever 2 resumos atrasados</h2>
+                <p style="margin: 0; font-size: 14px; color: var(--mu)">Sessões sem resumo com suas palavras depois de 24 h. Escreva de memória, sem abrir a fonte.</p>
+              </div>
+              <div style="border: 1px solid var(--ln); border-radius: 8px; background: var(--sf)">
+                <sc-for list="{{atrasados}}" as="a" hint-placeholder-count="2">
+                  <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; padding: 12px 16px; border-top: {{a.sep}}">
+                    <div style="flex: 1 1 280px; min-width: 0; display: flex; flex-direction: column">
+                      <span style="font-weight: 500">{{a.modulo}}</span>
+                      <span style="font-size: 13px; color: var(--mu)">{{a.quando}}</span>
+                    </div>
+                    <span style="font-size: 13px; color: var(--da); font-weight: 500">{{a.atraso}}</span>
+                    <a href="#" style="min-height: 40px; padding: 0 14px; border-radius: 4px; border: 1px solid var(--ls); color: var(--fg); font-size: 14px; font-weight: 500; text-decoration: none; display: inline-flex; align-items: center">Escrever resumo</a>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </li>
+
+          <li style="display: grid; grid-template-columns: 32px minmax(0, 1fr); column-gap: 16px">
+            <div style="display: flex; flex-direction: column; align-items: center">
+              <span style="width: 28px; height: 28px; box-sizing: border-box; border-radius: 999px; border: 1.5px solid var(--ls); color: var(--mu); font: 500 13px 'IBM Plex Mono', monospace; display: flex; align-items: center; justify-content: center">2</span>
+              <span style="flex: 1; width: 1px; background: var(--ln); margin: 4px 0"></span>
+            </div>
+            <div style="padding-bottom: 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px">
+              <div style="flex: 1 1 300px; display: flex; flex-direction: column; gap: 2px">
+                <h2 style="margin: 0; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 20px; line-height: 1.3">Responder 8 perguntas de cabeça</h2>
+                <p style="margin: 0; font-size: 14px; color: var(--mu)">2 atrasadas · Módulos 1, 3 e 4</p>
+              </div>
+              <a href="#" style="min-height: 44px; padding: 0 16px; border-radius: 4px; border: 1px solid var(--ls); color: var(--fg); font-weight: 500; text-decoration: none; display: inline-flex; align-items: center; gap: 10px">Começar revisão<kbd style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; padding: 0 5px; border-radius: 3px; border: 1px solid var(--ln); color: var(--mu)">R</kbd></a>
+            </div>
+          </li>
+
+          <li style="display: grid; grid-template-columns: 32px minmax(0, 1fr); column-gap: 16px">
+            <div style="display: flex; flex-direction: column; align-items: center">
+              <span style="width: 28px; height: 28px; box-sizing: border-box; border-radius: 999px; border: 1.5px solid var(--ls); color: var(--mu); font: 500 13px 'IBM Plex Mono', monospace; display: flex; align-items: center; justify-content: center">3</span>
+              <span style="flex: 1; width: 1px; background: var(--ln); margin: 4px 0"></span>
+            </div>
+            <div style="padding-bottom: 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px">
+              <div style="flex: 1 1 300px; display: flex; flex-direction: column; gap: 2px">
+                <h2 style="margin: 0; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 20px; line-height: 1.3">Resumir a sessão das 09:40</h2>
+                <p style="margin: 0; font-size: 14px; color: var(--mu); display: flex; align-items: center; gap: 8px; flex-wrap: wrap">Módulo 5 · Ferramentas<span style="display: inline-flex; align-items: center; gap: 4px; height: 22px; padding: 0 8px; border-radius: 999px; background: var(--was); color: var(--wa); font-size: 12px; font-weight: 500"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>Faltam 21 h</span></p>
+              </div>
+              <a href="#" style="min-height: 44px; padding: 0 16px; border-radius: 4px; border: 1px solid var(--ls); color: var(--fg); font-weight: 500; text-decoration: none; display: inline-flex; align-items: center">Escrever resumo</a>
+            </div>
+          </li>
+
+          <li style="display: grid; grid-template-columns: 32px minmax(0, 1fr); column-gap: 16px">
+            <div style="display: flex; flex-direction: column; align-items: center">
+              <span style="width: 28px; height: 28px; box-sizing: border-box; border-radius: 999px; border: 1.5px solid var(--ls); color: var(--mu); font: 500 13px 'IBM Plex Mono', monospace; display: flex; align-items: center; justify-content: center">4</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px">
+              <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px">
+                <h2 style="margin: 0; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 20px; line-height: 1.3">Rotina diária</h2>
+                <span style="font-size: 14px; color: var(--mu)">1 de 3</span>
+              </div>
+              <sc-for list="{{diaria}}" as="i" hint-placeholder-count="3">
+                <label style="display: flex; gap: 12px; align-items: flex-start; min-height: 32px; cursor: pointer">
+                  <input type="checkbox" checked="{{i.done}}" style="flex: none; width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--ac)">
+                  <span style="color: {{i.color}}; text-decoration: {{i.deco}}">{{i.label}}</span>
+                </label>
+              </sc-for>
+            </div>
+          </li>
+        </ol>
+      </sc-if>
+
+      <sc-if value="{{vazio}}" hint-placeholder-val="{{ false }}">
+        <section style="padding: 56px 0 24px; border-top: 1px solid var(--ln); display: flex; flex-direction: column; gap: 12px">
+          <span style="color: var(--ok)"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="m8 12 3 3 5-6"></path></svg></span>
+          <h2 style="margin: 0; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 30px; line-height: 1.2">Tudo em dia.</h2>
+          <p style="margin: 0; max-width: 52ch; color: var(--mu)">Nenhum resumo devendo, nenhuma revisão para hoje e a rotina diária está feita. Se sobrar energia, mais uma sessão rende mais que reler.</p>
+        </section>
+      </sc-if>
+    </main>
+
+    <aside style="flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
+      <section aria-labelledby="sessao" style="padding: 24px; border-radius: 8px; background: var(--sf); border: 1px solid var(--ln); display: flex; flex-direction: column; gap: 16px">
+        <div style="display: flex; flex-direction: column; gap: 4px">
+          <h2 id="sessao" style="margin: 0; font-size: 14px; font-weight: 500; color: var(--mu)">Sessão de foco</h2>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 38px; font-weight: 500; line-height: 1.1; font-variant-numeric: tabular-nums">25:00</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <label for="mod" style="font-size: 14px; font-weight: 500">Módulo</label>
+          <select id="mod" style="height: 44px; padding: 0 10px; border-radius: 4px; border: 1px solid var(--ls); background: var(--sf); color: var(--fg); font: 15px 'IBM Plex Sans', sans-serif"><option>Módulo 5 · Ferramentas</option></select>
+          <span style="font-size: 13px; color: var(--mu)">Sugerido: degrau 1, última sessão há 2 dias.</span>
+        </div>
+        <button type="button" style="min-height: 52px; padding: 0 20px; border-radius: 4px; border: 1px solid var(--ac); background: var(--ac); color: var(--acf); font: 500 16px 'IBM Plex Sans', sans-serif; display: inline-flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5v14l11-7Z"></path></svg>Iniciar sessão de 25 min</button>
+        <span style="font-size: 13px; color: var(--mu); display: flex; align-items: center; gap: 6px">Atalho <kbd style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; padding: 0 5px; border-radius: 3px; border: 1px solid var(--ln)">S</kbd> em qualquer página</span>
+      </section>
+
+      <section aria-labelledby="ciclos" style="display: flex; flex-direction: column; gap: 12px; font-size: 14px">
+        <h2 id="ciclos" style="margin: 0; font-size: 14px; font-weight: 500; color: var(--mu)">Também em aberto</h2>
+        <div style="display: flex; flex-direction: column; gap: 4px; padding-bottom: 12px; border-bottom: 1px solid var(--ln)">
+          <div style="display: flex; justify-content: space-between"><span style="font-weight: 500">Semana</span><span style="color: var(--mu)">1 de 3 · até domingo</span></div>
+          <span style="color: var(--mu)">Ficha de decisão; rever e cortar notas.</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 4px">
+          <div style="display: flex; justify-content: space-between"><span style="font-weight: 500">Mês</span><span style="color: var(--mu)">0 de 3 · faltam 11 dias</span></div>
+          <span style="color: var(--mu)">Síntese, revisão cega, guia "por onde começar".</span>
+        </div>
+        <a href="#" style="align-self: flex-start; color: var(--ac); min-height: 32px; display: inline-flex; align-items: center">Abrir rotinas</a>
+      </section>
+    </aside>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"tema":{"editor":"enum","options":["claro","escuro"],"default":"claro"},"vazio":{"editor":"boolean","default":false},"$preview":{"width":1280,"height":1100}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var P = {
+      claro: '--bg:#f2f4f1;--sf:#fbfcfb;--sk:#e9ece8;--fg:#17212b;--mu:#57626c;--ln:#d3d9d4;--ls:#aeb7b1;--ac:#2a47c2;--acf:#ffffff;--acs:#e3e8fa;--ok:#1c7548;--oks:#ddefe4;--wa:#8f5600;--was:#f6e9cf;--da:#b4271f;--das:#f8e0dd;--fo:#2a47c2;--hl:#ffe35a;--hli:#3d3200;',
+      escuro: '--bg:#11161b;--sf:#192027;--sk:#0c1014;--fg:#e3e8e5;--mu:#98a3ab;--ln:#2a343d;--ls:#44505a;--ac:#93a8ff;--acf:#0e1630;--acs:#1f2a52;--ok:#62cb93;--oks:#163626;--wa:#e8b657;--was:#3a2c10;--da:#ff8f85;--das:#45191a;--fo:#b9c6ff;--hl:#e8cc45;--hli:#2b2400;'
+    };
+    var tema = this.props.tema === 'escuro' ? 'escuro' : 'claro';
+    var vazio = !!this.props.vazio;
+    var labels = ['Responder de cabeça 3 perguntas de revisão (5 min)', 'Ler ou assistir uma seção de uma fonte (15–20 min)', 'Fechar a fonte e escrever uma nota de conceito (10–15 min)'];
+    var done = [true, false, false];
+    return {
+      vars: P[tema] + 'color-scheme:' + (tema === 'escuro' ? 'dark' : 'light') + ';',
+      tema: tema,
+      vazio: vazio,
+      cheio: !vazio,
+      resumoDia: vazio ? '1 sessão hoje · 25 min' : '4 passos na fila · 1 sessão hoje',
+      atrasados: [
+        { modulo: 'Módulo 3 · Contexto e memória', quando: 'Sessão de terça, 17/11, 14:10', atraso: 'há 43 h', sep: 'none' },
+        { modulo: 'Módulo 4 · Recuperação: RAG de verdade', quando: 'Sessão de quarta, 18/11, 08:30', atraso: 'há 26 h', sep: '1px solid var(--ln)' }
+      ],
+      diaria: labels.map(function (l, i) { return { label: l, done: done[i], color: done[i] ? 'var(--mu)' : 'var(--fg)', deco: done[i] ? 'line-through' : 'none' }; })
+    };
+  }
+}
+</script>
+</body>
+</html>

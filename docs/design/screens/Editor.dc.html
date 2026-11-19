@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Editor de nota</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=Literata:opsz,wght@7..72,400;7..72,600&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="{{vars}} min-height: 100vh; display: flex; flex-direction: column; background: var(--bg); color: var(--fg); font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 15px; line-height: 1.5">
+  <dc-import name="Cabecalho" tema="{{tema}}" ativo="modulos" hint-size="100%,57px"></dc-import>
+  <form style="flex: 1; width: 100%; max-width: 1120px; margin: 0 auto; padding: 24px 32px 96px; box-sizing: border-box; display: flex; flex-direction: column; gap: 20px">
+
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; padding-bottom: 16px; border-bottom: 1px solid var(--ln)">
+      <div style="flex: 1 1 320px; display: flex; flex-direction: column">
+        <a href="#" style="align-self: flex-start; font-size: 14px; color: var(--mu); text-decoration: none">← Módulo 5 · Ferramentas</a>
+        <span style="font-size: 14px; font-weight: 500">{{contexto}}</span>
+      </div>
+      <span style="font-size: 13px; color: var(--mu)">Rascunho salvo às 10:31</span>
+      <button type="button" style="min-height: 44px; padding: 0 14px; border-radius: 4px; border: 0; background: transparent; color: var(--mu); font: 500 15px 'IBM Plex Sans', sans-serif">Descartar</button>
+      <button type="submit" style="min-height: 44px; padding: 0 18px; border-radius: 4px; border: 1px solid var(--ac); background: var(--ac); color: var(--acf); font: 500 15px 'IBM Plex Sans', sans-serif; display: inline-flex; align-items: center; gap: 10px">Salvar nota<kbd style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; padding: 0 4px; border-radius: 3px; border: 1px solid color-mix(in srgb, var(--acf) 40%, transparent)">⌘S</kbd></button>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px">
+      <div role="radiogroup" aria-label="Tipo de nota" style="display: inline-flex; padding: 3px; gap: 2px; border-radius: 6px; background: var(--sk)">
+        <sc-for list="{{tipos}}" as="t" hint-placeholder-count="4">
+          <button type="button" role="radio" aria-checked="{{t.on}}" onClick="{{t.pick}}" style="min-height: 36px; padding: 0 12px; border-radius: 4px; border: 1px solid {{t.bd}}; background: {{t.bg}}; color: {{t.fg}}; font: {{t.w}} 14px 'IBM Plex Sans', sans-serif; cursor: pointer">{{t.label}}</button>
+        </sc-for>
+      </div>
+      <sc-if value="{{fonteFechada}}" hint-placeholder-val="{{ true }}">
+        <span style="font-size: 13px; color: var(--mu); display: inline-flex; align-items: center; gap: 6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="1"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>Fonte fechada: escreva de memória. <a href="#" style="color: var(--mu)">Abrir mesmo assim</a></span>
+      </sc-if>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 4px">
+      <label for="titulo" style="font-size: 13px; color: var(--mu)">Título</label>
+      <input id="titulo" value="{{titulo}}" style="height: 52px; padding: 0 2px; border: 0; border-bottom: 1px solid var(--ls); background: transparent; color: var(--fg); font: 600 26px 'Literata', Georgia, serif">
+    </div>
+
+    <div aria-label="Seções do modelo" style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px">
+      <span style="font-size: 13px; color: var(--mu); margin-right: 4px">Modelo · {{feitas}}</span>
+      <sc-for list="{{secoes}}" as="s" hint-placeholder-count="8">
+        <span style="display: inline-flex; align-items: center; gap: 4px; height: 26px; padding: 0 9px; border-radius: 999px; border: 1px solid {{s.bd}}; background: {{s.bg}}; color: {{s.fg}}; font-size: 12px; font-weight: 500">{{s.mark}} {{s.nome}}</span>
+      </sc-for>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: stretch">
+      <div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+        <label for="corpo" style="font-size: 13px; color: var(--mu); display: flex; justify-content: space-between"><span>Markdown</span><span style="font-family: 'IBM Plex Mono', monospace">{{chars}}</span></label>
+        <textarea id="corpo" style="flex: 1; min-height: 520px; padding: 16px; border-radius: 4px; border: 1px solid var(--ls); background: var(--sf); color: var(--fg); font: 14px/1.7 'IBM Plex Mono', monospace; resize: vertical; box-sizing: border-box">{{body}}</textarea>
+      </div>
+      <div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+        <span style="font-size: 13px; color: var(--mu)">Como vai ficar</span>
+        <article style="flex: 1; padding: 8px 4px; font-family: 'Literata', Georgia, serif; font-size: 17px; line-height: 1.7; display: flex; flex-direction: column; gap: 14px">
+          <sc-for list="{{preview}}" as="p" hint-placeholder-count="5">
+            <div><strong style="font-weight: 600">{{p.h}}:</strong> <span style="color: {{p.c}}">{{p.t}}</span></div>
+          </sc-for>
+        </article>
+      </div>
+    </div>
+
+    <fieldset style="margin: 0; padding: 20px 0 0; border: 0; border-top: 1px solid var(--ln); display: flex; flex-wrap: wrap; gap: 20px 32px">
+      <legend style="padding: 0; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 20px; margin-bottom: 12px; float: left; width: 100%">Para revisar depois</legend>
+      <div style="flex: 2 1 380px; display: flex; flex-direction: column; gap: 6px">
+        <label for="perg" style="font-size: 14px; font-weight: 500">Pergunta de revisão</label>
+        <input id="perg" value="{{pergunta}}" style="height: 44px; padding: 0 12px; border-radius: 4px; border: 1px solid var(--ls); background: var(--sf); color: var(--fg); font: 15px 'IBM Plex Sans', sans-serif">
+        <span style="font-size: 13px; color: var(--mu)">Volta para você em 1, 3, 7 e 21 dias. Pergunte o que exige lembrar, não reconhecer.</span>
+      </div>
+      <div style="flex: 1 1 260px; display: flex; flex-direction: column; gap: 6px">
+        <span id="grau" style="font-size: 14px; font-weight: 500">Grau da evidência</span>
+        <div role="radiogroup" aria-labelledby="grau" style="display: inline-flex; align-self: flex-start; padding: 3px; gap: 2px; border-radius: 6px; background: var(--sk)">
+          <sc-for list="{{graus}}" as="g" hint-placeholder-count="6">
+            <button type="button" role="radio" aria-checked="{{g.on}}" title="{{g.m}}" style="min-width: 38px; min-height: 36px; padding: 0 8px; border-radius: 4px; border: 1px solid {{g.bd}}; background: {{g.bg}}; color: {{g.fg}}; font: 500 13px 'IBM Plex Mono', monospace">{{g.v}}</button>
+          </sc-for>
+        </div>
+        <span style="font-size: 13px; color: var(--mu)">{{grauSignificado}}</span>
+      </div>
+    </fieldset>
+  </form>
+  <div style="position: sticky; bottom: 0">
+    <dc-import name="Timer" tema="{{tema}}" fase="ultimo" hint-size="100%,72px"></dc-import>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"tema":{"editor":"enum","options":["claro","escuro"],"default":"claro"},"tipo":{"editor":"enum","options":["resumo","decisao"],"default":"resumo"},"$preview":{"width":1280,"height":1500}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var self = this;
+    var P = {
+      claro: '--bg:#f2f4f1;--sf:#fbfcfb;--sk:#e9ece8;--fg:#17212b;--mu:#57626c;--ln:#d3d9d4;--ls:#aeb7b1;--ac:#2a47c2;--acf:#ffffff;--acs:#e3e8fa;--ok:#1c7548;--oks:#ddefe4;--wa:#8f5600;--was:#f6e9cf;--da:#b4271f;--das:#f8e0dd;--fo:#2a47c2;--hl:#ffe35a;--hli:#3d3200;',
+      escuro: '--bg:#11161b;--sf:#192027;--sk:#0c1014;--fg:#e3e8e5;--mu:#98a3ab;--ln:#2a343d;--ls:#44505a;--ac:#93a8ff;--acf:#0e1630;--acs:#1f2a52;--ok:#62cb93;--oks:#163626;--wa:#e8b657;--was:#3a2c10;--da:#ff8f85;--das:#45191a;--fo:#b9c6ff;--hl:#e8cc45;--hli:#2b2400;'
+    };
+    var tema = this.props.tema === 'escuro' ? 'escuro' : 'claro';
+    var tipo = (this.state && this.state.tipo) || this.props.tipo || 'resumo';
+    var C = {
+      resumo: {
+        contexto: 'Resumo da sessão de hoje, 09:40',
+        titulo: 'Ferramenta resolve intenção, não espelha a API',
+        pergunta: 'Por que três chamadas de API cruas pioram o agente?',
+        grau: 'C',
+        secoes: [
+          ['Afirmação', 'Uma ferramenta para agente deve resolver uma intenção inteira, não expor a API interna como ela é.'],
+          ['Mecanismo', 'Cada chamada é uma decisão do modelo. Três chamadas cruas são três chances de errar a ordem, o ID ou o formato.'],
+          ['Use quando', 'a tarefa tem um objetivo claro para o usuário, como agendar ou reembolsar.'],
+          ['Não use quando', 'o agente precisa explorar dados sem objetivo fixo; aí uma busca genérica com filtros serve melhor.'],
+          ['Alternativa mais simples', 'um fluxo fixo no código, sem agente, quando a sequência nunca muda.'],
+          ['Evidência', null],
+          ['Como eu verificaria', null],
+          ['Pergunta de revisão', null]
+        ]
+      },
+      decisao: {
+        contexto: 'Nova decisão no Módulo 5',
+        titulo: 'Festejo: identificadores injetados pelo código',
+        pergunta: 'O que me faria deixar o modelo escolher o ID do evento?',
+        grau: 'A',
+        secoes: [
+          ['Contexto', 'O agente do Festejo confirmava convidados no evento errado quando dois eventos tinham nomes parecidos.'],
+          ['Opções consideradas', 'o modelo escolhe o ID; o código injeta o ID da sessão; perguntar ao usuário sempre.'],
+          ['Escolha', 'o código injeta o ID. O modelo nunca vê nem escreve identificadores.'],
+          ['Evidência', 'tarefas reais do Festejo rodadas antes e depois da mudança: [RESULTADO MEDIDO].'],
+          ['Custo aceito', 'o agente não consegue agir em dois eventos na mesma conversa.'],
+          ['O que me faria mudar de ideia', null],
+          ['Data', '19/11/2026']
+        ]
+      }
+    }[tipo];
+    var body = C.secoes.map(function (s) { return '**' + s[0] + ':** ' + (s[1] || '…'); }).join('\n\n');
+    var feitas = C.secoes.filter(function (s) { return s[1]; }).length;
+    var labels = [['resumo', 'Resumo'], ['pergunta', 'Pergunta'], ['decisao', 'Decisão'], ['evidencia', 'Evidência']];
+    var G = [['A', 'medi no meu sistema, com baseline'], ['B', 'paper ou benchmark reproduzível'], ['C', 'relato de engenharia de uma empresa'], ['D', 'opinião de praticante experiente'], ['E', 'intuição minha ou do agente'], ['–', 'sem grau']];
+    return {
+      vars: P[tema] + 'color-scheme:' + (tema === 'escuro' ? 'dark' : 'light') + ';',
+      tema: tema,
+      contexto: C.contexto,
+      titulo: C.titulo,
+      pergunta: C.pergunta,
+      fonteFechada: tipo === 'resumo',
+      body: body,
+      chars: body.length + ' caracteres',
+      feitas: feitas + ' de ' + C.secoes.length,
+      secoes: C.secoes.map(function (s) {
+        var ok = !!s[1];
+        return { nome: s[0], mark: ok ? '✓' : '○', bd: ok ? 'transparent' : 'var(--ls)', bg: ok ? 'var(--oks)' : 'transparent', fg: ok ? 'var(--ok)' : 'var(--mu)' };
+      }),
+      preview: C.secoes.map(function (s) { return { h: s[0], t: s[1] || 'ainda não escrito', c: s[1] ? 'var(--fg)' : 'var(--mu)' }; }),
+      tipos: labels.map(function (l) {
+        var on = l[0] === tipo;
+        return { label: l[1], on: on ? 'true' : 'false', bd: on ? 'var(--ln)' : 'transparent', bg: on ? 'var(--sf)' : 'transparent', fg: on ? 'var(--fg)' : 'var(--mu)', w: on ? '500' : '400', pick: function () { if (l[0] === 'resumo' || l[0] === 'decisao') self.setState({ tipo: l[0] }); } };
+      }),
+      graus: G.map(function (g) {
+        var on = g[0] === C.grau;
+        return { v: g[0], m: g[1], on: on ? 'true' : 'false', bd: on ? 'var(--ln)' : 'transparent', bg: on ? 'var(--sf)' : 'transparent', fg: on ? 'var(--fg)' : 'var(--mu)' };
+      }),
+      grauSignificado: C.grau + ': ' + G.filter(function (g) { return g[0] === C.grau; })[0][1] + '.'
+    };
+  }
+}
+</script>
+</body>
+</html>

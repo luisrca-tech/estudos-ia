@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Sessões</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=Literata:opsz,wght@7..72,400;7..72,600&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="{{vars}} min-height: 100vh; background: var(--bg); color: var(--fg); font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 15px; line-height: 1.5">
+  <dc-import name="Cabecalho" tema="{{tema}}" ativo="sessoes" hint-size="100%,57px"></dc-import>
+  <main style="max-width: 1120px; margin: 0 auto; padding: 48px 32px 96px; box-sizing: border-box; display: flex; flex-direction: column; gap: 28px">
+    <header style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px">
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <h1 style="margin: 0; font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 38px; line-height: 1.15">Sessões</h1>
+        <p style="margin: 0; color: var(--mu)">Esta semana: 5 sessões concluídas, 2 h 05 min de foco.</p>
+      </div>
+      <div role="radiogroup" aria-label="Filtro" style="display: inline-flex; padding: 3px; gap: 2px; border-radius: 6px; background: var(--sk)">
+        <button type="button" role="radio" aria-checked="true" style="min-height: 36px; padding: 0 12px; border-radius: 4px; border: 1px solid var(--ln); background: var(--sf); color: var(--fg); font: 500 14px 'IBM Plex Sans', sans-serif">Todas</button>
+        <button type="button" role="radio" aria-checked="false" style="min-height: 36px; padding: 0 12px; border-radius: 4px; border: 1px solid transparent; background: transparent; color: var(--mu); font: 400 14px 'IBM Plex Sans', sans-serif; display: inline-flex; align-items: center; gap: 6px">Sem resumo <span style="min-width: 18px; height: 18px; padding: 0 5px; box-sizing: border-box; border-radius: 999px; background: var(--das); color: var(--da); font-size: 11px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center">3</span></button>
+      </div>
+    </header>
+
+    <div style="overflow-x: auto; border: 1px solid var(--ln); border-radius: 8px; background: var(--sf)">
+      <table style="width: 100%; min-width: 760px; border-collapse: collapse; font-size: 14px">
+        <thead>
+          <tr style="text-align: left; color: var(--mu); font-size: 12px">
+            <th scope="col" style="padding: 12px 16px; font-weight: 500; width: 80px">Início</th>
+            <th scope="col" style="padding: 12px 16px; font-weight: 500">Módulo</th>
+            <th scope="col" style="padding: 12px 16px; font-weight: 500; width: 120px">Foco</th>
+            <th scope="col" style="padding: 12px 16px; font-weight: 500; width: 190px">Resumo</th>
+            <th scope="col" style="padding: 12px 16px; font-weight: 500; width: 140px"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Ação</span></th>
+          </tr>
+        </thead>
+        <sc-for list="{{dias}}" as="d" hint-placeholder-count="3">
+          <tbody>
+            <tr><th scope="rowgroup" colspan="5" style="padding: 10px 16px 6px; text-align: left; background: var(--bg); border-top: 1px solid var(--ln); font-family: 'Literata', Georgia, serif; font-weight: 600; font-size: 15px">{{d.dia}}</th></tr>
+            <sc-for list="{{d.rows}}" as="r" hint-placeholder-count="2">
+              <tr style="border-top: 1px solid var(--ln); color: {{r.textColor}}">
+                <td style="padding: 12px 16px; font-family: 'IBM Plex Mono', monospace">{{r.hora}}</td>
+                <td style="padding: 12px 16px">{{r.modulo}}</td>
+                <td style="padding: 12px 16px">
+                  <span style="display: flex; flex-direction: column; gap: 4px">
+                    <span style="font-family: 'IBM Plex Mono', monospace">{{r.tempo}}</span>
+                    <span aria-hidden="true" style="height: 3px; width: 80px; background: var(--sk); border-radius: 2px; overflow: hidden"><span style="display: block; height: 3px; width: {{r.pct}}; background: {{r.barColor}}"></span></span>
+                  </span>
+                </td>
+                <td style="padding: 12px 16px"><span style="display: inline-flex; align-items: center; gap: 4px; height: 22px; padding: 0 8px; border-radius: 999px; background: {{r.bBg}}; color: {{r.bFg}}; font-size: 12px; font-weight: 500">{{r.status}}</span></td>
+                <td style="padding: 12px 16px; text-align: right"><sc-if value="{{r.acao}}" hint-placeholder-val="{{ false }}"><a href="#" style="color: var(--ac); font-weight: 500; min-height: 32px; display: inline-flex; align-items: center">{{r.acao}}</a></sc-if></td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </sc-for>
+      </table>
+    </div>
+    <button type="button" style="align-self: center; min-height: 44px; padding: 0 16px; border-radius: 4px; border: 1px solid var(--ls); background: transparent; color: var(--fg); font: 500 14px 'IBM Plex Sans', sans-serif">Carregar semanas anteriores</button>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"tema":{"editor":"enum","options":["claro","escuro"],"default":"claro"},"$preview":{"width":1280,"height":1100}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var P = {
+      claro: '--bg:#f2f4f1;--sf:#fbfcfb;--sk:#e9ece8;--fg:#17212b;--mu:#57626c;--ln:#d3d9d4;--ls:#aeb7b1;--ac:#2a47c2;--acf:#ffffff;--acs:#e3e8fa;--ok:#1c7548;--oks:#ddefe4;--wa:#8f5600;--was:#f6e9cf;--da:#b4271f;--das:#f8e0dd;--fo:#2a47c2;--hl:#ffe35a;--hli:#3d3200;',
+      escuro: '--bg:#11161b;--sf:#192027;--sk:#0c1014;--fg:#e3e8e5;--mu:#98a3ab;--ln:#2a343d;--ls:#44505a;--ac:#93a8ff;--acf:#0e1630;--acs:#1f2a52;--ok:#62cb93;--oks:#163626;--wa:#e8b657;--was:#3a2c10;--da:#ff8f85;--das:#45191a;--fo:#b9c6ff;--hl:#e8cc45;--hli:#2b2400;'
+    };
+    var tema = this.props.tema === 'escuro' ? 'escuro' : 'claro';
+    var S = {
+      andamento: ['Em andamento', 'var(--acs)', 'var(--ac)', null],
+      pendente: ['Faltam 21 h', 'var(--was)', 'var(--wa)', 'Escrever resumo'],
+      atrasado: ['Atrasado', 'var(--das)', 'var(--da)', 'Escrever resumo'],
+      coberto: ['Escrito', 'var(--oks)', 'var(--ok)', 'Ver resumo'],
+      cancelada: ['Cancelada', 'var(--sk)', 'var(--mu)', null]
+    };
+    function row(hora, modulo, real, st) {
+      var s = S[st];
+      return {
+        hora: hora, modulo: modulo, tempo: st === 'andamento' ? '06 / 25 min' : real + ' / 25 min',
+        pct: Math.round((st === 'andamento' ? 6 : real) / 25 * 100) + '%',
+        barColor: st === 'cancelada' ? 'var(--ls)' : 'var(--ac)',
+        status: s[0], bBg: s[1], bFg: s[2], acao: s[3] || false,
+        textColor: st === 'cancelada' ? 'var(--mu)' : 'var(--fg)'
+      };
+    }
+    return {
+      vars: P[tema] + 'color-scheme:' + (tema === 'escuro' ? 'dark' : 'light') + ';',
+      tema: tema,
+      dias: [
+        { dia: 'Hoje, quinta 19/11', rows: [row('10:12', 'Módulo 5 · Ferramentas', 0, 'andamento'), row('09:40', 'Módulo 5 · Ferramentas', 25, 'pendente')] },
+        { dia: 'Quarta, 18/11', rows: [row('08:30', 'Módulo 4 · Recuperação', 25, 'atrasado'), row('07:58', 'Módulo 4 · Recuperação', 9, 'cancelada')] },
+        { dia: 'Terça, 17/11', rows: [row('14:10', 'Módulo 3 · Contexto e memória', 25, 'atrasado')] },
+        { dia: 'Segunda, 16/11', rows: [row('19:05', 'Módulo 5 · Ferramentas', 25, 'coberto'), row('07:30', 'Módulo 1 · Fundamentos', 25, 'coberto')] }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

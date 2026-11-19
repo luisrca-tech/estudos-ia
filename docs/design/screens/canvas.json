@@ -1,0 +1,61 @@
+{
+  "v": 3,
+  "createdOnFiles": {"v": 1, "at": "2026-11-19T12:00:00Z"},
+  "title": "estudos-ia — design system e telas",
+  "launch": {"view": "canvas", "page": "sistema"},
+  "pages": [{"id": "sistema", "name": "Sistema"}, {"id": "telas", "name": "Telas"}],
+  "boards": {
+    "Main.dc.html": {"x": 0, "y": 0, "w": 1440, "h": 2600, "title": "Tokens", "page": "sistema"},
+    "Cabecalho.dc.html": {"x": 1520, "y": 0, "w": 1280, "h": 57, "title": "Cabeçalho com ⌘K", "page": "sistema"},
+    "Timer.dc.html": {"x": 1520, "y": 177, "w": 1280, "h": 76, "title": "Barra de sessão (rodapé)", "page": "sistema"},
+    "Componentes.dc.html": {"x": 0, "y": 2720, "w": 1280, "h": 3000, "title": "Componentes · claro", "page": "sistema"},
+    "Componentes-escuro.dc.html": {"x": 1360, "y": 2720, "w": 1280, "h": 3000, "title": "Componentes · escuro", "page": "sistema"},
+
+    "Hoje.dc.html": {"x": 0, "y": 0, "w": 1280, "h": 1100, "title": "Hoje, fila do dia · claro", "page": "telas", "expand": "fill"},
+    "Hoje-escuro.dc.html": {"x": 1360, "y": 0, "w": 1280, "h": 1100, "title": "Hoje, fila do dia · escuro", "page": "telas", "expand": "fill"},
+    "Hoje-vazio.dc.html": {"x": 2720, "y": 0, "w": 1280, "h": 1000, "title": "Hoje, tudo em dia · claro", "page": "telas", "expand": "fill"},
+    "Hoje-vazio-escuro.dc.html": {"x": 4080, "y": 0, "w": 1280, "h": 1000, "title": "Hoje, tudo em dia · escuro", "page": "telas", "expand": "fill"},
+
+    "Modulos.dc.html": {"x": 0, "y": 1620, "w": 1280, "h": 1600, "title": "Módulos, mapa da trilha · claro", "page": "telas", "expand": "fill"},
+    "Modulos-escuro.dc.html": {"x": 1360, "y": 1620, "w": 1280, "h": 1600, "title": "Módulos, mapa da trilha · escuro", "page": "telas", "expand": "fill"},
+
+    "Modulo.dc.html": {"x": 0, "y": 3540, "w": 1280, "h": 2300, "title": "Módulo e meu caderno · claro", "page": "telas", "expand": "fill"},
+    "Modulo-escuro.dc.html": {"x": 1360, "y": 3540, "w": 1280, "h": 2300, "title": "Módulo e meu caderno · escuro", "page": "telas", "expand": "fill"},
+
+    "Editor.dc.html": {"x": 0, "y": 6960, "w": 1280, "h": 1600, "title": "Editor, resumo da sessão · claro", "page": "telas", "expand": "fill", "is_interactive": true},
+    "Editor-escuro.dc.html": {"x": 1360, "y": 6960, "w": 1280, "h": 1600, "title": "Editor, resumo da sessão · escuro", "page": "telas", "expand": "fill", "is_interactive": true},
+    "Editor-previa.dc.html": {"x": 2720, "y": 6960, "w": 1280, "h": 1600, "title": "Editor, ficha de decisão · claro", "page": "telas", "expand": "fill", "is_interactive": true},
+    "Editor-previa-escuro.dc.html": {"x": 4080, "y": 6960, "w": 1280, "h": 1600, "title": "Editor, ficha de decisão · escuro", "page": "telas", "expand": "fill", "is_interactive": true},
+
+    "Revisoes.dc.html": {"x": 0, "y": 8680, "w": 1280, "h": 1000, "title": "Revisões, pergunta · claro", "page": "telas", "expand": "fill", "is_interactive": true},
+    "Revisoes-escuro.dc.html": {"x": 1360, "y": 8680, "w": 1280, "h": 1000, "title": "Revisões, pergunta · escuro", "page": "telas", "expand": "fill", "is_interactive": true},
+    "Revisoes-revelada.dc.html": {"x": 2720, "y": 8680, "w": 1280, "h": 1000, "title": "Revisões, revelada · claro", "page": "telas", "expand": "fill", "is_interactive": true},
+    "Revisoes-revelada-escuro.dc.html": {"x": 4080, "y": 8680, "w": 1280, "h": 1000, "title": "Revisões, revelada · escuro", "page": "telas", "expand": "fill", "is_interactive": true},
+
+    "Rotinas.dc.html": {"x": 0, "y": 9800, "w": 1280, "h": 1200, "title": "Rotinas · claro", "page": "telas", "expand": "fill"},
+    "Rotinas-escuro.dc.html": {"x": 1360, "y": 9800, "w": 1280, "h": 1200, "title": "Rotinas · escuro", "page": "telas", "expand": "fill"},
+
+    "Sessoes.dc.html": {"x": 0, "y": 11120, "w": 1280, "h": 1100, "title": "Sessões · claro", "page": "telas", "expand": "fill"},
+    "Sessoes-escuro.dc.html": {"x": 1360, "y": 11120, "w": 1280, "h": 1100, "title": "Sessões · escuro", "page": "telas", "expand": "fill"},
+
+    "Importar.dc.html": {"x": 0, "y": 12340, "w": 1280, "h": 1000, "title": "Importar, upload · claro", "page": "telas", "expand": "fill"},
+    "Importar-escuro.dc.html": {"x": 1360, "y": 12340, "w": 1280, "h": 1000, "title": "Importar, upload · escuro", "page": "telas", "expand": "fill"},
+    "Importar-previa.dc.html": {"x": 2720, "y": 12340, "w": 1280, "h": 1000, "title": "Importar, prévia · claro", "page": "telas", "expand": "fill"},
+    "Importar-previa-escuro.dc.html": {"x": 4080, "y": 12340, "w": 1280, "h": 1000, "title": "Importar, prévia · escuro", "page": "telas", "expand": "fill"},
+    "Importar-resultado.dc.html": {"x": 5440, "y": 12340, "w": 1280, "h": 1000, "title": "Importar, resultado · claro", "page": "telas", "expand": "fill"},
+    "Importar-resultado-escuro.dc.html": {"x": 6800, "y": 12340, "w": 1280, "h": 1000, "title": "Importar, resultado · escuro", "page": "telas", "expand": "fill"}
+  },
+  "order": [
+    "Main.dc.html", "Cabecalho.dc.html", "Timer.dc.html", "Componentes.dc.html", "Componentes-escuro.dc.html",
+    "Hoje.dc.html", "Hoje-escuro.dc.html", "Hoje-vazio.dc.html", "Hoje-vazio-escuro.dc.html",
+    "Modulos.dc.html", "Modulos-escuro.dc.html",
+    "Modulo.dc.html", "Modulo-escuro.dc.html",
+    "Editor.dc.html", "Editor-escuro.dc.html", "Editor-previa.dc.html", "Editor-previa-escuro.dc.html",
+    "Revisoes.dc.html", "Revisoes-escuro.dc.html", "Revisoes-revelada.dc.html", "Revisoes-revelada-escuro.dc.html",
+    "Rotinas.dc.html", "Rotinas-escuro.dc.html",
+    "Sessoes.dc.html", "Sessoes-escuro.dc.html",
+    "Importar.dc.html", "Importar-escuro.dc.html", "Importar-previa.dc.html", "Importar-previa-escuro.dc.html", "Importar-resultado.dc.html", "Importar-resultado-escuro.dc.html"
+  ],
+  "notes": {},
+  "designSystems": []
+}
