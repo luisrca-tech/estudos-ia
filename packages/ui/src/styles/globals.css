@@ -6,125 +6,274 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/*
+ * Design tokens (docs/design-system.md). "Engineering notebook": cool paper,
+ * pen-blue accent, highlighter yellow for what changed.
+ */
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.58 0.22 27);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.809 0.105 251.813);
-  --chart-2: oklch(0.623 0.214 259.815);
-  --chart-3: oklch(0.546 0.245 262.881);
-  --chart-4: oklch(0.488 0.243 264.376);
-  --chart-5: oklch(0.424 0.199 265.638);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --background: #f2f4f1;
+  --surface: #fbfcfb;
+  --surface-sunken: #e9ece8;
+  --foreground: #17212b;
+  --muted-foreground: #57626c;
+  --line: #d3d9d4;
+  --line-strong: #aeb7b1;
+  --accent: #2a47c2;
+  --accent-foreground: #ffffff;
+  --accent-soft: #e3e8fa;
+  --success: #1c7548;
+  --success-soft: #ddefe4;
+  --warning: #8f5600;
+  --warning-soft: #f6e9cf;
+  --danger: #b4271f;
+  --danger-soft: #f8e0dd;
+  --focus: #2a47c2;
+  --highlight: #ffe35a;
+  --highlight-ink: #3d3200;
+
+  --radius: 0.5rem;
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.87 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.371 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.809 0.105 251.813);
-  --chart-2: oklch(0.623 0.214 259.815);
-  --chart-3: oklch(0.546 0.245 262.881);
-  --chart-4: oklch(0.488 0.243 264.376);
-  --chart-5: oklch(0.424 0.199 265.638);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --background: #11161b;
+  --surface: #192027;
+  --surface-sunken: #0c1014;
+  --foreground: #e3e8e5;
+  --muted-foreground: #98a3ab;
+  --line: #2a343d;
+  --line-strong: #44505a;
+  --accent: #93a8ff;
+  --accent-foreground: #0e1630;
+  --accent-soft: #1f2a52;
+  --success: #62cb93;
+  --success-soft: #163626;
+  --warning: #e8b657;
+  --warning-soft: #3a2c10;
+  --danger: #ff8f85;
+  --danger-soft: #45191a;
+  --focus: #b9c6ff;
+  --highlight: #e8cc45;
+  --highlight-ink: #2b2400;
 }
 
 @theme inline {
-  --font-sans: "Inter Variable", sans-serif;
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
-  --color-foreground: var(--foreground);
+  --font-sans: var(--font-ui), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-reading), ui-serif, Georgia, serif;
+  --font-mono: var(--font-code), ui-monospace, "SFMono-Regular", monospace;
+
   --color-background: var(--background);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 12px);
-  --radius-4xl: calc(var(--radius) + 16px);
+  --color-surface: var(--surface);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-foreground: var(--foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-soft: var(--accent-soft);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-focus: var(--focus);
+  --color-highlight: var(--highlight);
+  --color-highlight-ink: var(--highlight-ink);
+
+  /* Aliases kept for the shadcn primitives that remain (dropdown menu, toast). */
+  --color-card: var(--surface);
+  --color-card-foreground: var(--foreground);
+  --color-popover: var(--surface);
+  --color-popover-foreground: var(--foreground);
+  --color-primary: var(--accent);
+  --color-primary-foreground: var(--accent-foreground);
+  --color-secondary: var(--surface-sunken);
+  --color-secondary-foreground: var(--foreground);
+  --color-muted: var(--surface-sunken);
+  --color-destructive: var(--danger);
+  --color-border: var(--line);
+  --color-input: var(--line-strong);
+  --color-ring: var(--focus);
+
+  /* Radius by role: controls, surfaces, the timer bar. */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+
+  /* Type scale (px): 12, 14, 15, 17, 20, 24, 30, 38. */
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1.4;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.45;
+  --text-base: 0.9375rem;
+  --text-base--line-height: 1.5;
+  --text-lg: 1.0625rem;
+  --text-lg--line-height: 1.7;
+  --text-xl: 1.25rem;
+  --text-xl--line-height: 1.35;
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: 1.25;
+  --text-3xl: 1.875rem;
+  --text-3xl--line-height: 1.2;
+  --text-4xl: 2.375rem;
+  --text-4xl--line-height: 1.15;
+
+  --container-reading: 45rem;
+  --container-wide: 65rem;
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-line;
   }
-  body {
-    @apply font-sans bg-background text-foreground;
-  }
+
   html {
     @apply font-sans;
+    color-scheme: light;
+    scroll-padding-top: 9rem;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-background text-base text-foreground antialiased;
+  }
+
+  ::selection {
+    background: var(--highlight);
+    color: var(--highlight-ink);
+  }
+
+  /* One focus treatment for every interactive element. */
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Long-form reading: module content and notes rendered from Markdown. */
+  .prose-estudo {
+    @apply font-serif text-lg text-foreground;
+    max-width: 68ch;
+    overflow-wrap: break-word;
+  }
+
+  .prose-estudo > * + * {
+    margin-top: 0.9em;
+  }
+
+  .prose-estudo :is(h1, h2, h3, h4) {
+    @apply font-semibold;
+    line-height: 1.25;
+    margin-top: 1.6em;
+  }
+
+  .prose-estudo > :first-child {
+    margin-top: 0;
+  }
+
+  .prose-estudo h1 {
+    @apply text-2xl;
+  }
+
+  .prose-estudo h2 {
+    @apply text-xl;
+  }
+
+  .prose-estudo :is(h3, h4) {
+    @apply text-lg;
+  }
+
+  .prose-estudo a {
+    @apply text-accent underline decoration-1 underline-offset-[3px];
+  }
+
+  .prose-estudo a:hover {
+    @apply decoration-2;
+  }
+
+  .prose-estudo :is(ul, ol) {
+    padding-left: 1.4em;
+  }
+
+  .prose-estudo ul {
+    list-style: disc;
+  }
+
+  .prose-estudo ol {
+    list-style: decimal;
+  }
+
+  .prose-estudo li + li {
+    margin-top: 0.35em;
+  }
+
+  .prose-estudo li::marker {
+    color: var(--muted-foreground);
+  }
+
+  .prose-estudo blockquote {
+    @apply border-l-2 border-line-strong pl-4 text-muted-foreground;
+  }
+
+  .prose-estudo :not(pre) > code {
+    @apply rounded-sm bg-surface-sunken px-1 py-0.5 font-mono;
+    font-size: 0.85em;
+  }
+
+  .prose-estudo pre {
+    @apply overflow-x-auto rounded-md bg-surface-sunken p-4 font-mono text-sm;
+  }
+
+  .prose-estudo hr {
+    @apply border-line;
+    margin-block: 1.6em;
+  }
+
+  .prose-estudo table {
+    @apply w-full border-collapse font-sans text-sm;
+  }
+
+  .prose-estudo :is(th, td) {
+    @apply border-b border-line px-2 py-1.5 text-left align-top;
+  }
+
+  .prose-estudo th {
+    @apply font-semibold;
+  }
+
+  .prose-estudo input[type="checkbox"] {
+    accent-color: var(--accent);
+    margin-right: 0.4em;
+  }
+
+  /* Inline variant: one-line Markdown inside lists and labels. */
+  .prose-inline {
+    max-width: none;
+    font: inherit;
+  }
+
+  .prose-inline > * {
+    display: inline;
   }
 }
