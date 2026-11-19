@@ -49,3 +49,14 @@ export function shortcutFor(event: KeyLike): ShortcutAction | null {
   if (command || event.altKey || isTypingTarget(event.target)) return null;
   return SINGLE_KEYS[key] ?? null;
 }
+
+export type ReviewAction = "reveal" | "forgot" | "recalled";
+
+/** Review keys: Space reveals the note, then 1 = Não lembrei and 2 = Lembrei. */
+export function reviewKeyFor(event: KeyLike, revealed: boolean): ReviewAction | null {
+  if (event.metaKey || event.ctrlKey || event.altKey || event.shiftKey || isTypingTarget(event.target)) return null;
+  if (!revealed) return event.key === " " ? "reveal" : null;
+  if (event.key === "1") return "forgot";
+  if (event.key === "2") return "recalled";
+  return null;
+}

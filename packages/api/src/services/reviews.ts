@@ -42,5 +42,6 @@ export async function loadDueReviews(db: Db, now: Date) {
     step: row.step,
     dueOn: row.dueOn,
     overdue: row.overdue,
+    noteCreatedAt: row.createdAt,
   }));
 }

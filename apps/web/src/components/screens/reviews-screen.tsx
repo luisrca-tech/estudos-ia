@@ -1,13 +1,12 @@
 "use client";
 
 import { Alert } from "@estudos-ia/ui/components/alert";
-import { Badge } from "@estudos-ia/ui/components/badge";
-import { Button, buttonVariants } from "@estudos-ia/ui/components/button";
+import { Button, buttonVariants, Kbd } from "@estudos-ia/ui/components/button";
 import { EmptyState } from "@estudos-ia/ui/components/empty-state";
 import { ErrorState } from "@estudos-ia/ui/components/error-state";
-import { PageHeader, PageShell } from "@estudos-ia/ui/components/page";
-import { ReviewCard } from "@estudos-ia/ui/components/review-card";
+import { controlClassName } from "@estudos-ia/ui/components/input";
 import { Skeleton, SkeletonLines } from "@estudos-ia/ui/components/skeleton";
+import { cn } from "@estudos-ia/ui/lib/utils";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -17,45 +16,99 @@ import { Markdown } from "@/components/markdown";
 import { formatDayMonth } from "@/lib/format";
 import { DB_HINT, noteTypeLabel } from "@/lib/labels";
 import { routes } from "@/lib/routes";
+import { reviewKeyFor } from "@/lib/shortcuts";
+import { nextReviewLabel, overdueLabel } from "@/lib/study-labels";
 import { useRefreshAll } from "@/lib/use-refresh";
 import { useTRPC, type RouterOutputs } from "@/utils/trpc";
 
 type DueReview = RouterOutputs["reviews"]["due"][number];
+type Result = "recalled" | "forgot";
 
 /** Reviews 1 to 4 happen 1, 3, 7 and 21 days after the note was written. */
 const STEP_LABELS = ["revisão de 1 dia", "revisão de 3 dias", "revisão de 7 dias", "revisão de 21 dias"];
 
-function RevealedNote({ noteId, prompt }: { noteId: string; prompt: string }) {
+function Shell({ children }: { children: React.ReactNode }) {
+  return <main className="mx-auto flex w-full max-w-focus flex-col gap-7 px-4 pt-8 pb-24 sm:px-8 sm:pt-10">{children}</main>;
+}
+
+function Heading() {
+  return <h1 className="font-serif text-3xl font-semibold">Revisões</h1>;
+}
+
+/** Answer and note side by side once revealed (board Revisoes-revelada). */
+function Revealed({ noteId, answer }: { noteId: string; answer: string }) {
   const trpc = useTRPC();
   const note = useQuery(trpc.reviews.reveal.queryOptions({ noteId }, { staleTime: Number.POSITIVE_INFINITY }));
 
   if (note.isPending) return <SkeletonLines lines={4} />;
   if (note.isError) {
     return (
-      <ErrorState title="Não foi possível abrir a nota." onRetry={() => note.refetch()}>
+      <ErrorState title="O banco local não respondeu." onRetry={() => note.refetch()}>
         {DB_HINT}
       </ErrorState>
     );
   }
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex flex-wrap items-center gap-2">
-        {/* A question note already shows its title as the prompt. */}
-        {note.data.title === prompt ? null : <h2 className="font-serif text-xl font-semibold">{note.data.title}</h2>}
-        {note.data.evidenceGrade ? <Badge>Grau {note.data.evidenceGrade}</Badge> : null}
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-4">
+        {answer.trim() ? (
+          <div className="flex flex-col gap-1.5 rounded-lg bg-surface-sunken p-4">
+            <span className="text-xs font-medium text-muted-foreground">Você respondeu</span>
+            <p className="font-serif leading-[1.65] whitespace-pre-wrap">{answer.trim()}</p>
+          </div>
+        ) : null}
+        <div className="flex min-w-0 flex-col gap-1.5 rounded-lg border border-line bg-surface p-4">
+          <span className="text-xs font-medium text-muted-foreground">
+            Sua nota{note.data.evidenceGrade ? ` · grau ${note.data.evidenceGrade}` : ""}
+          </span>
+          <Markdown>{note.data.body}</Markdown>
+        </div>
       </div>
-      <Markdown>{note.data.body}</Markdown>
-      <div className="flex flex-wrap gap-4 text-sm">
+      <div className="flex flex-wrap gap-x-5 gap-y-1">
+        <Link href={routes.note(note.data.noteId)} className="text-sm text-accent">
+          Abrir nota completa
+        </Link>
         {note.data.sourceUrl ? (
-          <a href={note.data.sourceUrl} target="_blank" rel="noreferrer noopener" className={buttonVariants({ variant: "link", size: "sm" })}>
+          <a href={note.data.sourceUrl} target="_blank" rel="noreferrer noopener" className="text-sm text-accent">
             Abrir a fonte
           </a>
         ) : null}
-        <Link href={routes.note(note.data.noteId)} className={buttonVariants({ variant: "link", size: "sm" })}>
-          Editar nota
-        </Link>
       </div>
     </div>
+  );
+}
+
+function GradeButton({
+  result,
+  hint,
+  shortcut,
+  pending,
+  disabled,
+  onClick,
+}: {
+  result: Result;
+  hint: string;
+  shortcut: string;
+  pending: boolean;
+  disabled: boolean;
+  onClick: () => void;
+}) {
+  const primary = result === "recalled";
+  return (
+    <Button
+      variant={primary ? "primary" : "outline"}
+      loading={pending}
+      disabled={disabled}
+      onClick={onClick}
+      aria-keyshortcuts={shortcut}
+      className="min-h-16 flex-[1_1_200px] justify-between px-[18px] py-2 text-base"
+    >
+      <span className="flex flex-col items-start">
+        <span>{primary ? "Lembrei" : "Não lembrei"}</span>
+        <span className={cn("text-[13px] font-normal", primary ? "opacity-85" : "text-muted-foreground")}>{hint}</span>
+      </span>
+      <Kbd inverted={primary}>{shortcut}</Kbd>
+    </Button>
   );
 }
 
@@ -66,57 +119,73 @@ export function ReviewsScreen() {
 
   // The queue is fixed when the round starts, so grading never reshuffles what comes next.
   const [queue, setQueue] = useState<DueReview[] | null>(null);
-  const [position, setPosition] = useState(0);
+  const [results, setResults] = useState<Result[]>([]);
   const [revealed, setRevealed] = useState(false);
+  // Client only: the answer helps the comparison and is never saved.
+  const [answer, setAnswer] = useState("");
   const revealButton = useRef<HTMLButtonElement>(null);
+  const position = results.length;
 
   useEffect(() => {
     if (queue === null && due.data) setQueue(due.data);
   }, [due.data, queue]);
 
-  useEffect(() => {
-    revealButton.current?.focus();
-  }, [position]);
-
   const grade = useMutation(
     trpc.reviews.grade.mutationOptions({
-      onSuccess: () => {
+      onSuccess: (_, variables) => {
         setRevealed(false);
-        setPosition((current) => current + 1);
+        setAnswer("");
+        setResults((current) => [...current, variables.result]);
         return refreshAll();
       },
       onError: (error) => toast.error("A revisão não foi registrada", { description: error.message }),
     }),
   );
 
+  const current = queue?.[position];
+
+  useEffect(() => {
+    if (!current) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      const action = reviewKeyFor(event, revealed);
+      if (!action) return;
+      event.preventDefault();
+      if (action === "reveal") setRevealed(true);
+      else if (!grade.isPending) grade.mutate({ noteId: current.noteId, result: action });
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [current, revealed, grade]);
+
   if (due.isError) {
     return (
-      <PageShell width="reading">
-        <PageHeader title="Revisões" />
-        <ErrorState title="Não foi possível carregar as revisões de hoje." onRetry={() => due.refetch()}>
+      <Shell>
+        <Heading />
+        <ErrorState title="O banco local não respondeu." onRetry={() => due.refetch()}>
           {DB_HINT}
         </ErrorState>
-      </PageShell>
+      </Shell>
     );
   }
 
   if (queue === null) {
     return (
-      <PageShell width="reading">
-        <PageHeader title="Revisões" />
-        <div role="status" aria-label="Carregando revisões">
-          <Skeleton className="h-64 rounded-md" />
+      <Shell>
+        <div role="status" aria-label="Carregando revisões" className="flex flex-col gap-6">
+          <Skeleton className="h-6 w-40" />
+          <Skeleton className="h-24" />
+          <Skeleton className="h-40" />
         </div>
-      </PageShell>
+      </Shell>
     );
   }
 
-  const current = queue[position];
+  const recalled = results.filter((result) => result === "recalled").length;
 
   if (!current) {
     return (
-      <PageShell width="reading">
-        <PageHeader title="Revisões" />
+      <Shell>
+        <Heading />
         {queue.length === 0 ? (
           <EmptyState
             title="Nenhuma revisão para hoje."
@@ -138,72 +207,125 @@ export function ReviewsScreen() {
               </Link>
             }
           >
-            Você passou por {queue.length === 1 ? "1 nota" : `${queue.length} notas`}. O que não lembrou volta amanhã.
+            {recalled} de {queue.length} lembradas. O que não lembrou volta amanhã.
           </Alert>
         )}
-      </PageShell>
+      </Shell>
     );
   }
 
-  return (
-    <PageShell width="reading" className="gap-6">
-      <PageHeader
-        title="Revisões"
-        description={<span className="font-sans text-base">Responda de cabeça antes de revelar. Tentar lembrar fixa mais do que reler.</span>}
-      />
+  const overdue = overdueLabel(current.dueOn, new Date());
 
-      <div className="flex flex-col gap-2">
-        <p className="text-sm font-medium" aria-live="polite">
-          {position + 1} de {queue.length}
-        </p>
-        <div className="flex gap-1" aria-hidden>
+  return (
+    <Shell>
+      <h1 className="sr-only">Revisões</h1>
+      <div className="flex flex-col gap-2.5">
+        <div className="flex items-baseline justify-between gap-3">
+          <span className="text-sm" aria-live="polite">
+            <span className="font-mono font-medium">
+              {position + 1} de {queue.length}
+            </span>
+            <span className="text-muted-foreground">
+              {" "}
+              · {recalled} {recalled === 1 ? "lembrada" : "lembradas"}
+            </span>
+          </span>
+          <Link href="/" className="inline-flex min-h-8 items-center text-sm text-muted-foreground">
+            Parar por hoje
+          </Link>
+        </div>
+        <div
+          role="progressbar"
+          aria-label="Revisões feitas"
+          aria-valuemin={0}
+          aria-valuemax={queue.length}
+          aria-valuenow={position}
+          className="grid gap-[3px]"
+          style={{ gridTemplateColumns: `repeat(${queue.length}, minmax(0, 1fr))` }}
+        >
           {queue.map((item, index) => (
             <span
               key={item.noteId}
-              className={`h-1.5 flex-1 rounded-full ${index < position ? "bg-accent" : index === position ? "bg-accent/45" : "bg-line-strong/50"}`}
+              className={cn(
+                "h-1 rounded-[1px]",
+                index === position
+                  ? "bg-accent"
+                  : results[index] === "recalled"
+                    ? "bg-success"
+                    : results[index] === "forgot"
+                      ? "bg-line-strong"
+                      : "bg-surface-sunken",
+              )}
             />
           ))}
         </div>
       </div>
 
-      <ReviewCard
-        key={current.noteId}
-        context={
-          <Link href={routes.module(current.moduleSlug)} className="underline-offset-[3px] hover:underline">
+      <article key={current.noteId} className="flex flex-col gap-6">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[13px] text-muted-foreground">
+          <Link href={routes.module(current.moduleSlug)} className="text-muted-foreground no-underline hover:underline">
             {current.moduleKicker}
           </Link>
-        }
-        meta={
-          <>
-            <Badge tone="accent">{noteTypeLabel(current.noteType)}</Badge>
-            <Badge>{STEP_LABELS[current.step] ?? `passo ${current.step + 1}`}</Badge>
-            {current.overdue ? <Badge tone="danger">atrasada desde {formatDayMonth(`${current.dueOn}T12:00:00-03:00`)}</Badge> : null}
-          </>
-        }
-        prompt={current.prompt}
-        revealed={revealed}
-        answer={revealed ? <RevealedNote noteId={current.noteId} prompt={current.prompt} /> : null}
-        actions={
-          revealed ? (
-            <>
-              <Button loading={grade.isPending && grade.variables.result === "recalled"} disabled={grade.isPending} onClick={() => grade.mutate({ noteId: current.noteId, result: "recalled" })}>
-                Lembrei
+          <span aria-hidden>·</span>
+          <span>
+            {noteTypeLabel(current.noteType)} de {formatDayMonth(current.noteCreatedAt)}
+          </span>
+          <span aria-hidden>·</span>
+          <span>{STEP_LABELS[current.step] ?? `revisão ${current.step + 1}`}</span>
+          {overdue ? (
+            <span className="inline-flex h-5 items-center rounded-full bg-danger-soft px-[7px] text-xs font-medium text-danger">{overdue}</span>
+          ) : null}
+        </div>
+        <h2 className="font-serif text-[1.625rem] leading-[1.3] font-semibold text-balance sm:text-[1.875rem]">{current.prompt}</h2>
+
+        {revealed ? (
+          <div className="flex flex-col gap-5">
+            <Revealed noteId={current.noteId} answer={answer} />
+            <div className="flex flex-wrap gap-3 border-t border-line pt-4">
+              <GradeButton
+                result="forgot"
+                hint="volta amanhã"
+                shortcut="1"
+                pending={grade.isPending && grade.variables.result === "forgot"}
+                disabled={grade.isPending}
+                onClick={() => grade.mutate({ noteId: current.noteId, result: "forgot" })}
+              />
+              <GradeButton
+                result="recalled"
+                hint={nextReviewLabel(current.step)}
+                shortcut="2"
+                pending={grade.isPending && grade.variables.result === "recalled"}
+                disabled={grade.isPending}
+                onClick={() => grade.mutate({ noteId: current.noteId, result: "recalled" })}
+              />
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="review-answer" className="text-sm font-medium">
+                Sua resposta, de cabeça <span className="font-normal text-muted-foreground">(opcional, não é salva)</span>
+              </label>
+              <textarea
+                id="review-answer"
+                rows={4}
+                value={answer}
+                onChange={(event) => setAnswer(event.target.value)}
+                className={cn(controlClassName, "resize-y px-3.5 py-3 font-serif leading-[1.6]")}
+              />
+            </div>
+            <div className="flex flex-wrap items-center gap-4">
+              <Button ref={revealButton} size="lg" onClick={() => setRevealed(true)} aria-keyshortcuts="Space">
+                Revelar nota
+                <Kbd inverted className="text-[11px]">
+                  Espaço
+                </Kbd>
               </Button>
-              <Button variant="outline" loading={grade.isPending && grade.variables.result === "forgot"} disabled={grade.isPending} onClick={() => grade.mutate({ noteId: current.noteId, result: "forgot" })}>
-                Não lembrei
-              </Button>
-              <span className="text-sm text-muted-foreground">Não lembrei volta amanhã.</span>
-            </>
-          ) : (
-            <>
-              <Button ref={revealButton} onClick={() => setRevealed(true)}>
-                Revelar
-              </Button>
-              <span className="text-sm text-muted-foreground">Responda em voz alta ou no papel primeiro.</span>
-            </>
-          )
-        }
-      />
-    </PageShell>
+              <span className="text-sm text-muted-foreground">Reconhecer não é lembrar. Tente antes.</span>
+            </div>
+          </div>
+        )}
+      </article>
+    </Shell>
   );
 }

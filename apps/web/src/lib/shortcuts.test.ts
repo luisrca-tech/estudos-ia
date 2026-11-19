@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { isTypingTarget, shortcutFor } from "./shortcuts";
+import { isTypingTarget, reviewKeyFor, shortcutFor, type KeyLike } from "./shortcuts";
 
 const input = (type = "text") => ({ tagName: "INPUT", type });
 const key = (k: string, extra: Partial<Parameters<typeof shortcutFor>[0]> = {}) => ({
@@ -59,5 +59,36 @@ describe("shortcutFor", () => {
     expect(shortcutFor(key("k", { ctrlKey: true }))).toBe("palette");
     expect(shortcutFor(key("s", { metaKey: true, target: { tagName: "TEXTAREA" } }))).toBe("save");
     expect(shortcutFor(key("S", { ctrlKey: true }))).toBe("save");
+  });
+});
+
+describe("reviewKeyFor", () => {
+  const key = (value: string, extra: Partial<KeyLike> = {}): KeyLike => ({
+    key: value,
+    metaKey: false,
+    ctrlKey: false,
+    altKey: false,
+    shiftKey: false,
+    target: { tagName: "BODY" },
+    ...extra,
+  });
+
+  it("reveals with Space only while the note is hidden", () => {
+    expect(reviewKeyFor(key(" "), false)).toBe("reveal");
+    expect(reviewKeyFor(key(" "), true)).toBeNull();
+  });
+
+  it("grades with 1 and 2 only after revealing", () => {
+    expect(reviewKeyFor(key("1"), true)).toBe("forgot");
+    expect(reviewKeyFor(key("2"), true)).toBe("recalled");
+    expect(reviewKeyFor(key("1"), false)).toBeNull();
+    expect(reviewKeyFor(key("2"), false)).toBeNull();
+  });
+
+  it("ignores keys while typing the answer and with modifiers", () => {
+    expect(reviewKeyFor(key(" ", { target: { tagName: "TEXTAREA" } }), false)).toBeNull();
+    expect(reviewKeyFor(key("2", { target: { tagName: "TEXTAREA" } }), true)).toBeNull();
+    expect(reviewKeyFor(key("2", { metaKey: true }), true)).toBeNull();
+    expect(reviewKeyFor(key(" ", { shiftKey: true }), false)).toBeNull();
   });
 });
