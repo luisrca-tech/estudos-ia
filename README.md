@@ -2,7 +2,7 @@
 
 Caderno diário para aplicar o método da *Trilha de Engenharia de Sistemas com IA*: sessões cronometradas por módulo, notas com as próprias palavras, revisão espaçada (1, 3, 7 e 21 dias) e rotinas diária, semanal e mensal.
 
-É um app de uma pessoa só, sem contas e sem IA nesta versão (V0). Publicado, ele fica atrás de uma senha única (veja [Deploy](#deploy-vercel)). A especificação está em [`docs/spec-v0.md`](docs/spec-v0.md) e o design system em [`docs/design-system.md`](docs/design-system.md).
+É um app de uma pessoa só, sem contas e sem IA nesta versão (V0). Publicado, ele fica atrás de uma tela de login com usuário e senha únicos (veja [Deploy](#deploy-vercel)). A especificação está em [`docs/spec-v0.md`](docs/spec-v0.md) e o design system em [`docs/design-system.md`](docs/design-system.md).
 
 ## Como rodar
 
@@ -125,11 +125,12 @@ Cadastre em Settings → Environment Variables, para Production (e Preview, se u
 | Variável | Obrigatória | Para que serve |
 |---|---|---|
 | `DATABASE_URL` | sim, já no build | conexão com o Postgres; sem ela o `next build` falha na validação do varlock |
-| `APP_PASSWORD` | sim, num deploy público | liga a trava de senha (HTTP Basic Auth) em todas as páginas e em `/api/trpc`; vazia, a trava fica desligada |
-| `APP_USER` | não | usuário da trava; o padrão é `luis` |
+| `APP_PASSWORD` | sim, num deploy público | liga o login: sem sessão, as páginas vão para `/login` e `/api/trpc` responde 401; vazia, a trava fica desligada |
+| `APP_SESSION_SECRET` | sim, com `APP_PASSWORD` | assina o cookie de sessão (HMAC-SHA256, 30 dias); gere com `openssl rand -hex 32`. Sem ela, ninguém consegue entrar e o servidor registra o erro |
+| `APP_USER` | não | usuário do login; o padrão é `luis` |
 | `_VARLOCK_ENV_KEY` | sim | chave de 64 caracteres hex; gere com `npx varlock generate-key --plain` |
 
-Na Vercel, a integração do varlock com o Next resolve as variáveis no build e as grava criptografadas dentro do bundle, porque lá não há como resolvê-las a cada requisição. A `_VARLOCK_ENV_KEY` criptografa no build e decifra em runtime, então precisa estar disponível nos dois. Consequência: trocar `APP_PASSWORD` ou `DATABASE_URL` só vale depois de um novo deploy.
+Na Vercel, a integração do varlock com o Next resolve as variáveis no build e as grava criptografadas dentro do bundle, porque lá não há como resolvê-las a cada requisição. A `_VARLOCK_ENV_KEY` criptografa no build e decifra em runtime, então precisa estar disponível nos dois. Consequência: trocar `APP_PASSWORD`, `APP_SESSION_SECRET` ou `DATABASE_URL` só vale depois de um novo deploy. Trocar `APP_SESSION_SECRET` encerra todas as sessões abertas.
 
 Use uma senha longa e aleatória. O varlock derruba qualquer resposta que contenha o valor de uma variável sensível; por isso `APP_USER` não é marcada como sensível, e uma senha curta que apareça numa nota quebraria a página.
 

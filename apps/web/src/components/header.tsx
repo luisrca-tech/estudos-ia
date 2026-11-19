@@ -12,6 +12,7 @@ import { uiActions } from "@/lib/ui-store";
 import { useTRPC } from "@/utils/trpc";
 
 import { ModeToggle } from "./mode-toggle";
+import { StairsIcon } from "./stairs-icon";
 
 const LINKS: ReadonlyArray<{ href: Route; label: string; match: (path: string) => boolean; reviews?: true }> = [
   { href: "/", label: "Hoje", match: (path) => path === "/" },
@@ -22,16 +23,7 @@ const LINKS: ReadonlyArray<{ href: Route; label: string; match: (path: string) =
   { href: "/import", label: "Importar", match: (path) => path.startsWith("/import") },
 ];
 
-/** The stairs of the method, used as the wordmark icon. */
-function StairsIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" aria-hidden>
-      <path d="M3 20h4v-4h4v-4h4V8h4V4" />
-    </svg>
-  );
-}
-
-export default function Header() {
+export default function Header({ signOut = false }: { signOut?: boolean }) {
   const pathname = usePathname();
   const trpc = useTRPC();
   const due = useQuery(trpc.reviews.due.queryOptions(undefined, { refetchInterval: 60_000 }));
@@ -87,6 +79,16 @@ export default function Header() {
             <Kbd className="bg-surface">⌘K</Kbd>
           </button>
           <ModeToggle />
+          {signOut ? (
+            <form method="post" action="/auth/logout">
+              <button
+                type="submit"
+                className="inline-flex h-9 cursor-pointer items-center rounded-sm px-2.5 text-sm text-muted-foreground hover:text-foreground"
+              >
+                Sair
+              </button>
+            </form>
+          ) : null}
         </div>
       </div>
     </header>

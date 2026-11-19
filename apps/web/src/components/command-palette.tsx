@@ -14,13 +14,14 @@ import { noteTypeLabel } from "@/lib/labels";
 import { routes } from "@/lib/routes";
 import { matchesQuery } from "@/lib/search";
 import { uiActions, useUiState } from "@/lib/ui-store";
+import { signOut as signOutRequest } from "@/lib/auth/sign-out";
 import { useStartSession } from "@/lib/use-start-session";
 import { useTRPC } from "@/utils/trpc";
 
 type Item = { id: string; group: "Ações" | "Módulos" | "Notas"; label: string; hint?: string; run: () => void };
 
 /** ⌘K: go to a module, a note or run an action. */
-export function CommandPalette() {
+export function CommandPalette({ signOut }: { signOut?: boolean }) {
   const { paletteOpen, currentModule } = useUiState();
   const trpc = useTRPC();
   const router = useRouter();
@@ -61,6 +62,9 @@ export function CommandPalette() {
           setTheme(resolvedTheme === "dark" ? "light" : "dark");
         },
       },
+      ...(signOut
+        ? [{ id: "a-sign-out", group: "Ações" as const, label: "Sair", run: () => { close(); void signOutRequest(); } }]
+        : []),
     ];
     const moduleItems: Item[] = (modules.data ?? []).map((module) => ({
       id: `m-${module.id}`,
@@ -81,7 +85,7 @@ export function CommandPalette() {
       ...moduleItems.filter((item) => matchesQuery(`${item.hint} ${item.label}`, query)).slice(0, query ? 8 : 15),
       ...noteItems,
     ];
-  }, [modules.data, notes.data, query, currentModule, resolvedTheme]);
+  }, [modules.data, notes.data, query, currentModule, resolvedTheme, signOut]);
 
   useEffect(() => setActive(0), [query, paletteOpen]);
   useEffect(() => {
