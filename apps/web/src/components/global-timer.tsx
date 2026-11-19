@@ -1,5 +1,6 @@
 "use client";
 
+import { requiresSummary } from "@estudos-ia/api/rules/summary-alerts";
 import { Button } from "@estudos-ia/ui/components/button";
 import { formatClock, TimerBar } from "@estudos-ia/ui/components/timer-bar";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -36,6 +37,10 @@ export function GlobalTimer() {
   const complete = useMutation(
     trpc.sessions.complete.mutationOptions({
       onSuccess: (completed) => {
+        if (!requiresSummary(completed.durationSeconds)) {
+          toast.success("Sessão concluída", { description: "Sessão curta: não gera cobrança de resumo." });
+          return refreshAll();
+        }
         const target = session && session.id === completed.id ? session : null;
         toast.success("Sessão concluída", {
           description: "Escreva seu resumo com suas palavras nas próximas 24 h.",

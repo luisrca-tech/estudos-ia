@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   ALERT_WINDOW_DAYS,
   findSessionToLink,
+  requiresSummary,
   sessionCounts,
   summaryStatus,
   type AlertNote,
@@ -28,6 +29,16 @@ const note = (overrides: Partial<AlertNote> = {}): AlertNote => ({
   source: "app",
   createdAt: at("2026-11-19T13:00:00Z"),
   ...overrides,
+});
+
+describe("requiresSummary", () => {
+  it("asks for a summary only from 5 minutes of real duration on", () => {
+    expect(requiresSummary(null)).toBe(false);
+    expect(requiresSummary(0)).toBe(false);
+    expect(requiresSummary(299)).toBe(false);
+    expect(requiresSummary(300)).toBe(true);
+    expect(requiresSummary(1500)).toBe(true);
+  });
 });
 
 describe("sessionCounts (acceptance 20)", () => {

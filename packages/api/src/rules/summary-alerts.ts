@@ -35,12 +35,16 @@ export type SummaryStatus = {
 
 type CountingSession = AlertSession & { endedAt: Date; durationSeconds: number };
 
+/** Whether a completed session of this real duration asks for a summary. */
+export function requiresSummary(durationSeconds: number | null): boolean {
+  return durationSeconds !== null && durationSeconds >= MIN_COUNTING_SECONDS;
+}
+
 export function sessionCounts(session: AlertSession): session is CountingSession {
   return (
     session.status === "completed" &&
     session.endedAt !== null &&
-    session.durationSeconds !== null &&
-    session.durationSeconds >= MIN_COUNTING_SECONDS
+    requiresSummary(session.durationSeconds)
   );
 }
 
