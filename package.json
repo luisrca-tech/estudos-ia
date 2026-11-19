@@ -20,7 +20,10 @@
     "db:stop": "npm run db:stop --workspace @estudos-ia/db --",
     "db:down": "npm run db:down --workspace @estudos-ia/db --",
     "env:generate": "varlock codegen --path ./apps/web/ && varlock codegen --path ./packages/db/",
-    "postinstall": "varlock codegen --path ./apps/web/ && varlock codegen --path ./packages/db/"
+    "postinstall": "varlock codegen --path ./apps/web/ && varlock codegen --path ./packages/db/",
+    "content:extract": "tsx scripts/extract-trilha.ts",
+    "db:seed": "npm run db:seed --workspace @estudos-ia/db --",
+    "test": "vitest run"
   },
   "dependencies": {
     "zod": "^4.6.7"
@@ -28,8 +31,13 @@
   "devDependencies": {
     "@estudos-ia/config": "*",
     "@types/node": "^26.6.6",
+    "@types/turndown": "^5.0.6",
+    "cheerio": "^1.2.0",
+    "tsx": "^4.23.15",
+    "turndown": "^7.2.5",
     "typescript": "^6.0.3",
-    "varlock": "1.25.0"
+    "varlock": "1.25.0",
+    "vitest": "^5.1.1"
   },
   "overrides": {
     "@next/env": "npm:@varlock/nextjs-integration@2.0.1"

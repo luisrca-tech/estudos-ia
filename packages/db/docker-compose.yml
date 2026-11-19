@@ -2,14 +2,14 @@ name: estudos-ia
 
 services:
   postgres:
-    image: postgres:18
+    image: pgvector/pgvector:pg18
     container_name: estudos-ia-postgres
     environment:
-      POSTGRES_DB: estudos-ia
+      POSTGRES_DB: estudos_ia
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - estudos-ia_postgres_data:/var/lib/postgresql
     healthcheck:
