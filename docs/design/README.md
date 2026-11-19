@@ -1,4 +1,4 @@
-# Design · estudos-ia
+# Design · Degrau
 
 Screen and interaction design for V0, made on 2026-11-19. Interactive canvas: https://claude.ai/artifact/DH7gsC9q6S7EUTxLGSu66f (private; open it from the owner's account).
 

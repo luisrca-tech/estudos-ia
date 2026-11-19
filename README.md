@@ -1,8 +1,8 @@
-# estudos-ia
+# Degrau
 
-Caderno diário para aplicar o método da *Trilha de Engenharia de Sistemas com IA*: sessões cronometradas por módulo, notas com as próprias palavras, revisão espaçada (1, 3, 7 e 21 dias) e rotinas diária, semanal e mensal.
+**Um degrau por dia em Engenharia de IA.** Caderno diário para aplicar o método da *Trilha de Engenharia de Sistemas com IA*: sessões cronometradas por módulo, notas com as próprias palavras, revisão espaçada (1, 3, 7 e 21 dias) e rotinas diária, semanal e mensal.
 
-É um app de uma pessoa só, sem contas e sem IA nesta versão (V0). Publicado, ele fica atrás de uma tela de login com usuário e senha únicos (veja [Deploy](#deploy-vercel)). A especificação está em [`docs/spec-v0.md`](docs/spec-v0.md) e o design system em [`docs/design-system.md`](docs/design-system.md).
+É um app de uma pessoa só, sem contas e sem IA nesta versão (V0). Publicado, ele fica atrás de uma tela de login com usuário e senha únicos (veja [Deploy](#deploy-vercel)). Em produção: <https://degrau-ia.vercel.app>. O repositório, os pacotes (`@estudos-ia/*`), o banco e o container continuam com o nome técnico `estudos-ia`. A especificação está em [`docs/spec-v0.md`](docs/spec-v0.md) e o design system em [`docs/design-system.md`](docs/design-system.md).
 
 ## Como rodar
 
@@ -102,7 +102,7 @@ docker exec -i estudos-ia-postgres psql -U postgres estudos_ia < backup-2026-11-
 
 ## Deploy (Vercel)
 
-O app roda na Vercel a partir de `apps/web`, com um Postgres remoto. Não há `vercel.json`: as configurações abaixo ficam no painel do projeto.
+O app roda na Vercel (projeto `degrau`, <https://degrau-ia.vercel.app>) a partir de `apps/web`, com um Postgres remoto. Cada push em `main` gera um deploy automático. Não há `vercel.json`: as configurações abaixo ficam no painel do projeto.
 
 ### Configurações do projeto
 

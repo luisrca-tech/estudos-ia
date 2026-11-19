@@ -1,4 +1,4 @@
-# Design system · estudos-ia
+# Design system · Degrau
 
 Decidido em 19/11/2026 com a skill `frontend-design`, antes das telas (S6/S7). Os tokens vivem em `packages/ui/src/styles/globals.css` e os componentes em `packages/ui/src/components/`. As telas só usam esses componentes e tokens.
 

@@ -10,8 +10,8 @@ const fontReading = Literata({ variable: "--font-reading", subsets: ["latin"], s
 const fontCode = IBM_Plex_Mono({ variable: "--font-code", subsets: ["latin"], weight: ["400", "500"] });
 
 export const metadata: Metadata = {
-  title: { default: "estudos-ia", template: "%s · estudos-ia" },
-  description: "Caderno diário da Trilha de Engenharia de Sistemas com IA.",
+  title: { default: "Degrau", template: "%s · Degrau" },
+  description: "Um degrau por dia em Engenharia de IA: sessões, notas com as próprias palavras, revisão espaçada e rotinas.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

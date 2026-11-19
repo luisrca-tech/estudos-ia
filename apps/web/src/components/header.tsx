@@ -34,7 +34,7 @@ export default function Header({ signOut = false }: { signOut?: boolean }) {
       <div className="mx-auto flex min-h-header w-full max-w-page flex-wrap items-stretch gap-x-6 px-4 sm:px-8 lg:flex-nowrap">
         <Link href="/" className="mr-auto flex items-center gap-2 font-serif text-[17px] font-semibold text-foreground no-underline lg:mr-0">
           <StairsIcon />
-          estudos-ia
+          Degrau
         </Link>
         <nav aria-label="Principal" className="order-last -mx-3 flex w-full min-w-0 items-stretch overflow-x-auto lg:order-none lg:mx-0 lg:w-auto lg:flex-1">
           {LINKS.map((link) => {
