@@ -12,7 +12,7 @@ const buttonVariants = cva(
         outline: "border-line-strong bg-surface text-foreground hover:border-foreground/40 hover:bg-surface-sunken",
         ghost: "text-foreground hover:bg-surface-sunken",
         danger: "border-danger/40 bg-danger-soft text-danger hover:border-danger",
-        link: "h-auto rounded-none p-0 text-accent underline decoration-1 underline-offset-[3px] hover:decoration-2",
+        link: "h-auto! rounded-none px-0! text-accent underline decoration-1 underline-offset-[3px] hover:decoration-2",
       },
       size: {
         sm: "h-8 px-3 text-sm",
@@ -21,7 +21,6 @@ const buttonVariants = cva(
         icon: "size-10",
       },
     },
-    compoundVariants: [{ variant: "link", className: "h-auto px-0" }],
     defaultVariants: { variant: "primary", size: "md" },
   },
 );

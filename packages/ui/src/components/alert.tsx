@@ -1,6 +1,6 @@
 import { cn } from "@estudos-ia/ui/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
-import { CircleAlertIcon, CircleCheckIcon, ClockIcon, InfoIcon } from "lucide-react";
+import { CircleAlertIcon, CircleCheckIcon, ClockIcon, HighlighterIcon, InfoIcon } from "lucide-react";
 import * as React from "react";
 
 const alertVariants = cva("flex gap-3 rounded-md border border-l-4 p-4", {
@@ -10,13 +10,15 @@ const alertVariants = cva("flex gap-3 rounded-md border border-l-4 p-4", {
       success: "border-success/30 border-l-success bg-success-soft",
       warning: "border-warning/30 border-l-warning bg-warning-soft",
       danger: "border-danger/30 border-l-danger bg-danger-soft",
+      // Something changed and wants a look; not a problem.
+      highlight: "border-line border-l-highlight bg-surface",
     },
   },
   defaultVariants: { tone: "info" },
 });
 
-const ICONS = { info: InfoIcon, success: CircleCheckIcon, warning: ClockIcon, danger: CircleAlertIcon };
-const ICON_COLOR = { info: "text-accent", success: "text-success", warning: "text-warning", danger: "text-danger" };
+const ICONS = { info: InfoIcon, success: CircleCheckIcon, warning: ClockIcon, danger: CircleAlertIcon, highlight: HighlighterIcon };
+const ICON_COLOR = { info: "text-accent", success: "text-success", warning: "text-warning", danger: "text-danger", highlight: "text-foreground" };
 
 type AlertProps = Omit<React.ComponentProps<"div">, "title"> &
   VariantProps<typeof alertVariants> & {

@@ -37,7 +37,7 @@ type StepSelectorProps = {
 /** Pick the mastery step. Choosing the current step again goes one step back. */
 function StepSelector({ level, onLevelChange, labels, descriptions, disabled, className }: StepSelectorProps) {
   return (
-    <div role="group" aria-label="Degrau de domínio" data-slot="step-selector" className={cn("grid grid-cols-5 items-end gap-1.5", className)}>
+    <div role="group" aria-label="Degrau de domínio" data-slot="step-selector" className={cn("grid grid-cols-5 items-start gap-1.5", className)}>
       {STEPS.map((step, index) => {
         const reached = step <= level;
         return (
@@ -50,13 +50,15 @@ function StepSelector({ level, onLevelChange, labels, descriptions, disabled, cl
             onClick={() => onLevelChange(step === level ? step - 1 : step)}
             className="group flex cursor-pointer flex-col gap-1.5 rounded-sm text-left disabled:cursor-not-allowed disabled:opacity-60"
           >
-            <span
-              className={cn(
-                "block w-full rounded-sm border transition-colors",
-                reached ? "border-accent bg-accent" : "border-line-strong bg-surface group-hover:border-accent",
-              )}
-              style={{ height: `${0.5 + index * 0.4}rem` }}
-            />
+            <span className="flex h-9 items-end">
+              <span
+                className={cn(
+                  "block w-full rounded-sm border transition-colors",
+                  reached ? "border-accent bg-accent" : "border-line-strong/70 bg-surface-sunken group-hover:border-accent",
+                )}
+                style={{ height: `${0.5 + index * 0.4}rem` }}
+              />
+            </span>
             <span className={cn("text-xs leading-tight sm:text-sm", reached ? "font-medium text-foreground" : "text-muted-foreground")}>
               <span className="tabular-nums">{step}</span> {labels[index]}
             </span>

@@ -1,25 +1,33 @@
 import type { AppRouter } from "@estudos-ia/api/routers/index";
-import { environmentManager, QueryCache, QueryClient } from "@tanstack/react-query";
-import { createTRPCClient, httpBatchLink } from "@trpc/client";
+import { environmentManager, QueryClient } from "@tanstack/react-query";
+import { createTRPCClient, httpBatchLink, TRPCClientError } from "@trpc/client";
+import type { inferRouterOutputs } from "@trpc/server";
 import { createTRPCContext } from "@trpc/tanstack-react-query";
-import { toast } from "sonner";
 
 export const { TRPCProvider, useTRPC, useTRPCClient } = createTRPCContext<AppRouter>();
 
+export type RouterOutputs = inferRouterOutputs<AppRouter>;
+
+/** tRPC error code such as NOT_FOUND or CONFLICT, when the error came from the API. */
+export function errorCode(error: unknown): string | undefined {
+  return error instanceof TRPCClientError ? (error.data as { code?: string } | undefined)?.code : undefined;
+}
+
+function isClientError(error: unknown): boolean {
+  const status =
+    error instanceof TRPCClientError ? (error.data as { httpStatus?: number } | undefined)?.httpStatus : undefined;
+  return status !== undefined && status < 500;
+}
+
 function makeQueryClient() {
   return new QueryClient({
-    queryCache: new QueryCache({
-      onError: (error, query) => {
-        toast.error(error.message, {
-          action: {
-            label: "retry",
-            onClick: () => {
-              query.invalidate();
-            },
-          },
-        });
+    defaultOptions: {
+      queries: {
+        staleTime: 5_000,
+        // A 4xx will not get better by asking again.
+        retry: (failureCount, error) => failureCount < 1 && !isClientError(error),
       },
-    }),
+    },
   });
 }
 
