@@ -2,7 +2,7 @@
 
 Caderno diário para aplicar o método da *Trilha de Engenharia de Sistemas com IA*: sessões cronometradas por módulo, notas com as próprias palavras, revisão espaçada (1, 3, 7 e 21 dias) e rotinas diária, semanal e mensal.
 
-É um app local, de uma pessoa só, sem autenticação e sem IA nesta versão (V0). A especificação está em [`docs/spec-v0.md`](docs/spec-v0.md) e o design system em [`docs/design-system.md`](docs/design-system.md).
+É um app de uma pessoa só, sem contas e sem IA nesta versão (V0). Publicado, ele fica atrás de uma senha única (veja [Deploy](#deploy-vercel)). A especificação está em [`docs/spec-v0.md`](docs/spec-v0.md) e o design system em [`docs/design-system.md`](docs/design-system.md).
 
 ## Como rodar
 
@@ -99,6 +99,52 @@ docker exec -i estudos-ia-postgres psql -U postgres estudos_ia < backup-2026-11-
 ```
 
 `npm run db:down` remove o container, mas mantém o volume. Os dados só se perdem se o volume for apagado (`docker volume rm`) ou com `docker compose down -v`.
+
+## Deploy (Vercel)
+
+O app roda na Vercel a partir de `apps/web`, com um Postgres remoto. Não há `vercel.json`: as configurações abaixo ficam no painel do projeto.
+
+### Configurações do projeto
+
+| Campo | Valor |
+|---|---|
+| Framework Preset | Next.js |
+| Root Directory | `apps/web` |
+| Include files outside the Root Directory | ligado (padrão), porque o app usa `packages/*` |
+| Install Command | padrão (a Vercel detecta os workspaces do npm e instala na raiz do repositório) |
+| Build Command | padrão (`next build`) |
+| Output Directory | padrão (`.next`) |
+| Node.js Version | 24.x |
+
+A instalação roda o `postinstall` da raiz, que gera `apps/web/src/env.ts` e `packages/db/src/env.ts` a partir dos `.env.schema` (esses arquivos não entram no git). Esse passo não precisa de nenhum valor de variável.
+
+### Variáveis de ambiente
+
+Cadastre em Settings → Environment Variables, para Production (e Preview, se usar):
+
+| Variável | Obrigatória | Para que serve |
+|---|---|---|
+| `DATABASE_URL` | sim, já no build | conexão com o Postgres; sem ela o `next build` falha na validação do varlock |
+| `APP_PASSWORD` | sim, num deploy público | liga a trava de senha (HTTP Basic Auth) em todas as páginas e em `/api/trpc`; vazia, a trava fica desligada |
+| `APP_USER` | não | usuário da trava; o padrão é `luis` |
+| `_VARLOCK_ENV_KEY` | sim | chave de 64 caracteres hex; gere com `npx varlock generate-key --plain` |
+
+Na Vercel, a integração do varlock com o Next resolve as variáveis no build e as grava criptografadas dentro do bundle, porque lá não há como resolvê-las a cada requisição. A `_VARLOCK_ENV_KEY` criptografa no build e decifra em runtime, então precisa estar disponível nos dois. Consequência: trocar `APP_PASSWORD` ou `DATABASE_URL` só vale depois de um novo deploy.
+
+Use uma senha longa e aleatória. O varlock derruba qualquer resposta que contenha o valor de uma variável sensível; por isso `APP_USER` não é marcada como sensível, e uma senha curta que apareça numa nota quebraria a página.
+
+Sem `APP_PASSWORD`, nada muda no desenvolvimento local: `npm run dev` continua sem senha.
+
+### Banco remoto
+
+Rode as migrations e o seed da sua máquina, apontando para o banco remoto. O valor de `DATABASE_URL` no ambiente tem precedência sobre o `apps/web/.env`:
+
+```bash
+DATABASE_URL='postgresql://usuario:senha@host:5432/banco?sslmode=require' npm run db:migrate
+DATABASE_URL='postgresql://usuario:senha@host:5432/banco?sslmode=require' npm run db:seed
+```
+
+As migrations atuais não usam pgvector, então qualquer Postgres serve. A extensão `vector` só será necessária na V2 (busca nas notas); escolha um provedor que a ofereça para não precisar migrar depois.
 
 ## Fora da V0
 
