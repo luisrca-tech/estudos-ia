@@ -80,3 +80,29 @@ export function moduleNumber(kicker: string): string {
 export function formatTime(value: DateInput): string {
   return time.format(new Date(value));
 }
+
+const WEEKDAY_NAMES = ["domingo", "segunda", "terça", "quarta", "quinta", "sexta", "sábado"];
+const MONTH_NAMES = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
+
+/** "Quinta, 19 de novembro" from a YYYY-MM-DD day. */
+export function formatDayTitle(day: string): string {
+  const date = calendarDay(day);
+  return `${capitalize(WEEKDAY_NAMES[date.getUTCDay()]!)}, ${date.getUTCDate()} de ${MONTH_NAMES[date.getUTCMonth()]}`;
+}
+
+const spParts = new Intl.DateTimeFormat("en-CA", {
+  timeZone: TZ,
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+  hour: "2-digit",
+  minute: "2-digit",
+  hourCycle: "h23",
+});
+
+/** "Sessão de terça, 17/11, 14:10" in São Paulo time. */
+export function formatSessionWhen(value: DateInput): string {
+  const parts = Object.fromEntries(spParts.formatToParts(new Date(value)).map((part) => [part.type, part.value]));
+  const weekday = WEEKDAY_NAMES[calendarDay(`${parts.year}-${parts.month}-${parts.day}`).getUTCDay()];
+  return `Sessão de ${weekday}, ${parts.day}/${parts.month}, ${parts.hour}:${parts.minute}`;
+}
