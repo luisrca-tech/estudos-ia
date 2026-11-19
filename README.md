@@ -136,6 +136,8 @@ Use uma senha longa e aleatória. O varlock derruba qualquer resposta que conten
 
 Sem `APP_PASSWORD`, nada muda no desenvolvimento local: `npm run dev` continua sem senha.
 
+O Degrau é um app pessoal atrás de login: `robots.txt` bloqueia tudo e as páginas levam `noindex, nofollow`. O ícone, o manifest, o `robots.txt` e a imagem de compartilhamento (`/opengraph-image`) ficam abertos para que links e o ícone funcionem antes do login. A URL pública usada nos metadados vem de `SITE_URL` (padrão `https://degrau-ia.vercel.app`).
+
 ### Banco remoto
 
 Rode as migrations e o seed da sua máquina, apontando para o banco remoto. O valor de `DATABASE_URL` no ambiente tem precedência sobre o `apps/web/.env`:

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <style>
+    .tile { fill: #2A47C2 }
+    @media (prefers-color-scheme: dark) { .tile { fill: #93A8FF } .steps { fill: #0E1630 } }
+  </style>
+  <rect class="tile" width="32" height="32" rx="7"/>
+  <path class="steps" fill="#FFFFFF" d="M6 26V20H12V14H18V8H26V26Z"/>
+</svg>
