@@ -1,0 +1,42 @@
+{
+  "name": "estudos-ia",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "type": "module",
+  "scripts": {
+    "dev": "npm run dev --workspaces --if-present",
+    "build": "npm run build --workspaces --if-present",
+    "check-types": "npm run check-types --workspaces --if-present",
+    "dev:web": "npm run dev --workspace web --",
+    "db:push": "npm run db:push --workspace @estudos-ia/db --",
+    "db:studio": "npm run db:studio --workspace @estudos-ia/db --",
+    "db:generate": "npm run db:generate --workspace @estudos-ia/db --",
+    "db:migrate": "npm run db:migrate --workspace @estudos-ia/db --",
+    "db:start": "npm run db:start --workspace @estudos-ia/db --",
+    "db:watch": "npm run db:watch --workspace @estudos-ia/db --",
+    "db:stop": "npm run db:stop --workspace @estudos-ia/db --",
+    "db:down": "npm run db:down --workspace @estudos-ia/db --",
+    "env:generate": "varlock codegen --path ./apps/web/ && varlock codegen --path ./packages/db/",
+    "postinstall": "varlock codegen --path ./apps/web/ && varlock codegen --path ./packages/db/"
+  },
+  "dependencies": {
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@estudos-ia/config": "*",
+    "@types/node": "^26.6.6",
+    "typescript": "^6.0.3",
+    "varlock": "1.25.0"
+  },
+  "overrides": {
+    "@next/env": "npm:@varlock/nextjs-integration@2.0.1"
+  },
+  "packageManager": "npm@11.19.0",
+  "allowScripts": {
+    "esbuild": true,
+    "sharp": true
+  }
+}

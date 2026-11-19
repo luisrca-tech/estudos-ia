@@ -1,0 +1,3 @@
+{
+  "extends": "@estudos-ia/config/tsconfig.base.json"
+}
