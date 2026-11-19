@@ -42,46 +42,9 @@ export const GRADES: ReadonlyArray<{ value: Grade; meaning: string }> = [
   { value: "E", meaning: "intuição minha ou do agente" },
 ];
 
-/** Concept note model of the method, shown as placeholder for summaries. */
-export const SUMMARY_TEMPLATE = `Afirmação: em uma frase, com minhas palavras
-
-Mecanismo: por que funciona
-
-Use quando: …
-
-Não use quando: …
-
-Alternativa mais simples: …
-
-Evidência: fonte + grau (A–E)
-
-Como eu verificaria no meu sistema: …
-
-Pergunta de revisão: …`;
-
-/** Short ADR model, shown as placeholder for decisions. */
-export const DECISION_TEMPLATE = `Contexto: …
-
-Opções consideradas: …
-
-Escolha: …
-
-Evidência: …
-
-Custo aceito: …
-
-O que me faria mudar de ideia: …
-
-Data: …`;
-
-export const BODY_TEMPLATES: Partial<Record<NoteType, string>> = {
-  summary: SUMMARY_TEMPLATE,
-  decision: DECISION_TEMPLATE,
-};
-
 export const BODY_PLACEHOLDERS: Record<NoteType, string> = {
-  summary: SUMMARY_TEMPLATE,
-  decision: DECISION_TEMPLATE,
+  summary: "Escreva de memória: a afirmação, o mecanismo, quando usar e quando não usar.",
+  decision: "O contexto, as opções, a escolha e o custo aceito.",
   question: "O que você ainda não sabe responder? Escreva a pergunta no título e, aqui, o que já sabe e onde procurar.",
   evidence: "O que a fonte afirma, como eles sabem e o que isso muda no seu sistema.",
 };

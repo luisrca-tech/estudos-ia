@@ -3,14 +3,12 @@
 import { buttonVariants } from "@estudos-ia/ui/components/button";
 import { EmptyState } from "@estudos-ia/ui/components/empty-state";
 import { ErrorState } from "@estudos-ia/ui/components/error-state";
-import { PageHeader, PageShell } from "@estudos-ia/ui/components/page";
+import { PageShell } from "@estudos-ia/ui/components/page";
 import { Skeleton, SkeletonLines } from "@estudos-ia/ui/components/skeleton";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 
-import { formatDateTime } from "@/lib/format";
 import { DB_HINT, isNoteType } from "@/lib/labels";
-import { routes } from "@/lib/routes";
 import { errorCode, useTRPC } from "@/utils/trpc";
 
 import { NoteForm } from "./note-form";
@@ -63,17 +61,11 @@ export function NewNoteScreen({ slug, type, sessionId }: { slug: string; type?: 
   }
 
   return (
-    <PageShell width="reading" className="gap-8">
-      <PageHeader
-        kicker={<Link href={routes.module(module.data.slug)}>{module.data.content.kicker}</Link>}
-        title="Nova nota"
-      />
-      <NoteForm
-        module={module.data}
-        initialType={isNoteType(type) ? type : "summary"}
-        sessionId={sessionId && /^[0-9a-f-]{36}$/i.test(sessionId) ? sessionId : undefined}
-      />
-    </PageShell>
+    <NoteForm
+      module={{ ...module.data, kicker: module.data.content.kicker, title: module.data.content.title }}
+      initialType={isNoteType(type) ? type : "summary"}
+      sessionId={sessionId && /^[0-9a-f-]{36}$/i.test(sessionId) ? sessionId : undefined}
+    />
   );
 }
 
@@ -96,18 +88,5 @@ export function EditNoteScreen({ id }: { id: string }) {
     );
   }
 
-  return (
-    <PageShell width="reading" className="gap-8">
-      <PageHeader
-        kicker={<Link href={routes.module(note.data.module.slug)}>{note.data.module.kicker}</Link>}
-        title="Editar nota"
-        description={
-          <span className="font-sans text-sm">
-            Criada em {formatDateTime(note.data.createdAt)}. Editar não muda a agenda de revisão.
-          </span>
-        }
-      />
-      <NoteForm key={note.data.id} module={note.data.module} note={note.data} />
-    </PageShell>
-  );
+  return <NoteForm key={note.data.id} module={note.data.module} note={note.data} />;
 }
