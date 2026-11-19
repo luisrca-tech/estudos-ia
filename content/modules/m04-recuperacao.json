@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "slug": "m04-recuperacao",
+  "key": "m4",
+  "part": 1,
+  "order": 4,
+  "kicker": "Módulo 4 · Buscar a verdade",
+  "title": "Recuperação: RAG de verdade",
+  "lead": "RAG não é \"banco vetorial\". É um problema de busca, e a qualidade da resposta é limitada pelo que a busca trouxe. Por isso se mede a recuperação separada da geração.",
+  "prerequisites": null,
+  "seen": [
+    "RAG fornece evidência na execução; fine-tuning muda parâmetros.",
+    "Uma consulta direta a uma API ou SQL pode bastar; banco vetorial não é obrigação."
+  ],
+  "new": [
+    "**Chunking:** tamanho, sobreposição e por que um trecho sem contexto perde o sentido.",
+    "**Busca híbrida:** BM25 (palavra exata, nomes, códigos) junto com embeddings (sentido). Juntas, costumam superar cada uma sozinha.",
+    "**Reranking:** buscar muitos candidatos de forma barata e reordenar com um modelo mais preciso.",
+    "**Contextual Retrieval:** acrescentar a cada trecho uma frase explicando de onde ele vem. A Anthropic relata cerca de 49% menos falhas de recuperação, e 67% combinando com reranking (grau C).",
+    "**Métricas de busca:** recall@k e precisão, medidos num conjunto de perguntas com o trecho correto marcado.",
+    "**Busca agêntica:** o agente decide o que buscar, em várias rodadas. Mais flexível, mais cara e mais difícil de avaliar."
+  ],
+  "decisionQuestions": [
+    "A resposta errada veio de busca ruim ou de geração ruim? Como eu sei?",
+    "Os usuários buscam por termos exatos (nomes, códigos) ou por sentido?",
+    "Os dados mudam? Com que frequência preciso reindexar?"
+  ],
+  "readings": [
+    {
+      "kind": "Artigo",
+      "title": "[Contextual retrieval in AI systems](https://www.anthropic.com/news/contextual-retrieval), Anthropic",
+      "url": "https://www.anthropic.com/news/contextual-retrieval",
+      "duration": "25 min",
+      "why": "Busca híbrida, reranking e contextualização de trechos, com números e código.",
+      "grade": null
+    },
+    {
+      "kind": "Artigo",
+      "title": "[Patterns for Building LLM-based Systems & Products](https://eugeneyan.com/writing/llm-patterns/), Eugene Yan",
+      "url": "https://eugeneyan.com/writing/llm-patterns/",
+      "duration": "1 h 30",
+      "why": "Avaliação, RAG, fine-tuning, cache, guardrails e feedback. Um dos textos mais citados do campo.",
+      "grade": null
+    },
+    {
+      "kind": "Artigo",
+      "title": "[What We've Learned From A Year of Building with LLMs](https://applied-llms.org/), Yan, Bischof, Frye, Husain, Liu e Shankar",
+      "url": "https://applied-llms.org/",
+      "duration": "2 h",
+      "why": "Lições táticas, operacionais e estratégicas de seis praticantes. Leia uma parte por semana.",
+      "grade": null
+    },
+    {
+      "kind": "Paper",
+      "title": "[Retrieval-Augmented Generation](https://arxiv.org/abs/2005.11401), Lewis et al. e [Self-RAG](https://arxiv.org/abs/2310.11511), Asai et al.",
+      "url": "https://arxiv.org/abs/2005.11401",
+      "duration": "1 h",
+      "why": "A origem do termo e uma versão em que o modelo decide quando buscar e critica o que trouxe.",
+      "grade": "B"
+    }
+  ],
+  "exercise": "Monte 30 perguntas reais sobre um corpus que você conhece (documentação do Festejo ou do Entrelaços) e marque o trecho que responde cada uma. Meça o recall@5 de uma busca só por palavras e de uma busca híbrida. Só depois avalie a resposta gerada.",
+  "seeds": "Anote quais documentos têm dados pessoais e quem pode ver cada um. Busca sobre dados pessoais é assunto de LGPD no [Módulo 14](/modules/m14-governanca)."
+}

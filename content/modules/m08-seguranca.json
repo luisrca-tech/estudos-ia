@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "slug": "m08-seguranca",
+  "key": "m8",
+  "part": 1,
+  "order": 8,
+  "kicker": "Módulo 8 · Proteger",
+  "title": "Segurança de sistemas com agentes",
+  "lead": "Um modelo não distingue com confiança instrução de dado. Todo texto que ele lê pode tentar comandá-lo. Por isso a segurança se garante na arquitetura, não no prompt.",
+  "prerequisites": null,
+  "seen": [
+    "Autorização é código; instrução no prompt não substitui controle.",
+    "Ações destrutivas com aprovação; separar leitura de escrita."
+  ],
+  "new": [
+    "**Prompt injection direto e indireto:** o direto vem do usuário. O indireto vem de conteúdo que o agente lê (página, e-mail, documento, resposta de ferramenta). O indireto é o mais perigoso.",
+    "**Lethal trifecta (Simon Willison):** acesso a dados privados, exposição a conteúdo não confiável e capacidade de comunicar para fora. Com as três juntas, um atacante consegue exfiltrar dados. A defesa mais confiável é cortar uma das três.",
+    "**Padrões de defesa por desenho:** seletor de ações, planejar antes de ler dados não confiáveis, map-reduce com LLMs isolados, dual LLM e minimização de contexto.",
+    "**CaMeL:** um modelo privilegiado escreve o plano a partir do pedido confiável; um modelo em quarentena só extrai dados; capacidades rastreiam de onde veio cada valor.",
+    "**Riscos de MCP e de ferramentas de terceiros:** descrições de ferramenta envenenadas e servidores que mudam de comportamento.",
+    "**OWASP Top 10 para LLMs:** o checklist de mercado, de injeção a consumo ilimitado de recursos."
+  ],
+  "decisionQuestions": [
+    "Quais das três pernas da trifecta este agente tem? Qual eu consigo remover?",
+    "Que texto não confiável entra no contexto, e o que o agente pode fazer depois de lê-lo?",
+    "Se o modelo obedecer ao atacante, qual é o pior efeito possível? A aplicação impede isso?"
+  ],
+  "readings": [
+    {
+      "kind": "Artigo",
+      "title": "[The lethal trifecta for AI agents](https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/), Simon Willison",
+      "url": "https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/",
+      "duration": "15 min",
+      "why": "O modelo mental mais útil de segurança de agentes.",
+      "grade": null
+    },
+    {
+      "kind": "Vídeo",
+      "title": "[Prompt Injection, explained](https://www.youtube.com/watch?v=FgxwCaL6UTA), Simon Willison",
+      "url": "https://www.youtube.com/watch?v=FgxwCaL6UTA",
+      "duration": "40 min",
+      "why": "Por que o problema não tem uma correção simples.",
+      "grade": null
+    },
+    {
+      "kind": "Paper",
+      "title": "[Design Patterns for Securing LLM Agents against Prompt Injections](https://arxiv.org/abs/2506.08837), Beurer-Kellner et al.",
+      "url": "https://arxiv.org/abs/2506.08837",
+      "duration": "1 h",
+      "why": "Seis padrões de arquitetura com prós e contras e estudos de caso. O mais aplicável da lista.",
+      "grade": "B"
+    },
+    {
+      "kind": "Paper",
+      "title": "[Defeating Prompt Injections by Design (CaMeL)](https://arxiv.org/abs/2503.18813), Debenedetti et al.",
+      "url": "https://arxiv.org/abs/2503.18813",
+      "duration": "1 h",
+      "why": "Separação entre planejamento e dados com rastreamento de capacidades.",
+      "grade": "B"
+    },
+    {
+      "kind": "Referência",
+      "title": "[OWASP Top 10 for LLM Applications](https://genai.owasp.org/llm-top-10/)",
+      "url": "https://genai.owasp.org/llm-top-10/",
+      "duration": "1 h",
+      "why": "Checklist para revisar qualquer sistema antes de produção.",
+      "grade": null
+    },
+    {
+      "kind": "Série",
+      "title": "[Posts sobre prompt injection](https://simonwillison.net/tags/prompt-injection/), Simon Willison",
+      "url": "https://simonwillison.net/tags/prompt-injection/",
+      "duration": "contínuo",
+      "why": "Os casos reais de ataque aparecem aqui primeiro.",
+      "grade": null
+    }
+  ],
+  "exercise": "Faça a análise da trifecta para o gerador de convites e para o bot: liste os dados privados acessíveis, as fontes de texto não confiável (o pedido do comprador, imagens enviadas, nomes de convidados) e os canais de saída (links, imagens, e-mails, chamadas externas). Proponha qual perna cortar e escreva três ataques de teste que o sistema precisa bloquear.",
+  "seeds": "Para cada dado de terceiro, anote a base legal, o tempo de retenção e para qual provedor de modelo ele vai. Isso alimenta o mapa de dados do [Módulo 14](/modules/m14-governanca)."
+}

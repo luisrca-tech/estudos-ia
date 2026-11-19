@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "slug": "m13-produto-feedback",
+  "key": "m13",
+  "part": 2,
+  "order": 13,
+  "kicker": "Módulo 13 · Produto e feedback",
+  "title": "Produto, UX de IA e o ciclo de feedback",
+  "lead": "Um sistema de IA vale o que vale a experiência em volta do erro. O produto decide quanta autonomia o modelo tem, como o usuário corrige e como essa correção volta para a avaliação.",
+  "prerequisites": "Pré-requisitos: módulos 2, 6 e 9.",
+  "seen": [
+    "Módulo 9: data flywheel, shadow mode e canário.",
+    "Módulo 8: confirmação humana nas ações de risco.",
+    "Módulo 6: lei de Goodhart, ou seja, a métrica que vira meta deixa de medir."
+  ],
+  "new": [
+    "**Controle de autonomia:** sugerir → rascunho para aprovar → agir com desfazer → agir sozinho. É o \"autonomy slider\" da palestra do Karpathy. Cada ação sobe de nível só com pass^k medido (Módulo 6).",
+    "**Projetar para o erro:** deixar claro o que o sistema faz e com que qualidade, permitir correção rápida, desfazer e escalar para um humano. As 18 diretrizes HAX da Microsoft organizam isso em quatro momentos: no início, durante a interação, quando erra e ao longo do tempo.",
+    "**Feedback explícito × implícito:** o polegar para cima é ruidoso e raro. Sinais implícitos (editou, refez, copiou, abandonou) são mais honestos. Todo sinal precisa de um destino, que é a fila da análise de erros.",
+    "**Métrica de produto × métrica de modelo:** taxa de aceite, proporção editada, tempo até um resultado útil e contatos com o suporte. O caso Klarna, na seção de casos, mostra o que acontece quando o custo domina a avaliação.",
+    "**A entrada também é UX:** uma interface que coleta a entrada certa costuma melhorar o resultado mais que trocar de modelo. O briefing do Festejo é exatamente esse ponto."
+  ],
+  "decisionQuestions": [
+    "Em que nível de autonomia está cada ação, e com qual evidência?",
+    "Como o usuário corrige um erro em menos de 30 segundos?",
+    "Para onde vai cada sinal de feedback, e quem lê?",
+    "Que métrica de qualidade impede que uma meta de custo piore o produto?"
+  ],
+  "readings": [
+    {
+      "kind": "Guia",
+      "title": "[Guidelines for Human-AI Interaction](https://www.microsoft.com/en-us/haxtoolkit/ai-guidelines/), Microsoft HAX",
+      "url": "https://www.microsoft.com/en-us/haxtoolkit/ai-guidelines/",
+      "duration": "30 min",
+      "why": "As 18 diretrizes, validadas em pesquisa. Vira checklist de revisão de qualquer tela com IA.",
+      "grade": null
+    },
+    {
+      "kind": "Artigo",
+      "title": "[Patterns for Building LLM-based Systems & Products](https://eugeneyan.com/writing/llm-patterns/), Eugene Yan",
+      "url": "https://eugeneyan.com/writing/llm-patterns/",
+      "duration": "45 min",
+      "why": "Leia as seções de UX defensiva e de coleta de feedback. O resto revisa a Parte 1.",
+      "grade": null
+    },
+    {
+      "kind": "Artigo",
+      "title": "[All the Hard Stuff Nobody Talks About when Building Products with LLMs](https://www.honeycomb.io/blog/hard-stuff-nobody-talks-about-llm) e [So We Shipped an AI Product. Did it Work?](https://www.honeycomb.io/blog/we-shipped-ai-product), Honeycomb",
+      "url": "https://www.honeycomb.io/blog/hard-stuff-nobody-talks-about-llm",
+      "duration": "40 min",
+      "why": "Um time que lançou, mediu e contou o que deu errado. Os dois textos juntos fecham o ciclo.",
+      "grade": null
+    },
+    {
+      "kind": "Artigo",
+      "title": "[What We've Learned From A Year of Building with LLMs](https://applied-llms.org/), Yan, Bischof, Frye, Husain, Liu e Shankar",
+      "url": "https://applied-llms.org/",
+      "duration": "1 h",
+      "why": "Táticas, operação e estratégia de produto. Bom para ler em três dias.",
+      "grade": null
+    },
+    {
+      "kind": "Guia",
+      "title": "[People + AI Guidebook](https://pair.withgoogle.com/guidebook/), Google PAIR",
+      "url": "https://pair.withgoogle.com/guidebook/",
+      "duration": "1 h",
+      "why": "Comece pelos capítulos de feedback e controle e de erros.",
+      "grade": null
+    },
+    {
+      "kind": "Vídeo",
+      "title": "[Software Is Changing (Again)](https://www.youtube.com/watch?v=LCEmiRjPEtQ), Andrej Karpathy",
+      "url": "https://www.youtube.com/watch?v=LCEmiRjPEtQ",
+      "duration": "revisão",
+      "why": "Já está no Módulo 1. Reveja o trecho sobre autonomia gradual e verificação humana.",
+      "grade": null
+    }
+  ],
+  "exercise": "No briefing e no painel do Festejo, liste cada ponto em que o comprador ou o convidado pode discordar do que a IA fez. Para cada um, responda: como ele percebe o erro, como corrige, qual sinal fica registrado e para onde esse sinal vai. Revise a lista com as 18 diretrizes HAX e escolha as três lacunas mais caras. Peça ao Atlas para atacar a sua escolha.",
+  "seeds": "O mapa de onde humanos aprovam, corrigem ou desistem (Módulo 2), o campo de sinal do usuário no trace (Módulo 9) e o arquivo de correções (Módulo 6)."
+}

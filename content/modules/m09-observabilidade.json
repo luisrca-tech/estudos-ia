@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "slug": "m09-observabilidade",
+  "key": "m9",
+  "part": 1,
+  "order": 9,
+  "kicker": "Módulo 9 · Operar",
+  "title": "Observabilidade e operação",
+  "lead": "Se você não consegue ver o que o modelo recebeu e respondeu numa execução específica, não consegue depurar, avaliar nem melhorar. Observabilidade é o que transforma produção em dados de avaliação.",
+  "prerequisites": null,
+  "seen": [
+    "Trace por execução com entrada, contexto, versão do prompt, modelo, custo e veredito.",
+    "Avaliação contínua com casos reservados a cada mudança."
+  ],
+  "new": [
+    "**Traces e spans:** uma execução é uma árvore de passos (chamada de modelo, ferramenta, busca), cada um com tempo, tokens, custo e erro.",
+    "**Convenções GenAI do OpenTelemetry:** nomes padrão para modelo, tokens e operações, para não ficar preso a um fornecedor de observabilidade.",
+    "**Prompt como artefato versionado:** cada execução registra a versão do prompt e do modelo, para comparar e reverter.",
+    "**Mudança segura:** shadow mode (a versão nova roda em paralelo sem responder), canário (uma fração do tráfego) e rollback.",
+    "**Flywheel de dados:** sinais de produção (aceite, edição, reclamação, reabertura) viram casos de avaliação e, com volume, dados de ajuste. Respeite a LGPD ao guardar entradas de usuários."
+  ],
+  "decisionQuestions": [
+    "Dado o ID de uma execução que falhou, consigo ver exatamente o que o modelo recebeu?",
+    "Que sinal de produção diz que uma resposta foi boa, sem perguntar ao usuário?",
+    "Como coloco um prompt novo no ar sem arriscar todos os usuários?"
+  ],
+  "readings": [
+    {
+      "kind": "Artigo",
+      "title": "[Building A Generative AI Platform](https://huyenchip.com/2024/07/25/genai-platform.html), Chip Huyen",
+      "url": "https://huyenchip.com/2024/07/25/genai-platform.html",
+      "duration": "1 h",
+      "why": "A plataforma inteira, peça por peça: contexto, guardrails, roteador, cache, observabilidade e orquestração.",
+      "grade": null
+    },
+    {
+      "kind": "Spec",
+      "title": "[OpenTelemetry · Semantic conventions for GenAI](https://opentelemetry.io/docs/specs/semconv/gen-ai/)",
+      "url": "https://opentelemetry.io/docs/specs/semconv/gen-ai/",
+      "duration": "40 min",
+      "why": "Leia os atributos de spans de modelo e de agente.",
+      "grade": null
+    },
+    {
+      "kind": "Artigo",
+      "title": "[A Year of Building with LLMs](https://applied-llms.org/), parte operacional",
+      "url": "https://applied-llms.org/",
+      "duration": "40 min",
+      "why": "Dados, modelos, produto e pessoas na operação.",
+      "grade": null
+    },
+    {
+      "kind": "Livro",
+      "title": "[AI Engineering](https://www.oreilly.com/library/view/ai-engineering/9781098166298/), Chip Huyen, O'Reilly",
+      "url": "https://www.oreilly.com/library/view/ai-engineering/9781098166298/",
+      "duration": "livro",
+      "why": "A referência mais completa do campo. Bom para ler um capítulo por mês, em paralelo com a trilha.",
+      "grade": null
+    }
+  ],
+  "exercise": "Retome a falha da geração do Marcos, que não apareceu nos logs. Defina o trace mínimo que teria mostrado a causa: quais spans, quais atributos e onde gravar. Peça ao Tecnico para dizer se cabe na API atual, e só então leve a mudança ao T3.",
+  "seeds": "No trace mínimo, inclua o tempo até o primeiro token, a versão do prompt e um campo para o sinal do usuário (editou, refez, abandonou). Esses campos servem aos módulos [12](/modules/m12-inferencia-latencia), [13](/modules/m13-produto-feedback) e [14](/modules/m14-governanca)."
+}

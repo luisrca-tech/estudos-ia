@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "slug": "m05-ferramentas-aci",
+  "key": "m5",
+  "part": 1,
+  "order": 5,
+  "kicker": "Módulo 5 · Como o modelo age",
+  "title": "Ferramentas e a interface agente-computador",
+  "lead": "A definição de uma ferramenta é parte do prompt. Ferramentas ruins fazem um bom modelo parecer burro. Ferramenta boa é desenhada para o agente, não espelhada da API interna.",
+  "prerequisites": null,
+  "seen": [
+    "Poka-yoke: argumentos que tornam o erro difícil.",
+    "Identificadores sensíveis injetados pelo código; poucas ferramentas, só as do caso de uso."
+  ],
+  "new": [
+    "**Ferramentas para agentes, não para programas:** uma ferramenta que resolve uma intenção (por exemplo, \"agendar reunião\") em vez de três chamadas de API cruas.",
+    "**Respostas econômicas:** devolver só o que importa, com paginação, filtros e um modo resumido ou detalhado. Erros que dizem ao agente o que fazer a seguir.",
+    "**Nomes e fronteiras:** namespace entre ferramentas parecidas para o agente não confundir.",
+    "**Avaliar ferramentas:** rodar tarefas reais, ler as transcrições e ajustar a descrição onde o agente erra.",
+    "**MCP:** protocolo padrão para expor ferramentas, recursos e prompts. Ajuda na integração e traz riscos próprios (Módulo 8).",
+    "**Saída estruturada:** schema estrito e decodificação restrita garantem o formato. O conteúdo continua precisando de validação."
+  ],
+  "decisionQuestions": [
+    "Só pela descrição e pelos parâmetros, um dev júnior saberia usar esta ferramenta?",
+    "Quais ferramentas leem e quais escrevem? Quais escritas não se desfazem?",
+    "A resposta da ferramenta cabe no contexto quando o resultado é grande?"
+  ],
+  "readings": [
+    {
+      "kind": "Artigo",
+      "title": "[Writing effective tools for AI agents](https://www.anthropic.com/engineering/writing-tools-for-agents), Anthropic",
+      "url": "https://www.anthropic.com/engineering/writing-tools-for-agents",
+      "duration": "30 min",
+      "why": "Como desenhar, avaliar e melhorar ferramentas, inclusive usando o próprio agente para isso.",
+      "grade": null
+    },
+    {
+      "kind": "Docs",
+      "title": "[Model Context Protocol](https://modelcontextprotocol.io/)",
+      "url": "https://modelcontextprotocol.io/",
+      "duration": "1 h",
+      "why": "Leia a introdução, a arquitetura e a parte de segurança da especificação.",
+      "grade": null
+    },
+    {
+      "kind": "Código",
+      "title": "[Claude Cookbooks](https://github.com/anthropics/claude-cookbooks)",
+      "url": "https://github.com/anthropics/claude-cookbooks",
+      "duration": "sob demanda",
+      "why": "Exemplos executáveis de tool use, saída estruturada, RAG e agentes.",
+      "grade": null
+    }
+  ],
+  "exercise": "Pegue as ferramentas que um agente do Festejo ou do Entrelaços usa ou usaria. Monte uma tabela com nome, leitura ou escrita, reversível ou não, quem fornece os identificadores e o que acontece se a chamada for repetida. Essa tabela é o insumo dos Módulos 7 e 8.",
+  "seeds": "Anote onde a saída do modelo quebra o parser ou o schema da ferramenta. É o ponto de partida da saída estruturada no [Módulo 12](/modules/m12-inferencia-latencia)."
+}

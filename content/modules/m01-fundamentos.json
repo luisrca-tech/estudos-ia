@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "slug": "m01-fundamentos",
+  "key": "m1",
+  "part": 1,
+  "order": 1,
+  "kicker": "Módulo 1 · Fundamentos",
+  "title": "O que o modelo é e o que ele não é",
+  "lead": "Quase todo erro de arquitetura começa por esperar do modelo algo que ele não faz: lembrar o que não está no contexto, ser determinístico, saber fatos de depois do treino ou \"consultar\" os próprios pesos como um banco de dados.",
+  "prerequisites": null,
+  "seen": [
+    "Pesos, contexto e memória externa são camadas diferentes.",
+    "MoE ativa parte dos parâmetros por token; não é multiagente.",
+    "Fine-tuning muda comportamento; não condensa um domínio inteiro."
+  ],
+  "new": [
+    "**Tokens e janela de contexto:** custo, limite e por que contar caracteres engana.",
+    "**Pré-treino, ajuste por instrução e RLHF:** de onde vêm as capacidades e os vícios (bajulação, excesso de confiança).",
+    "**Amostragem e não determinismo:** temperatura e por que o mesmo prompt dá respostas diferentes. Isso muda a forma de testar.",
+    "**Raciocínio em tempo de inferência:** chain-of-thought, autoconsistência e orçamento de raciocínio (effort). Quando pensar mais compra qualidade e quando só compra latência.",
+    "**Alucinação como propriedade, não bug:** o modelo gera o plausível. A mitigação é arquitetural (fonte, verificação), não um prompt pedindo para \"não inventar\"."
+  ],
+  "decisionQuestions": [
+    "Esta informação precisa estar no contexto, ou espero que o modelo \"saiba\"?",
+    "Preciso de raciocínio longo nesta etapa, ou ela é de extração e formatação?",
+    "Meu teste considera que a mesma entrada pode dar saídas diferentes?"
+  ],
+  "readings": [
+    {
+      "kind": "Vídeo",
+      "title": "[Intro to Large Language Models](https://www.youtube.com/watch?v=zjkBMFhNj_g), Andrej Karpathy",
+      "url": "https://www.youtube.com/watch?v=zjkBMFhNj_g",
+      "duration": "1 h",
+      "why": "A melhor visão geral: o que é o modelo, como é treinado e onde estão os limites e riscos.",
+      "grade": null
+    },
+    {
+      "kind": "Vídeo",
+      "title": "[Deep Dive into LLMs like ChatGPT](https://www.youtube.com/watch?v=7xTGNNLPyMI), Andrej Karpathy",
+      "url": "https://www.youtube.com/watch?v=7xTGNNLPyMI",
+      "duration": "3 h 30",
+      "why": "Pré-treino, tokenização, pós-treino, alucinação e raciocínio, em profundidade. Assista em blocos de 30 minutos.",
+      "grade": null
+    },
+    {
+      "kind": "Vídeo",
+      "title": "[Software Is Changing (Again)](https://www.youtube.com/watch?v=LCEmiRjPEtQ), Andrej Karpathy, YC",
+      "url": "https://www.youtube.com/watch?v=LCEmiRjPEtQ",
+      "duration": "40 min",
+      "why": "Modelo como sistema operacional, autonomia gradual e o papel do humano na verificação.",
+      "grade": null
+    },
+    {
+      "kind": "Paper",
+      "title": "[Chain-of-Thought Prompting](https://arxiv.org/abs/2201.11903), Wei et al. e [Self-Consistency](https://arxiv.org/abs/2203.11171), Wang et al.",
+      "url": "https://arxiv.org/abs/2201.11903",
+      "duration": "40 min",
+      "why": "As bases do raciocínio em inferência. Leia resumo, figuras e conclusão.",
+      "grade": "B"
+    },
+    {
+      "kind": "Artigo",
+      "title": "[LLM Powered Autonomous Agents](https://lilianweng.github.io/posts/2023-06-23-agent/), Lilian Weng",
+      "url": "https://lilianweng.github.io/posts/2023-06-23-agent/",
+      "duration": "40 min",
+      "why": "Planejamento, memória e uso de ferramentas como componentes. Antigo, mas o vocabulário continua.",
+      "grade": null
+    },
+    {
+      "kind": "Opcional",
+      "title": "[Let's build GPT](https://www.youtube.com/watch?v=kCc8FmEb1nY), Andrej Karpathy",
+      "url": "https://www.youtube.com/watch?v=kCc8FmEb1nY",
+      "duration": "2 h",
+      "why": "Para quem quer ver a mecânica em código. Não é necessário para projetar sistemas.",
+      "grade": null
+    }
+  ],
+  "exercise": "Rode o mesmo prompt do gerador de convites do Festejo 10 vezes com a mesma entrada. Conte quantas saídas passam no seu critério de aceite. Esse número é o primeiro dado de consistência do sistema, e ele vai voltar no Módulo 6 (pass^k).",
+  "seeds": "Toda vez que um prompt bem escrito, com exemplos, ainda errar formato, tom ou regra **do mesmo jeito**, anote o caso. Erro consistente de comportamento é o sinal que justifica ajustar o modelo no [Módulo 11](/modules/m11-adaptacao-dados). Erro aleatório não é."
+}

@@ -1,0 +1,158 @@
+{
+  "schemaVersion": 1,
+  "slug": "m06-avaliacao",
+  "key": "m6",
+  "part": 1,
+  "order": 6,
+  "kicker": "Módulo 6 · O mais importante",
+  "title": "Avaliação: a habilidade que separa engenharia de achismo",
+  "lead": "Sem avaliação não existe decisão técnica, só preferência. Este é o módulo com mais peso na trilha e o que mais gera destaque, porque pouca gente sabe fazer bem.",
+  "prerequisites": null,
+  "seen": [
+    "Baseline, holdout, ablação; variar uma dimensão por vez.",
+    "Gate barato antes do juiz caro; juiz cego com troca A/B.",
+    "Validade da avaliação: o caso Quillmark."
+  ],
+  "new": [
+    "**Análise de erros primeiro:** ler dezenas de transcrições reais, anotar livremente o que deu errado e só depois agrupar em categorias. As métricas saem das falhas observadas, não de uma lista genérica.",
+    "**Três tipos de avaliador:** código (determinístico, barato), modelo (flexível, enviesado) e humano (caro, a referência). Use o mais barato que mede a coisa certa.",
+    "**Passa ou falha em vez de nota:** juízes binários com critério escrito são mais consistentes e mais acionáveis do que escalas de 1 a 10.",
+    "**Vieses do LLM-juiz:** posição, verbosidade e autopreferência. A troca A/B do Site Workflow responde ao primeiro.",
+    "**Validar o validador:** medir a concordância do juiz com rótulos humanos antes de confiar nele. Os critérios mudam conforme você vê mais casos.",
+    "**pass@k × pass^k:** pass@k pergunta se acerta pelo menos uma vez em k tentativas; pass^k, se acerta todas as k. Para um agente que atende clientes, o que importa é pass^k, e ele cai rápido quando k cresce.",
+    "**Estatística mínima:** com 30 casos, uma diferença de 5 pontos pode ser ruído. Erro padrão, comparação pareada e intervalos de confiança.",
+    "**Lei de Goodhart:** quando uma métrica vira meta, deixa de ser uma boa métrica.",
+    "**Avaliar a trajetória ou o resultado:** conferir o estado final do sistema é mais robusto do que exigir uma sequência exata de passos.",
+    "**Usuário simulado:** um modelo fazendo o papel do cliente, com objetivo e persona, para testar agentes conversacionais. É a resposta técnica ao \"agente fazendo os dois lados\"."
+  ],
+  "decisionQuestions": [
+    "Quais são as cinco falhas mais frequentes, segundo as transcrições que eu li?",
+    "Qual delas um código consegue detectar sem modelo?",
+    "Meu juiz concorda comigo em quantos casos de cada 100?",
+    "A diferença entre as duas versões é maior que o ruído?"
+  ],
+  "readings": [
+    {
+      "kind": "Artigo",
+      "title": "[Your AI Product Needs Evals](https://hamel.dev/blog/posts/evals/), Hamel Husain",
+      "url": "https://hamel.dev/blog/posts/evals/",
+      "duration": "40 min",
+      "why": "Por onde começar: testes unitários de LLM, avaliação humana e de modelo, e o ciclo de melhoria.",
+      "grade": null
+    },
+    {
+      "kind": "Artigo",
+      "title": "[A Field Guide to Rapidly Improving AI Products](https://hamel.dev/blog/posts/field-guide/), Hamel Husain",
+      "url": "https://hamel.dev/blog/posts/field-guide/",
+      "duration": "40 min",
+      "why": "Análise de erros, ferramentas de leitura de dados e o especialista de domínio no centro.",
+      "grade": null
+    },
+    {
+      "kind": "Artigo",
+      "title": "[Using LLM-as-a-Judge For Evaluation](https://hamel.dev/blog/posts/llm-judge/), Hamel Husain",
+      "url": "https://hamel.dev/blog/posts/llm-judge/",
+      "duration": "40 min",
+      "why": "Como criar um juiz binário, com críticas escritas e alinhado a um especialista.",
+      "grade": null
+    },
+    {
+      "kind": "Artigo",
+      "title": "[Demystifying evals for AI agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents), Anthropic",
+      "url": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents",
+      "duration": "40 min",
+      "why": "Avaliação específica de agentes: tarefas, avaliadores, trajetórias e consistência.",
+      "grade": null
+    },
+    {
+      "kind": "Vídeo",
+      "title": "[Why AI evals are the hottest new skill for product builders](https://www.youtube.com/watch?v=BsWxPI9UM4c), Hamel Husain e Shreya Shankar, Lenny's Podcast",
+      "url": "https://www.youtube.com/watch?v=BsWxPI9UM4c",
+      "duration": "1 h 40",
+      "why": "Análise de erros na prática, com uma demonstração em dados reais.",
+      "grade": null
+    },
+    {
+      "kind": "Vídeo",
+      "title": "[LLM Evals: Common Mistakes](https://www.youtube.com/watch?v=GL0XhAj5LPE), Hamel Husain",
+      "url": "https://www.youtube.com/watch?v=GL0XhAj5LPE",
+      "duration": "1 h",
+      "why": "Os erros que mais aparecem ao criar avaliações de domínio.",
+      "grade": null
+    },
+    {
+      "kind": "Artigo",
+      "title": "[AI Evals: Everything You Need to Know](https://hamel.dev/blog/posts/evals-faq/), Hamel Husain e Shreya Shankar",
+      "url": "https://hamel.dev/blog/posts/evals-faq/",
+      "duration": "consulta",
+      "why": "Perguntas frequentes. Volte a ele sempre que travar.",
+      "grade": null
+    },
+    {
+      "kind": "Artigo",
+      "title": "[Evaluating the Effectiveness of LLM-Evaluators](https://eugeneyan.com/writing/llm-evaluators/) e [Task-Specific LLM Evals that Do & Don't Work](https://eugeneyan.com/writing/evals/), Eugene Yan",
+      "url": "https://eugeneyan.com/writing/llm-evaluators/",
+      "duration": "1 h 30",
+      "why": "Revisão de pesquisa sobre juízes e métricas por tipo de tarefa.",
+      "grade": null
+    },
+    {
+      "kind": "Paper",
+      "title": "[Judging LLM-as-a-Judge](https://arxiv.org/abs/2306.05685), Zheng et al.",
+      "url": "https://arxiv.org/abs/2306.05685",
+      "duration": "45 min",
+      "why": "A origem da discussão sobre vieses de posição, verbosidade e autopreferência.",
+      "grade": "B"
+    },
+    {
+      "kind": "Paper",
+      "title": "[Who Validates the Validators?](https://arxiv.org/abs/2404.12272), Shankar et al.",
+      "url": "https://arxiv.org/abs/2404.12272",
+      "duration": "45 min",
+      "why": "Os critérios mudam ao ver as saídas; como alinhar o juiz às preferências humanas.",
+      "grade": "B"
+    },
+    {
+      "kind": "Paper",
+      "title": "[τ-bench](https://arxiv.org/abs/2406.12045), Yao et al. e o [resumo da Sierra](https://sierra.ai/blog/benchmarking-ai-agents)",
+      "url": "https://arxiv.org/abs/2406.12045",
+      "duration": "45 min",
+      "why": "Agente, ferramentas e usuário simulado; de onde vem a métrica pass^k.",
+      "grade": "B"
+    },
+    {
+      "kind": "Paper",
+      "title": "[A statistical approach to model evaluations](https://www.anthropic.com/research/statistical-approach-to-model-evals), Anthropic ([paper](https://arxiv.org/abs/2411.00640))",
+      "url": "https://www.anthropic.com/research/statistical-approach-to-model-evals",
+      "duration": "30 min",
+      "why": "Barras de erro, comparação pareada e quantos casos você precisa.",
+      "grade": "B"
+    },
+    {
+      "kind": "Paper",
+      "title": "[Categorizing Variants of Goodhart's Law](https://arxiv.org/abs/1803.04585), Manheim e Garrabrant",
+      "url": "https://arxiv.org/abs/1803.04585",
+      "duration": "30 min",
+      "why": "As quatro formas de uma métrica se descolar do objetivo. O Quillmark é um exemplo.",
+      "grade": "B"
+    },
+    {
+      "kind": "Docs",
+      "title": "[Define success criteria and build evaluations](https://docs.claude.com/en/docs/test-and-evaluate/develop-tests), Claude Docs",
+      "url": "https://docs.claude.com/en/docs/test-and-evaluate/develop-tests",
+      "duration": "20 min",
+      "why": "Critérios de sucesso específicos e mensuráveis, com exemplos de avaliadores.",
+      "grade": null
+    },
+    {
+      "kind": "Vídeo",
+      "title": "[Getting Evals Right for LLM Applications](https://www.youtube.com/watch?v=QDQT99csHJQ), LangChain Interrupt",
+      "url": "https://www.youtube.com/watch?v=QDQT99csHJQ",
+      "duration": "30 min",
+      "why": "Palestra complementar sobre os erros recorrentes em avaliações.",
+      "grade": null
+    }
+  ],
+  "exercise": "1.  Junte 50 gerações reais de convites do Festejo, em dev.\n2.  Leia uma a uma e anote livremente o que está errado. Não use categorias prontas.\n3.  Agrupe as anotações em 4 a 6 tipos de falha e conte cada um.\n4.  Para o tipo mais frequente: se um código detecta, escreva o gate. Se não, escreva um juiz binário e meça a concordância com os seus rótulos.\n5.  Guarde 20 casos fora do ajuste. Eles viram o conjunto de regressão de toda mudança de prompt ou modelo.",
+  "seeds": "Guarde cada caso rotulado e cada correção sua num único arquivo, com entrada, saída, rótulo e motivo. Não descarte nada: esse arquivo vira o dataset do [Módulo 11](/modules/m11-adaptacao-dados) e o começo do ciclo de feedback do [Módulo 13](/modules/m13-produto-feedback)."
+}

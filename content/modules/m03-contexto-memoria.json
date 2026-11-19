@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "slug": "m03-contexto-memoria",
+  "key": "m3",
+  "part": 1,
+  "order": 3,
+  "kicker": "Módulo 3 · O que o modelo vê",
+  "title": "Contexto e memória",
+  "lead": "O contexto é um recurso finito com retorno decrescente. Cada token a mais compete pela atenção do modelo. Engenharia de contexto é escolher o menor conjunto de informação de alto sinal para cada etapa.",
+  "prerequisites": null,
+  "seen": [
+    "Contexto útil vale mais que contexto acumulado.",
+    "Skills com carregamento progressivo; sessões novas por papel em vez de uma sessão longa que compacta.",
+    "Estado em disco ou banco, nunca só na conversa."
+  ],
+  "new": [
+    "**Context rot:** o desempenho cai com o tamanho da entrada, mesmo em tarefas simples e bem antes do limite da janela.",
+    "**Lost in the middle:** o modelo usa melhor o que está no começo e no fim. Onde você coloca a evidência importa.",
+    "**Técnicas para tarefas longas:** compaction (resumir e recomeçar), notas estruturadas fora da janela e subagentes como isolamento de contexto.",
+    "**Recuperação just-in-time:** dar ao agente identificadores e ferramentas para buscar, em vez de pré-carregar tudo.",
+    "**Ordem para o cache:** parte estável primeiro (sistema, ferramentas, exemplos) e parte variável no fim. Isso derruba custo e latência.",
+    "**Memória de longo prazo:** episódica (o que aconteceu), semântica (fatos) e procedural (como fazer). Política de escrita, conflito, substituição e validade. O próprio OpenMausBot é um estudo de caso."
+  ],
+  "decisionQuestions": [
+    "O que esta etapa precisa ver, no mínimo, para acertar?",
+    "O que entra porque \"pode ajudar\"? Tire e meça.",
+    "Esta memória deve ser gravada automaticamente, com confirmação ou nunca?"
+  ],
+  "readings": [
+    {
+      "kind": "Artigo",
+      "title": "[Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents), Anthropic",
+      "url": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+      "duration": "30 min",
+      "why": "O texto de base: orçamento de atenção, compaction, notas e subagentes.",
+      "grade": null
+    },
+    {
+      "kind": "Pesquisa",
+      "title": "[Context Rot](https://research.trychroma.com/context-rot), Chroma",
+      "url": "https://research.trychroma.com/context-rot",
+      "duration": "40 min",
+      "why": "Experimentos mostrando a queda de desempenho com o aumento da entrada, em vários modelos.",
+      "grade": "B"
+    },
+    {
+      "kind": "Paper",
+      "title": "[Lost in the Middle](https://arxiv.org/abs/2307.03172), Liu et al.",
+      "url": "https://arxiv.org/abs/2307.03172",
+      "duration": "30 min",
+      "why": "O resultado clássico sobre a posição da informação no contexto.",
+      "grade": "B"
+    },
+    {
+      "kind": "Artigo",
+      "title": "[Equipping agents for the real world with Agent Skills](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills), Anthropic",
+      "url": "https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills",
+      "duration": "20 min",
+      "why": "Carregamento progressivo explicado por quem desenhou o mecanismo.",
+      "grade": null
+    },
+    {
+      "kind": "Vídeo",
+      "title": "[No Vibes Allowed: Solving Hard Problems in Complex Codebases](https://www.youtube.com/watch?v=rmvDxxNubIg), Dex Horthy",
+      "url": "https://www.youtube.com/watch?v=rmvDxxNubIg",
+      "duration": "30 min",
+      "why": "Gestão de contexto aplicada a agentes de código: pesquisar, planejar e implementar em fases.",
+      "grade": null
+    },
+    {
+      "kind": "Docs",
+      "title": "[Prompt caching](https://docs.claude.com/en/docs/build-with-claude/prompt-caching), Claude Docs",
+      "url": "https://docs.claude.com/en/docs/build-with-claude/prompt-caching",
+      "duration": "20 min",
+      "why": "Como o cache funciona, o que o invalida e como é cobrado.",
+      "grade": null
+    }
+  ],
+  "exercise": "Faça uma ablação de contexto no gerador de convites: liste tudo o que entra no prompt, retire um bloco por vez e meça o efeito em 20 casos. Anote quais blocos não mudam nada. Esse é o seu primeiro experimento de grau A sobre contexto.",
+  "seeds": "Registre o tamanho do contexto em cada chamada e quanto dele se repete entre chamadas. É a base para calcular a economia com cache de prompt no [Módulo 12](/modules/m12-inferencia-latencia)."
+}

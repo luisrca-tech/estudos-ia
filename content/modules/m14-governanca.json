@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "slug": "m14-governanca",
+  "key": "m14",
+  "part": 2,
+  "order": 14,
+  "kicker": "Módulo 14 · Governança e ciclo de vida",
+  "title": "Governança, dados pessoais e ciclo de vida",
+  "lead": "O sistema muda mesmo quando você não mexe nele: o fornecedor troca o modelo, a lei muda, os dados envelhecem. Governança é saber o que está rodando, com quais dados, e como voltar atrás.",
+  "prerequisites": "Pré-requisitos: módulos 6, 7, 8 e 9.",
+  "seen": [
+    "Módulo 7: idempotência, reconciliação e execução durável.",
+    "Módulo 8: trifecta letal e OWASP LLM Top 10.",
+    "Módulo 9: traces com as convenções GenAI do OpenTelemetry."
+  ],
+  "new": [
+    "**Tudo versionado:** prompt, modelo (com o ID datado), parâmetros, ferramentas, índice de busca e juiz. Um ID por execução liga essas peças e permite reproduzir uma saída antiga.",
+    "**Mudar prompt é fazer deploy:** o conjunto de regressão roda a cada mudança de prompt ou de modelo, e o gate bloqueia o merge. É o Módulo 6 dentro do CI.",
+    "**Migração e aposentadoria de modelos:** os modelos têm data para sair do ar. Com o conjunto de regressão pronto, uma troca leva dias, não semanas.",
+    "**LGPD na prática:** base legal, minimização, retenção, direitos do titular, papéis de controlador e operador, e transferência internacional, que acontece quando dados vão para um provedor de modelo fora do Brasil. No Festejo e no Entrelaços, isso cobre convidados e pagadores.",
+    "**Documentar o sistema:** uma ficha do sistema (model card) diz o que ele faz, os limites, como foi avaliado e quais dados usa. É o que você entrega quando alguém pergunta \"isso é confiável?\".",
+    "**Frameworks de risco:** o NIST AI RMF organiza o trabalho em governar, mapear, medir e gerenciar. O AI Act europeu classifica sistemas por risco e vale para quem atende a União Europeia. Para você, servem de referência, não de obrigação.",
+    "**Dívida técnica de sistemas com modelo:** o código do modelo é uma parte pequena do sistema. Acoplamento, dependência de dados e laços de feedback são onde o custo de manutenção cresce."
+  ],
+  "decisionQuestions": [
+    "Consigo dizer qual prompt e qual modelo geraram esta saída de três semanas atrás?",
+    "Se o modelo for aposentado em 60 dias, quanto tempo levo para trocar com segurança?",
+    "Que dados pessoais saem do Brasil, para quem, e com qual base legal?",
+    "Quando apago os dados, e o que prova que apaguei?"
+  ],
+  "readings": [
+    {
+      "kind": "Paper",
+      "title": "[Hidden Technical Debt in Machine Learning Systems](https://papers.nips.cc/paper/2015/hash/86df7dcfd896fcaf2674f757a2463eba-Abstract.html), Sculley et al., NeurIPS 2015",
+      "url": "https://papers.nips.cc/paper/2015/hash/86df7dcfd896fcaf2674f757a2463eba-Abstract.html",
+      "duration": "40 min",
+      "why": "O clássico sobre por que o modelo é a menor parte do sistema. Continua atual.",
+      "grade": "B"
+    },
+    {
+      "kind": "Lei",
+      "title": "[Lei 13.709/2018 (LGPD)](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm), Planalto, e [ANPD](https://www.gov.br/anpd/pt-br)",
+      "url": "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+      "duration": "1 h",
+      "why": "Leia os artigos 6 (princípios), 7 (bases legais), 18 (direitos do titular) e 33 (transferência internacional). A ANPD publica guias e orientações.",
+      "grade": null
+    },
+    {
+      "kind": "Docs",
+      "title": "[Model deprecations](https://docs.claude.com/en/docs/about-claude/model-deprecations) e [Define success criteria and build evaluations](https://docs.claude.com/en/docs/test-and-evaluate/develop-tests), Claude Docs",
+      "url": "https://docs.claude.com/en/docs/about-claude/model-deprecations",
+      "duration": "30 min",
+      "why": "Como os modelos saem do ar, e o eval que torna a troca segura.",
+      "grade": null
+    },
+    {
+      "kind": "Guia",
+      "title": "[AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework), NIST",
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework",
+      "duration": "30 min",
+      "why": "O vocabulário de risco que empresas grandes usam. Leia a visão geral e as quatro funções.",
+      "grade": null
+    },
+    {
+      "kind": "Paper",
+      "title": "[Model Cards for Model Reporting](https://arxiv.org/abs/1810.03993), Mitchell et al.",
+      "url": "https://arxiv.org/abs/1810.03993",
+      "duration": "30 min",
+      "why": "A origem da ficha do sistema. Use as seções do paper como modelo.",
+      "grade": "B"
+    },
+    {
+      "kind": "Opcional",
+      "title": "[EU Artificial Intelligence Act](https://artificialintelligenceact.eu/)",
+      "url": "https://artificialintelligenceact.eu/",
+      "duration": "consulta",
+      "why": "Para entender a classificação por risco, que serve de referência para outras regulações.",
+      "grade": null
+    }
+  ],
+  "exercise": "Monte a ficha de execução do Festejo. Para uma geração real, liste o que seria preciso para reproduzi-la (prompt, versão, modelo, parâmetros, entrada, fontes) e marque o que existe hoje. Depois mapeie os dados pessoais do fluxo de convites com base legal, retenção e provedor. Use a regra decidida em 17/11: os dados são limpos 30 dias depois do arquivamento manual.",
+  "seeds": "O versionamento por execução (Módulo 7), o mapa de dados de terceiros (Módulo 8), os documentos com dados pessoais (Módulo 4) e os campos de versão no trace (Módulo 9)."
+}

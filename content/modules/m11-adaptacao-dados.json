@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "slug": "m11-adaptacao-dados",
+  "key": "m11",
+  "part": 2,
+  "order": 11,
+  "kicker": "Módulo 11 · Adaptação e dados",
+  "title": "Ajustar o modelo, e os dados que isso exige",
+  "lead": "Ajustar pesos é a última alavanca, não a primeira. Compensa quando o problema é um comportamento consistente, como formato, estilo, tom ou regra, e quando você já tem avaliação e dados revisados. O ativo que fica é o dataset, não o modelo ajustado.",
+  "prerequisites": "Pré-requisitos: módulos 1, 6 e 10.",
+  "seen": [
+    "Volume 1: fine-tuning muda comportamento; não condensa um domínio inteiro nos pesos.",
+    "Módulo 10: destilação e quantização como alavancas de custo.",
+    "Módulo 6: casos rotulados, juiz validado e conjunto de regressão."
+  ],
+  "new": [
+    "**Escada de adaptação:** prompt com exemplos → contexto e RAG → ferramentas → ajuste supervisionado (SFT) → ajuste por preferência (DPO) → destilação. Suba um degrau só quando o seu eval mostrar que o anterior parou de melhorar.",
+    "**Conhecimento × comportamento:** fatos que mudam vão no contexto (RAG). Formato, estilo, tom e regras são o terreno do ajuste. É o argumento central do Hamel Husain (grau C, praticante).",
+    "**LoRA e PEFT:** ajustam uma fração pequena dos parâmetros. O treino fica barato e os adaptadores podem ser trocados por cliente ou por tarefa.",
+    "**Qualidade acima de quantidade:** no LIMA, cerca de 1.000 exemplos bem curados bastaram para um bom comportamento de assistente (grau B, paper). Cem exemplos revisados valem mais que dez mil copiados.",
+    "**Dados sintéticos:** um modelo gera exemplos para treinar outro (Self-Instruct). Os riscos são perder diversidade e herdar os erros do modelo professor. Filtre sempre com o juiz validado do Módulo 6.",
+    "**Custo escondido:** o modelo ajustado fica preso a um modelo base. Quando o fornecedor lança um modelo novo ou aposenta o antigo, você refaz o ajuste (Módulo 14). Guarde o dataset e o script de treino versionados."
+  ],
+  "decisionQuestions": [
+    "O eval mostra que prompt e contexto pararam de melhorar, ou eu só cansei de iterar?",
+    "A falha é de conhecimento, de comportamento ou de raciocínio?",
+    "Tenho de 100 a 1.000 exemplos bons e revisados por humano?",
+    "Quem mantém o modelo ajustado quando o modelo base mudar?"
+  ],
+  "readings": [
+    {
+      "kind": "Artigo",
+      "title": "[Is Fine-Tuning Still Valuable?](https://hamel.dev/blog/posts/fine_tuning_valuable.html), Hamel Husain e convidados",
+      "url": "https://hamel.dev/blog/posts/fine_tuning_valuable.html",
+      "duration": "20 min",
+      "why": "Visões a favor e contra, de praticantes. Leia primeiro, para chegar ao resto com critério.",
+      "grade": null
+    },
+    {
+      "kind": "Aula",
+      "title": "[When and Why to Fine Tune an LLM](https://parlance-labs.com/education/fine_tuning_course/workshop_1.html), Parlance Labs (Hamel Husain e Dan Becker)",
+      "url": "https://parlance-labs.com/education/fine_tuning_course/workshop_1.html",
+      "duration": "1 h 30",
+      "why": "Workshop gravado, com notas. A tese é \"tente não ajustar; prove que precisa com eval\".",
+      "grade": null
+    },
+    {
+      "kind": "Docs",
+      "title": "[Model optimization](https://platform.openai.com/docs/guides/model-optimization), OpenAI",
+      "url": "https://platform.openai.com/docs/guides/model-optimization",
+      "duration": "20 min",
+      "why": "O fluxo completo do provedor: eval, prompt, SFT, preferência e destilação, nesta ordem.",
+      "grade": null
+    },
+    {
+      "kind": "Paper",
+      "title": "[LIMA: Less Is More for Alignment](https://arxiv.org/abs/2305.11206), Zhou et al.",
+      "url": "https://arxiv.org/abs/2305.11206",
+      "duration": "30 min",
+      "why": "A evidência mais citada de que a curadoria pesa mais que o volume.",
+      "grade": "B"
+    },
+    {
+      "kind": "Paper",
+      "title": "[LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685), Hu et al.",
+      "url": "https://arxiv.org/abs/2106.09685",
+      "duration": "30 min",
+      "why": "Por que dá para ajustar barato. Leia resumo, figura 1 e conclusão.",
+      "grade": "B"
+    },
+    {
+      "kind": "Paper",
+      "title": "[Self-Instruct](https://arxiv.org/abs/2212.10560), Wang et al.",
+      "url": "https://arxiv.org/abs/2212.10560",
+      "duration": "30 min",
+      "why": "A base dos dados sintéticos para instrução, com os limites que os autores apontam.",
+      "grade": "B"
+    },
+    {
+      "kind": "Opcional",
+      "title": "[Direct Preference Optimization](https://arxiv.org/abs/2305.18290), Rafailov et al.",
+      "url": "https://arxiv.org/abs/2305.18290",
+      "duration": "40 min",
+      "why": "Ajuste por preferência sem um modelo de recompensa separado. Só se você for ajustar por preferência.",
+      "grade": null
+    }
+  ],
+  "exercise": "Pegue o arquivo de casos rotulados do Módulo 6 (gerações de convites do Festejo). Classifique cada falha como conhecimento, comportamento ou raciocínio. Se mais da metade for comportamento consistente e o prompt já passou por três iterações sem ganho no eval, escreva uma ficha de decisão a favor do ajuste. Caso contrário, a ficha registra por que não ajustar e o que faria você mudar de ideia. As duas conclusões contam como entrega.",
+  "seeds": "O arquivo de casos rotulados e correções do Módulo 6 e as anotações de erro consistente do Módulo 1. Sem eles, este módulo começa do zero."
+}

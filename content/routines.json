@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "slug": "daily-recall",
+      "cadence": "daily",
+      "order": 1,
+      "label": "Responder de cabeça 3 perguntas de revisão (5 min)",
+      "hint": "30–45 min"
+    },
+    {
+      "slug": "daily-read-one",
+      "cadence": "daily",
+      "order": 2,
+      "label": "Ler ou assistir **uma** seção de uma fonte (15–20 min)",
+      "hint": "30–45 min"
+    },
+    {
+      "slug": "daily-concept-note",
+      "cadence": "daily",
+      "order": 3,
+      "label": "Fechar a fonte e escrever uma nota de conceito (10–15 min)",
+      "hint": "30–45 min"
+    },
+    {
+      "slug": "weekly-exercise",
+      "cadence": "weekly",
+      "order": 1,
+      "label": "Um exercício prático do módulo da semana num projeto real",
+      "hint": "2–3 h"
+    },
+    {
+      "slug": "weekly-decision",
+      "cadence": "weekly",
+      "order": 2,
+      "label": "Uma ficha de decisão sobre algo que você escolheu ou vai escolher",
+      "hint": "2–3 h"
+    },
+    {
+      "slug": "weekly-prune",
+      "cadence": "weekly",
+      "order": 3,
+      "label": "Rever as notas e cortar o que não usaria",
+      "hint": "2–3 h"
+    },
+    {
+      "slug": "monthly-synthesis",
+      "cadence": "monthly",
+      "order": 1,
+      "label": "Escrever um texto de síntese",
+      "hint": "meio dia"
+    },
+    {
+      "slug": "monthly-blind-review",
+      "cadence": "monthly",
+      "order": 2,
+      "label": "Pedir uma revisão cega a um agente",
+      "hint": "meio dia"
+    },
+    {
+      "slug": "monthly-playbook",
+      "cadence": "monthly",
+      "order": 3,
+      "label": "Atualizar o guia \"por onde começar\" com o que aprendeu",
+      "hint": "meio dia"
+    }
+  ]
+}

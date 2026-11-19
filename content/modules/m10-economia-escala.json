@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "slug": "m10-economia-escala",
+  "key": "m10",
+  "part": 1,
+  "order": 10,
+  "kicker": "Módulo 10 · Custo e escala",
+  "title": "Economia de inferência e multiagentes",
+  "lead": "Custo é uma propriedade do sistema inteiro, não do preço por token. Multiagentes são a decisão em que isso mais aparece: compram qualidade e paralelismo com muitos tokens.",
+  "prerequisites": null,
+  "seen": [
+    "Custo por resultado correto e aceito; cascata e roteamento; cache de prefixo e de resultado; destilação e quantização.",
+    "Especialistas separados só com trabalho independente e contrato de integração."
+  ],
+  "new": [
+    "**Alavancas de custo, em ordem de esforço:** cortar contexto, cache de prompt, modelo menor por etapa, processamento em lote (batch) para o que não é urgente, cascata e, por último, ajuste ou destilação.",
+    "**Latência que importa:** tempo até o primeiro token, streaming, p95 e tempo até a entrega útil.",
+    "**Multiagente segundo a Anthropic:** no relato do sistema de pesquisa, agentes usaram cerca de 4× mais tokens que um chat, e o multiagente cerca de 15×. A quantidade de tokens explicou a maior parte da variação de desempenho. Compensa em tarefas de alto valor, muito paralelizáveis e com informação que não cabe numa janela (grau C).",
+    "**Quando o multiagente atrapalha:** tarefas com muitas dependências entre as partes, como código com contexto compartilhado. Aí a coordenação custa mais do que o paralelismo rende.",
+    "**Contratos entre agentes:** objetivo, formato de saída, ferramentas e limites explícitos na delegação. É o que você já pede aos briefs do OpenMausBot."
+  ],
+  "decisionQuestions": [
+    "As subtarefas são realmente independentes, ou vão precisar conversar?",
+    "O ganho de qualidade paga um custo de tokens várias vezes maior?",
+    "Qual etapa consome mais tokens, e ela precisa do modelo maior?"
+  ],
+  "readings": [
+    {
+      "kind": "Artigo",
+      "title": "[How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system), Anthropic",
+      "url": "https://www.anthropic.com/engineering/multi-agent-research-system",
+      "duration": "40 min",
+      "why": "O relato mais honesto sobre custo, coordenação e avaliação de multiagentes.",
+      "grade": null
+    },
+    {
+      "kind": "Docs",
+      "title": "[Prompt caching](https://docs.claude.com/en/docs/build-with-claude/prompt-caching), Claude Docs",
+      "url": "https://docs.claude.com/en/docs/build-with-claude/prompt-caching",
+      "duration": "revisão",
+      "why": "Volte aqui com números do seu fluxo para estimar a economia.",
+      "grade": null
+    },
+    {
+      "kind": "Paper",
+      "title": "[Distilling the Knowledge in a Neural Network](https://arxiv.org/abs/1503.02531), Hinton et al.",
+      "url": "https://arxiv.org/abs/1503.02531",
+      "duration": "30 min",
+      "why": "A origem da destilação, citada no Volume 1.",
+      "grade": "B"
+    },
+    {
+      "kind": "Vídeo",
+      "title": "[Open Questions for AI Engineering](https://www.youtube.com/watch?v=AjLVoAu-u-Q), Simon Willison, AI Engineer",
+      "url": "https://www.youtube.com/watch?v=AjLVoAu-u-Q",
+      "duration": "20 min",
+      "why": "O que continua sem resposta no campo, inclusive custo e confiabilidade.",
+      "grade": null
+    }
+  ],
+  "exercise": "Faça o exercício que ficou pendente no Volume 2: rode uma seção já aceita do Site Workflow com a cascata ligada e com ela desligada (só Opus). Registre rodadas, uso, tempo e intervenções. É a primeira ablação e o primeiro custo por resultado aceito do processo.",
+  "seeds": "Na ablação da cascata, registre também o p95 de latência. Se o modelo menor quase chega lá, ele é candidato a destilação no [Módulo 11](/modules/m11-adaptacao-dados)."
+}

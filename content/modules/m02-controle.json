@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "slug": "m02-controle",
+  "key": "m2",
+  "part": 1,
+  "order": 2,
+  "kicker": "Módulo 2 · Controle do trabalho",
+  "title": "Padrões de controle: quem decide o próximo passo",
+  "lead": "Este é o módulo que você mais domina. O objetivo agora é ir além dos cinco padrões: entender os princípios de projeto de agentes confiáveis e por que tantos sistemas em produção são, na verdade, workflows com pequenos trechos agênticos.",
+  "prerequisites": null,
+  "seen": [
+    "Workflow × agente; os cinco padrões de workflow; agente como loop com ferramentas e limites.",
+    "Comece pelo mais simples; só adicione complexidade com medição.",
+    "O loop pertence ao código; o modelo recebe uma tarefa delimitada por vez."
+  ],
+  "new": [
+    "**ReAct:** o paper que formalizou alternar raciocínio e ação. É a origem do loop de agente.",
+    "**Ações em código (CodeAct):** deixar o agente escrever código em vez de chamar ferramentas uma a uma. Quando compõe melhor e quando é mais arriscado.",
+    "**12-Factor Agents:** ser dono do prompt, do contexto e do fluxo de controle; estado como dado; agentes pequenos e focados. É a defesa mais clara do que você já pratica.",
+    "**Autonomia gradual:** começar com o humano aprovando tudo e liberar ações conforme a evidência de acerto cresce."
+  ],
+  "decisionQuestions": [
+    "Consigo desenhar o caminho? Então é workflow. Onde exatamente o caminho é imprevisível?",
+    "Qual é o menor trecho que precisa ser agêntico?",
+    "Qual é a condição de parada, e o que acontece quando ela dispara?"
+  ],
+  "readings": [
+    {
+      "kind": "Artigo",
+      "title": "[Building effective agents](https://www.anthropic.com/engineering/building-effective-agents), Anthropic",
+      "url": "https://www.anthropic.com/engineering/building-effective-agents",
+      "duration": "releitura 20 min",
+      "why": "Releia depois do Volume 2, com o runner na cabeça.",
+      "grade": null
+    },
+    {
+      "kind": "Vídeo",
+      "title": "[How We Build Effective Agents](https://www.youtube.com/watch?v=D7_ipDqhtwk), Barry Zhang, AI Engineer",
+      "url": "https://www.youtube.com/watch?v=D7_ipDqhtwk",
+      "duration": "15 min",
+      "why": "O coautor do artigo explica quando não construir um agente e como pensar como ele.",
+      "grade": null
+    },
+    {
+      "kind": "Vídeo",
+      "title": "[Tips for building AI agents](https://www.youtube.com/watch?v=LP5OCa20Zpg), Anthropic",
+      "url": "https://www.youtube.com/watch?v=LP5OCa20Zpg",
+      "duration": "30 min",
+      "why": "Conversa entre engenheiros sobre erros comuns e o que mudou desde o artigo.",
+      "grade": null
+    },
+    {
+      "kind": "Artigo",
+      "title": "[12-Factor Agents](https://github.com/humanlayer/12-factor-agents), HumanLayer",
+      "url": "https://github.com/humanlayer/12-factor-agents",
+      "duration": "1 h",
+      "why": "Doze princípios de agentes de produção. Leia um fator por dia e compare com o Festejo.",
+      "grade": null
+    },
+    {
+      "kind": "Vídeo",
+      "title": "[12-Factor Agents: Patterns of reliable LLM applications](https://www.youtube.com/watch?v=8kMaTybvDUw), Dex Horthy",
+      "url": "https://www.youtube.com/watch?v=8kMaTybvDUw",
+      "duration": "20 min",
+      "why": "A versão falada do repositório, com casos.",
+      "grade": null
+    },
+    {
+      "kind": "Artigo",
+      "title": "[Agents](https://huyenchip.com/2025/01/07/agents.html), Chip Huyen",
+      "url": "https://huyenchip.com/2025/01/07/agents.html",
+      "duration": "1 h",
+      "why": "Planejamento, ferramentas e modos de falha de agentes, com rigor de livro.",
+      "grade": null
+    },
+    {
+      "kind": "Artigo",
+      "title": "[Emerging Patterns in Building GenAI Products](https://martinfowler.com/articles/gen-ai-patterns/), Martin Fowler / Thoughtworks",
+      "url": "https://martinfowler.com/articles/gen-ai-patterns/",
+      "duration": "1 h",
+      "why": "Catálogo de padrões com a linguagem de arquitetura de software.",
+      "grade": null
+    },
+    {
+      "kind": "Paper",
+      "title": "[ReAct](https://arxiv.org/abs/2210.03629), Yao et al. e [Executable Code Actions (CodeAct)](https://arxiv.org/abs/2402.01030), Wang et al.",
+      "url": "https://arxiv.org/abs/2210.03629",
+      "duration": "1 h",
+      "why": "Leia resumo, método e figuras. O resto é benchmark.",
+      "grade": "B"
+    }
+  ],
+  "exercise": "Desenhe o fluxo atual de geração de convites marcando cada etapa como \"código decide\" ou \"modelo decide\", como no diagrama do Volume 2. Para cada etapa marcada como \"modelo\", escreva por que não poderia ser código. Leve o desenho ao Atlas para que ele ataque as escolhas.",
+  "seeds": "Em cada passo do fluxo, marque onde um humano aprova, corrige ou desiste. Esse é o rascunho do mapa de autonomia do [Módulo 13](/modules/m13-produto-feedback)."
+}

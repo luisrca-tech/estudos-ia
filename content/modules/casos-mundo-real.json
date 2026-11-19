@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "slug": "casos-mundo-real",
+  "key": "casos",
+  "part": 2,
+  "order": 15,
+  "kicker": "No mundo real",
+  "title": "Como as empresas aplicam estes conceitos",
+  "lead": "O padrão que se repete: nenhuma delas trata o modelo como o diferencial. O diferencial está em avaliação, contexto, harness e operação.",
+  "prerequisites": null,
+  "seen": [],
+  "new": [],
+  "decisionQuestions": [
+    "Qual problema de negócio, e qual métrica eles contaram?",
+    "Qual padrão escolheram, e qual alternativa descartaram?",
+    "Como avaliaram? Há baseline, ou só o número final?",
+    "Que grau de evidência o texto realmente sustenta?",
+    "O que muda se a mesma decisão for levada para o Festejo ou o Entrelaços?"
+  ],
+  "readings": [
+    {
+      "kind": "Base",
+      "title": "[LLMOps Database](https://www.zenml.io/llmops-database), ZenML",
+      "url": "https://www.zenml.io/llmops-database",
+      "duration": null,
+      "why": "Centenas de casos de produção resumidos, com filtros por técnica e setor. Bom para responder \"quem já fez isso?\".",
+      "grade": null
+    },
+    {
+      "kind": "Base",
+      "title": "[ML and LLM system design: 800 case studies](https://www.evidentlyai.com/ml-system-design), Evidently AI",
+      "url": "https://www.evidentlyai.com/ml-system-design",
+      "duration": null,
+      "why": "Links organizados por empresa para os blogs de engenharia originais.",
+      "grade": null
+    },
+    {
+      "kind": "Podcast",
+      "title": "[AI Engineering with Chip Huyen](https://newsletter.pragmaticengineer.com/p/ai-engineering-with-chip-huyen), The Pragmatic Engineer",
+      "url": "https://newsletter.pragmaticengineer.com/p/ai-engineering-with-chip-huyen",
+      "duration": null,
+      "why": "A autora da régua desta parte explica a diferença entre engenharia de IA e engenharia de ML. Tem versão em vídeo.",
+      "grade": null
+    },
+    {
+      "kind": "Caso",
+      "title": "Anthropic · sistema de pesquisa ([Anthropic](https://www.anthropic.com/engineering/multi-agent-research-system))",
+      "url": "https://www.anthropic.com/engineering/multi-agent-research-system",
+      "duration": null,
+      "why": "Orquestrador com subagentes em paralelo, cerca de 15× mais tokens que um chat, avaliação com juiz e com humanos. Módulos: 2 · 6 · 10.",
+      "grade": "C"
+    },
+    {
+      "kind": "Caso",
+      "title": "GitHub · Copilot ([GitHub Blog](https://github.blog/ai-and-ml/generative-ai/how-github-copilot-is-getting-better-at-understanding-your-code/) · [arquitetura](https://github.blog/ai-and-ml/llms/the-architecture-of-todays-llm-applications/))",
+      "url": "https://github.blog/ai-and-ml/generative-ai/how-github-copilot-is-getting-better-at-understanding-your-code/",
+      "duration": null,
+      "why": "Montagem de contexto com os arquivos abertos e vizinhos, priorizados para caber na janela. Módulos: 3 · 4.",
+      "grade": "C"
+    },
+    {
+      "kind": "Caso",
+      "title": "Cursor · Instant Apply ([Cursor](https://cursor.com/blog/instant-apply))",
+      "url": "https://cursor.com/blog/instant-apply",
+      "duration": null,
+      "why": "Modelo ajustado para aplicar edições e decodificação especulativa para reescrever arquivos rápido. Módulos: 11 · 12.",
+      "grade": "C"
+    },
+    {
+      "kind": "Caso",
+      "title": "Rechat · assistente Lucy ([Hamel Husain](https://hamel.dev/blog/posts/evals/))",
+      "url": "https://hamel.dev/blog/posts/evals/",
+      "duration": null,
+      "why": "Saiu de um platô de qualidade com análise de erros, testes de unidade e juízes alinhados a humanos. Módulos: 6.",
+      "grade": "C"
+    },
+    {
+      "kind": "Caso",
+      "title": "Honeycomb · Query Assistant ([antes](https://www.honeycomb.io/blog/hard-stuff-nobody-talks-about-llm) · [depois](https://www.honeycomb.io/blog/we-shipped-ai-product))",
+      "url": "https://www.honeycomb.io/blog/hard-stuff-nobody-talks-about-llm",
+      "duration": null,
+      "why": "Relataram os problemas de contexto, latência e prompt injection, e depois mediram se o produto foi usado. Módulos: 3 · 8 · 13.",
+      "grade": "C"
+    },
+    {
+      "kind": "Caso",
+      "title": "LinkedIn · produto com IA generativa ([LinkedIn Engineering](https://www.linkedin.com/blog/engineering/generative-ai/musings-on-building-a-generative-ai-product))",
+      "url": "https://www.linkedin.com/blog/engineering/generative-ai/musings-on-building-a-generative-ai-product",
+      "duration": null,
+      "why": "Roteamento para agentes especializados, e a avaliação como gargalo: a primeira parte da qualidade veio rápido e o resto levou meses. Módulos: 2 · 6.",
+      "grade": "C"
+    },
+    {
+      "kind": "Caso",
+      "title": "Klarna · atendimento ([Klarna, 2024](https://www.klarna.com/international/press/klarna-ai-assistant-handles-two-thirds-of-customer-service-chats-in-its-first-month/) · [heise, 2025](https://heise.de/-10379419))",
+      "url": "https://www.klarna.com/international/press/klarna-ai-assistant-handles-two-thirds-of-customer-service-chats-in-its-first-month/",
+      "duration": null,
+      "why": "Em 2024, o assistente atendeu dois terços dos chats no primeiro mês. Em 2025, o CEO disse que o custo pesou demais na avaliação, que a qualidade caiu e que a empresa voltaria a garantir atendimento humano. É Goodhart na prática. Módulos: 6 · 13.",
+      "grade": "C"
+    }
+  ],
+  "exercise": null,
+  "seeds": null
+}

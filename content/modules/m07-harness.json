@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "slug": "m07-harness",
+  "key": "m7",
+  "part": 1,
+  "order": 7,
+  "kicker": "Módulo 7 · Sobreviver ao erro",
+  "title": "Harness e confiabilidade",
+  "lead": "Um sistema com IA é, antes de tudo, um sistema distribuído: chamadas que falham, demoram, voltam pela metade ou são repetidas. As técnicas para lidar com isso existem há décadas. O trabalho é aplicá-las a um componente probabilístico.",
+  "prerequisites": null,
+  "seen": [
+    "Limites de tempo, passos e gasto; estado durável; definição verificável de conclusão.",
+    "Idempotência e reconciliação; ledger e resume.",
+    "O modelo interpreta; a aplicação mantém a autoridade."
+  ],
+  "new": [
+    "**Timeouts, retries e backoff com jitter:** por que repetir imediatamente piora uma queda, e como espalhar as tentativas.",
+    "**Chave de idempotência na prática:** como Stripe e AWS fazem repetição segura.",
+    "**Circuit breaker e fallback:** parar de chamar um provedor que está falhando e cair para outro modelo ou para uma resposta degradada.",
+    "**Sagas e compensação:** quando uma operação com vários passos falha no meio, desfazer os passos anteriores com ações de compensação.",
+    "**Execução durável:** motores de workflow (Temporal, Cloudflare Workflows, Inngest) que guardam o progresso de cada passo e retomam depois de uma queda. É o ledger do Site Workflow como infraestrutura.",
+    "**Humano no ciclo por risco:** uma matriz de ação × risco que define o que executa direto, o que vira proposta e o que só é registrado.",
+    "**Harness para tarefas longas:** arquivo de progresso, um passo por sessão e verificação de ponta a ponta antes de marcar como pronto."
+  ],
+  "decisionQuestions": [
+    "Se esta chamada for repetida, o que acontece com o mundo?",
+    "Se o processo cair entre o passo 3 e o 4, como eu descubro onde parou?",
+    "Qual é a resposta degradada aceitável quando o modelo não está disponível?"
+  ],
+  "readings": [
+    {
+      "kind": "Artigo",
+      "title": "[Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents), Anthropic",
+      "url": "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents",
+      "duration": "30 min",
+      "why": "Reler comparando com o runner do Site Workflow.",
+      "grade": null
+    },
+    {
+      "kind": "Artigo",
+      "title": "[Designing robust and predictable APIs with idempotency](https://stripe.com/blog/idempotency), Stripe",
+      "url": "https://stripe.com/blog/idempotency",
+      "duration": "20 min",
+      "why": "Chaves de idempotência explicadas por quem as popularizou.",
+      "grade": null
+    },
+    {
+      "kind": "Artigo",
+      "title": "[Making retries safe with idempotent APIs](https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/) e [Timeouts, retries and backoff with jitter](https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/), AWS Builders' Library",
+      "url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/",
+      "duration": "1 h",
+      "why": "Dois clássicos de engenharia de sistemas distribuídos.",
+      "grade": null
+    },
+    {
+      "kind": "Artigo",
+      "title": "[Circuit Breaker](https://martinfowler.com/bliki/CircuitBreaker.html), Martin Fowler e [Saga pattern](https://microservices.io/patterns/data/saga.html), microservices.io",
+      "url": "https://martinfowler.com/bliki/CircuitBreaker.html",
+      "duration": "40 min",
+      "why": "Dois padrões que você vai usar em qualquer fluxo com vários serviços.",
+      "grade": null
+    },
+    {
+      "kind": "Docs",
+      "title": "[Cloudflare Workflows](https://developers.cloudflare.com/workflows/), [Temporal](https://docs.temporal.io/) e [Inngest](https://www.inngest.com/docs)",
+      "url": "https://developers.cloudflare.com/workflows/",
+      "duration": "1 h",
+      "why": "Leia só os conceitos de cada um e compare. O Festejo já roda em Cloudflare.",
+      "grade": null
+    },
+    {
+      "kind": "Artigo",
+      "title": "[Claude Code best practices](https://www.anthropic.com/engineering/claude-code-best-practices), Anthropic",
+      "url": "https://www.anthropic.com/engineering/claude-code-best-practices",
+      "duration": "30 min",
+      "why": "Harness do ponto de vista de quem usa agentes de código: planejar, verificar e iterar.",
+      "grade": null
+    }
+  ],
+  "exercise": "Com a tabela de ferramentas do Módulo 5, escreva para cada ação com efeito externo (cobrança, envio, publicação): a chave de idempotência, a consulta de reconciliação, a compensação e se exige confirmação humana. Use o fluxo de pagamento do Entrelaços como primeiro caso, porque é onde repetir custa dinheiro.",
+  "seeds": "Versione prompt, modelo e configuração junto do código, com um identificador por execução. É o pré-requisito para reproduzir e migrar no [Módulo 14](/modules/m14-governanca)."
+}

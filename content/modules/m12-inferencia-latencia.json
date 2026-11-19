@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "slug": "m12-inferencia-latencia",
+  "key": "m12",
+  "part": 2,
+  "order": 12,
+  "kicker": "Módulo 12 · Inferência e latência",
+  "title": "Inferência, latência e saída estruturada",
+  "lead": "O usuário sente a latência antes de sentir a qualidade. E um sistema que depende de interpretar texto livre quebra nas bordas. Este módulo trata da chamada ao modelo como componente de engenharia: tempo, formato, falha e preço.",
+  "prerequisites": "Pré-requisitos: módulos 5, 7 e 10.",
+  "seen": [
+    "Módulo 10: alavancas de custo, tempo até o primeiro token, p95, cache de prefixo e cascata.",
+    "Módulo 7: retry com backoff e jitter, circuit breaker.",
+    "Módulo 5: schemas de ferramenta e poka-yoke."
+  ],
+  "new": [
+    "**Orçamento de latência por etapa:** tempo até o primeiro token, tokens por segundo e tempo até a entrega útil. Separe a latência real da percebida: streaming, indicação de progresso e trabalho em segundo plano (como o carregamento da geração no Festejo) mudam o que o usuário sente sem mudar o modelo.",
+    "**Saída estruturada:** quando código consome a resposta, use schema (structured outputs ou uso de ferramenta forçado), valide e tenha um caminho de reparo. Expressão regular sobre texto livre é dívida.",
+    "**Cache de prompt na prática:** o que é fixo vai primeiro e o que varia vai no fim. Meça a taxa de acerto do cache, não só o preço anunciado.",
+    "**Lote para o que não é urgente:** processamento em lote custa menos e tem prazo maior. Serve para avaliações, reprocessamentos e geração offline.",
+    "**Roteamento com evidência:** FrugalGPT e RouteLLM mostram que um roteador pode manter a qualidade com menos custo. A condição é ter eval por rota, senão o roteador esconde regressões.",
+    "**Falha de provedor:** limites de taxa, indisponibilidade e modelo alternativo. No Festejo, com OpenRouter, isso é configuração de fallback mais a garantia de que o modelo reserva passa no mesmo eval.",
+    "**Como os provedores servem:** KV cache, PagedAttention (vLLM), decodificação especulativa e quantização. Você não vai implementar nada disso, mas entender explica preço e latência e ajuda a decidir quando hospedar o próprio modelo."
+  ],
+  "decisionQuestions": [
+    "Qual latência o usuário tolera nesta etapa, e o que ele vê enquanto espera?",
+    "A saída é consumida por código? Então qual é o schema e o que acontece quando ele falha?",
+    "O início do meu prompt é estável entre chamadas?",
+    "O que acontece quando o provedor falha ou me limita, e o modelo reserva foi avaliado?"
+  ],
+  "readings": [
+    {
+      "kind": "Docs",
+      "title": "[Latency optimization](https://platform.openai.com/docs/guides/latency-optimization), OpenAI",
+      "url": "https://platform.openai.com/docs/guides/latency-optimization",
+      "duration": "20 min",
+      "why": "Princípios práticos de latência que valem para qualquer provedor.",
+      "grade": null
+    },
+    {
+      "kind": "Docs",
+      "title": "[Structured outputs](https://docs.claude.com/en/docs/build-with-claude/structured-outputs), [Streaming](https://docs.claude.com/en/docs/build-with-claude/streaming) e [Batch processing](https://docs.claude.com/en/docs/build-with-claude/batch-processing), Claude Docs",
+      "url": "https://docs.claude.com/en/docs/build-with-claude/structured-outputs",
+      "duration": "30 min",
+      "why": "Os três recursos de chamada que mais mudam um sistema real.",
+      "grade": null
+    },
+    {
+      "kind": "Artigo",
+      "title": "[Editing Files at 1000 Tokens per Second](https://cursor.com/blog/instant-apply), Cursor",
+      "url": "https://cursor.com/blog/instant-apply",
+      "duration": "15 min",
+      "why": "Caso real que junta ajuste fino (Módulo 11) e decodificação especulativa para ganhar velocidade.",
+      "grade": null
+    },
+    {
+      "kind": "Paper",
+      "title": "[FrugalGPT](https://arxiv.org/abs/2305.05176), Chen et al.",
+      "url": "https://arxiv.org/abs/2305.05176",
+      "duration": "30 min",
+      "why": "Cascata e roteamento medidos. A base acadêmica do que o Volume 1 chamou de cascata.",
+      "grade": "B"
+    },
+    {
+      "kind": "Paper",
+      "title": "[Fast Inference from Transformers via Speculative Decoding](https://arxiv.org/abs/2211.17192), Leviathan et al.",
+      "url": "https://arxiv.org/abs/2211.17192",
+      "duration": "30 min",
+      "why": "Por que um modelo pequeno pode acelerar um grande. Leia resumo e figuras.",
+      "grade": "B"
+    },
+    {
+      "kind": "Docs",
+      "title": "[Auto Router](https://openrouter.ai/docs/features/model-routing), OpenRouter",
+      "url": "https://openrouter.ai/docs/features/model-routing",
+      "duration": "10 min",
+      "why": "O roteamento do provedor que o Festejo já usa. Leia com as perguntas de decisão ao lado.",
+      "grade": null
+    },
+    {
+      "kind": "Opcional",
+      "title": "[PagedAttention (vLLM)](https://arxiv.org/abs/2309.06180), Kwon et al. e [RouteLLM](https://arxiv.org/abs/2406.18665), Ong et al.",
+      "url": "https://arxiv.org/abs/2309.06180",
+      "duration": "1 h",
+      "why": "Para quando você pensar em servir o próprio modelo ou treinar um roteador.",
+      "grade": null
+    }
+  ],
+  "exercise": "Meça TTFT, tempo total e p95 de 20 gerações do Festejo, ou da etapa mais lenta de outro fluxo. Escreva o orçamento de latência por etapa e marque onde streaming, cache ou segundo plano mudam o que o usuário sente. Depois confira se toda saída consumida por código passa por um schema, e anote o que acontece quando ela não passa.",
+  "seeds": "Os tamanhos de contexto (Módulo 3), as quebras de parser (Módulo 5), o TTFT no trace (Módulo 9) e o p95 da ablação da cascata (Módulo 10)."
+}
