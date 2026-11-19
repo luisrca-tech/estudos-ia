@@ -1,0 +1,2136 @@
+{
+  "type": "base",
+  "version": "9",
+  "dialect": "postgres",
+  "id": "1445612d-f13b-451e-aa9e-ca444bc8f2c7",
+  "prevIds": [
+    "00000000-0000-0000-0000-000000000000"
+  ],
+  "footprints": [
+    {
+      "statementType": "create_enum",
+      "statementTarget": [
+        "enum",
+        "public",
+        "cadence"
+      ],
+      "writes": [
+        "s|enum|public.cadence",
+        "n|enum|public.cadence",
+        "e|enum|public.cadence",
+        "n|type|public.cadence"
+      ],
+      "reads": [
+        "n|sch|public"
+      ]
+    },
+    {
+      "statementType": "create_enum",
+      "statementTarget": [
+        "enum",
+        "public",
+        "note_source"
+      ],
+      "writes": [
+        "s|enum|public.note_source",
+        "n|enum|public.note_source",
+        "e|enum|public.note_source",
+        "n|type|public.note_source"
+      ],
+      "reads": [
+        "n|sch|public"
+      ]
+    },
+    {
+      "statementType": "create_enum",
+      "statementTarget": [
+        "enum",
+        "public",
+        "note_type"
+      ],
+      "writes": [
+        "s|enum|public.note_type",
+        "n|enum|public.note_type",
+        "e|enum|public.note_type",
+        "n|type|public.note_type"
+      ],
+      "reads": [
+        "n|sch|public"
+      ]
+    },
+    {
+      "statementType": "create_enum",
+      "statementTarget": [
+        "enum",
+        "public",
+        "review_result"
+      ],
+      "writes": [
+        "s|enum|public.review_result",
+        "n|enum|public.review_result",
+        "e|enum|public.review_result",
+        "n|type|public.review_result"
+      ],
+      "reads": [
+        "n|sch|public"
+      ]
+    },
+    {
+      "statementType": "create_enum",
+      "statementTarget": [
+        "enum",
+        "public",
+        "session_status"
+      ],
+      "writes": [
+        "s|enum|public.session_status",
+        "n|enum|public.session_status",
+        "e|enum|public.session_status",
+        "n|type|public.session_status"
+      ],
+      "reads": [
+        "n|sch|public"
+      ]
+    },
+    {
+      "statementType": "create_table",
+      "statementTarget": [
+        "table",
+        "public",
+        "module_content_version"
+      ],
+      "writes": [
+        "s|tbl|public.module_content_version",
+        "n|tbl|public.module_content_version",
+        "e|tbl|public.module_content_version",
+        "n|rel|public.module_content_version",
+        "n|type|public.module_content_version",
+        "n|rel|public.module_content_version_pkey",
+        "n|rel|public.module_content_version_module_hash_unique"
+      ],
+      "reads": [
+        "n|sch|public"
+      ]
+    },
+    {
+      "statementType": "create_table",
+      "statementTarget": [
+        "table",
+        "public",
+        "module_progress"
+      ],
+      "writes": [
+        "s|tbl|public.module_progress",
+        "n|tbl|public.module_progress",
+        "e|tbl|public.module_progress",
+        "n|rel|public.module_progress",
+        "n|type|public.module_progress",
+        "n|rel|public.module_progress_pkey"
+      ],
+      "reads": [
+        "n|sch|public"
+      ]
+    },
+    {
+      "statementType": "create_table",
+      "statementTarget": [
+        "table",
+        "public",
+        "routine_item"
+      ],
+      "writes": [
+        "s|tbl|public.routine_item",
+        "n|tbl|public.routine_item",
+        "e|tbl|public.routine_item",
+        "n|rel|public.routine_item",
+        "n|type|public.routine_item",
+        "n|rel|public.routine_item_pkey",
+        "n|rel|public.routine_item_slug_unique"
+      ],
+      "reads": [
+        "n|sch|public",
+        "n|enum|public.cadence"
+      ]
+    },
+    {
+      "statementType": "create_table",
+      "statementTarget": [
+        "table",
+        "public",
+        "module"
+      ],
+      "writes": [
+        "s|tbl|public.module",
+        "n|tbl|public.module",
+        "e|tbl|public.module",
+        "n|rel|public.module",
+        "n|type|public.module",
+        "n|rel|public.module_pkey",
+        "n|rel|public.module_slug_unique",
+        "n|rel|public.module_key_unique"
+      ],
+      "reads": [
+        "n|sch|public"
+      ]
+    },
+    {
+      "statementType": "create_table",
+      "statementTarget": [
+        "table",
+        "public",
+        "import_batch"
+      ],
+      "writes": [
+        "s|tbl|public.import_batch",
+        "n|tbl|public.import_batch",
+        "e|tbl|public.import_batch",
+        "n|rel|public.import_batch",
+        "n|type|public.import_batch",
+        "n|rel|public.import_batch_pkey"
+      ],
+      "reads": [
+        "n|sch|public"
+      ]
+    },
+    {
+      "statementType": "create_table",
+      "statementTarget": [
+        "table",
+        "public",
+        "note"
+      ],
+      "writes": [
+        "s|tbl|public.note",
+        "n|tbl|public.note",
+        "e|tbl|public.note",
+        "n|rel|public.note",
+        "n|type|public.note",
+        "n|rel|public.note_pkey"
+      ],
+      "reads": [
+        "n|sch|public",
+        "n|enum|public.note_type",
+        "n|enum|public.note_source"
+      ]
+    },
+    {
+      "statementType": "create_table",
+      "statementTarget": [
+        "table",
+        "public",
+        "review_log"
+      ],
+      "writes": [
+        "s|tbl|public.review_log",
+        "n|tbl|public.review_log",
+        "e|tbl|public.review_log",
+        "n|rel|public.review_log",
+        "n|type|public.review_log",
+        "n|rel|public.review_log_pkey"
+      ],
+      "reads": [
+        "n|sch|public",
+        "n|enum|public.review_result"
+      ]
+    },
+    {
+      "statementType": "create_table",
+      "statementTarget": [
+        "table",
+        "public",
+        "review_schedule"
+      ],
+      "writes": [
+        "s|tbl|public.review_schedule",
+        "n|tbl|public.review_schedule",
+        "e|tbl|public.review_schedule",
+        "n|rel|public.review_schedule",
+        "n|type|public.review_schedule",
+        "n|rel|public.review_schedule_pkey"
+      ],
+      "reads": [
+        "n|sch|public"
+      ]
+    },
+    {
+      "statementType": "create_table",
+      "statementTarget": [
+        "table",
+        "public",
+        "routine_check"
+      ],
+      "writes": [
+        "s|tbl|public.routine_check",
+        "n|tbl|public.routine_check",
+        "e|tbl|public.routine_check",
+        "n|rel|public.routine_check",
+        "n|type|public.routine_check",
+        "n|rel|public.routine_check_pkey",
+        "n|rel|public.routine_check_item_period_unique"
+      ],
+      "reads": [
+        "n|sch|public"
+      ]
+    },
+    {
+      "statementType": "create_table",
+      "statementTarget": [
+        "table",
+        "public",
+        "study_session"
+      ],
+      "writes": [
+        "s|tbl|public.study_session",
+        "n|tbl|public.study_session",
+        "e|tbl|public.study_session",
+        "n|rel|public.study_session",
+        "n|type|public.study_session",
+        "n|rel|public.study_session_pkey"
+      ],
+      "reads": [
+        "n|sch|public",
+        "n|enum|public.session_status"
+      ]
+    },
+    {
+      "statementType": "create_index",
+      "statementTarget": [
+        "index",
+        "public",
+        "note",
+        "note_module_created_idx"
+      ],
+      "writes": [
+        "s|idx|public.note_module_created_idx",
+        "n|idx|public.note_module_created_idx",
+        "e|idx|public.note_module_created_idx",
+        "n|rel|public.note_module_created_idx"
+      ],
+      "reads": [
+        "n|tbl|public.note",
+        "n|sch|public",
+        "n|col|public.note.module_id",
+        "n|col|public.note.created_at"
+      ]
+    },
+    {
+      "statementType": "create_index",
+      "statementTarget": [
+        "index",
+        "public",
+        "note",
+        "note_type_idx"
+      ],
+      "writes": [
+        "s|idx|public.note_type_idx",
+        "n|idx|public.note_type_idx",
+        "e|idx|public.note_type_idx",
+        "n|rel|public.note_type_idx"
+      ],
+      "reads": [
+        "n|tbl|public.note",
+        "n|sch|public",
+        "n|col|public.note.type"
+      ]
+    },
+    {
+      "statementType": "create_index",
+      "statementTarget": [
+        "index",
+        "public",
+        "review_log",
+        "review_log_note_idx"
+      ],
+      "writes": [
+        "s|idx|public.review_log_note_idx",
+        "n|idx|public.review_log_note_idx",
+        "e|idx|public.review_log_note_idx",
+        "n|rel|public.review_log_note_idx"
+      ],
+      "reads": [
+        "n|tbl|public.review_log",
+        "n|sch|public",
+        "n|col|public.review_log.note_id"
+      ]
+    },
+    {
+      "statementType": "create_index",
+      "statementTarget": [
+        "index",
+        "public",
+        "review_schedule",
+        "review_schedule_due_on_idx"
+      ],
+      "writes": [
+        "s|idx|public.review_schedule_due_on_idx",
+        "n|idx|public.review_schedule_due_on_idx",
+        "e|idx|public.review_schedule_due_on_idx",
+        "n|rel|public.review_schedule_due_on_idx"
+      ],
+      "reads": [
+        "n|tbl|public.review_schedule",
+        "n|sch|public",
+        "n|col|public.review_schedule.due_on"
+      ]
+    },
+    {
+      "statementType": "create_index",
+      "statementTarget": [
+        "index",
+        "public",
+        "study_session",
+        "study_session_single_running_idx"
+      ],
+      "writes": [
+        "s|idx|public.study_session_single_running_idx",
+        "n|idx|public.study_session_single_running_idx",
+        "e|idx|public.study_session_single_running_idx",
+        "n|rel|public.study_session_single_running_idx"
+      ],
+      "reads": [
+        "n|tbl|public.study_session",
+        "n|sch|public",
+        "n|col|public.study_session.status"
+      ]
+    },
+    {
+      "statementType": "create_index",
+      "statementTarget": [
+        "index",
+        "public",
+        "study_session",
+        "study_session_module_idx"
+      ],
+      "writes": [
+        "s|idx|public.study_session_module_idx",
+        "n|idx|public.study_session_module_idx",
+        "e|idx|public.study_session_module_idx",
+        "n|rel|public.study_session_module_idx"
+      ],
+      "reads": [
+        "n|tbl|public.study_session",
+        "n|sch|public",
+        "n|col|public.study_session.module_id",
+        "n|col|public.study_session.started_at"
+      ]
+    },
+    {
+      "statementType": "create_fk",
+      "statementTarget": [
+        "table",
+        "public",
+        "module_content_version"
+      ],
+      "writes": [
+        "s|fk|public.module_content_version.module_content_version_module_id_module_id_fkey",
+        "n|fk|public.module_content_version.module_content_version_module_id_module_id_fkey",
+        "e|fk|public.module_content_version.module_content_version_module_id_module_id_fkey",
+        "n|con|public.module_content_version.module_content_version_module_id_module_id_fkey"
+      ],
+      "reads": [
+        "n|tbl|public.module_content_version",
+        "n|sch|public",
+        "n|tbl|public.module",
+        "n|sch|public",
+        "n|col|public.module_content_version.module_id",
+        "n|col|public.module.id",
+        "e|uniqueness|public.module.id"
+      ]
+    },
+    {
+      "statementType": "create_fk",
+      "statementTarget": [
+        "table",
+        "public",
+        "module_progress"
+      ],
+      "writes": [
+        "s|fk|public.module_progress.module_progress_module_id_module_id_fkey",
+        "n|fk|public.module_progress.module_progress_module_id_module_id_fkey",
+        "e|fk|public.module_progress.module_progress_module_id_module_id_fkey",
+        "n|con|public.module_progress.module_progress_module_id_module_id_fkey"
+      ],
+      "reads": [
+        "n|tbl|public.module_progress",
+        "n|sch|public",
+        "n|tbl|public.module",
+        "n|sch|public",
+        "n|col|public.module_progress.module_id",
+        "n|col|public.module.id",
+        "e|uniqueness|public.module.id"
+      ]
+    },
+    {
+      "statementType": "create_fk",
+      "statementTarget": [
+        "table",
+        "public",
+        "note"
+      ],
+      "writes": [
+        "s|fk|public.note.note_module_id_module_id_fkey",
+        "n|fk|public.note.note_module_id_module_id_fkey",
+        "e|fk|public.note.note_module_id_module_id_fkey",
+        "n|con|public.note.note_module_id_module_id_fkey"
+      ],
+      "reads": [
+        "n|tbl|public.note",
+        "n|sch|public",
+        "n|tbl|public.module",
+        "n|sch|public",
+        "n|col|public.note.module_id",
+        "n|col|public.module.id",
+        "e|uniqueness|public.module.id"
+      ]
+    },
+    {
+      "statementType": "create_fk",
+      "statementTarget": [
+        "table",
+        "public",
+        "note"
+      ],
+      "writes": [
+        "s|fk|public.note.note_session_id_study_session_id_fkey",
+        "n|fk|public.note.note_session_id_study_session_id_fkey",
+        "e|fk|public.note.note_session_id_study_session_id_fkey",
+        "n|con|public.note.note_session_id_study_session_id_fkey"
+      ],
+      "reads": [
+        "n|tbl|public.note",
+        "n|sch|public",
+        "n|tbl|public.study_session",
+        "n|sch|public",
+        "n|col|public.note.session_id",
+        "n|col|public.study_session.id",
+        "e|uniqueness|public.study_session.id"
+      ]
+    },
+    {
+      "statementType": "create_fk",
+      "statementTarget": [
+        "table",
+        "public",
+        "note"
+      ],
+      "writes": [
+        "s|fk|public.note.note_import_batch_id_import_batch_id_fkey",
+        "n|fk|public.note.note_import_batch_id_import_batch_id_fkey",
+        "e|fk|public.note.note_import_batch_id_import_batch_id_fkey",
+        "n|con|public.note.note_import_batch_id_import_batch_id_fkey"
+      ],
+      "reads": [
+        "n|tbl|public.note",
+        "n|sch|public",
+        "n|tbl|public.import_batch",
+        "n|sch|public",
+        "n|col|public.note.import_batch_id",
+        "n|col|public.import_batch.id",
+        "e|uniqueness|public.import_batch.id"
+      ]
+    },
+    {
+      "statementType": "create_fk",
+      "statementTarget": [
+        "table",
+        "public",
+        "review_log"
+      ],
+      "writes": [
+        "s|fk|public.review_log.review_log_note_id_note_id_fkey",
+        "n|fk|public.review_log.review_log_note_id_note_id_fkey",
+        "e|fk|public.review_log.review_log_note_id_note_id_fkey",
+        "n|con|public.review_log.review_log_note_id_note_id_fkey"
+      ],
+      "reads": [
+        "n|tbl|public.review_log",
+        "n|sch|public",
+        "n|tbl|public.note",
+        "n|sch|public",
+        "n|col|public.review_log.note_id",
+        "n|col|public.note.id",
+        "e|uniqueness|public.note.id"
+      ]
+    },
+    {
+      "statementType": "create_fk",
+      "statementTarget": [
+        "table",
+        "public",
+        "review_schedule"
+      ],
+      "writes": [
+        "s|fk|public.review_schedule.review_schedule_note_id_note_id_fkey",
+        "n|fk|public.review_schedule.review_schedule_note_id_note_id_fkey",
+        "e|fk|public.review_schedule.review_schedule_note_id_note_id_fkey",
+        "n|con|public.review_schedule.review_schedule_note_id_note_id_fkey"
+      ],
+      "reads": [
+        "n|tbl|public.review_schedule",
+        "n|sch|public",
+        "n|tbl|public.note",
+        "n|sch|public",
+        "n|col|public.review_schedule.note_id",
+        "n|col|public.note.id",
+        "e|uniqueness|public.note.id"
+      ]
+    },
+    {
+      "statementType": "create_fk",
+      "statementTarget": [
+        "table",
+        "public",
+        "routine_check"
+      ],
+      "writes": [
+        "s|fk|public.routine_check.routine_check_routine_item_id_routine_item_id_fkey",
+        "n|fk|public.routine_check.routine_check_routine_item_id_routine_item_id_fkey",
+        "e|fk|public.routine_check.routine_check_routine_item_id_routine_item_id_fkey",
+        "n|con|public.routine_check.routine_check_routine_item_id_routine_item_id_fkey"
+      ],
+      "reads": [
+        "n|tbl|public.routine_check",
+        "n|sch|public",
+        "n|tbl|public.routine_item",
+        "n|sch|public",
+        "n|col|public.routine_check.routine_item_id",
+        "n|col|public.routine_item.id",
+        "e|uniqueness|public.routine_item.id"
+      ]
+    },
+    {
+      "statementType": "create_fk",
+      "statementTarget": [
+        "table",
+        "public",
+        "study_session"
+      ],
+      "writes": [
+        "s|fk|public.study_session.study_session_module_id_module_id_fkey",
+        "n|fk|public.study_session.study_session_module_id_module_id_fkey",
+        "e|fk|public.study_session.study_session_module_id_module_id_fkey",
+        "n|con|public.study_session.study_session_module_id_module_id_fkey"
+      ],
+      "reads": [
+        "n|tbl|public.study_session",
+        "n|sch|public",
+        "n|tbl|public.module",
+        "n|sch|public",
+        "n|col|public.study_session.module_id",
+        "n|col|public.module.id",
+        "e|uniqueness|public.module.id"
+      ]
+    }
+  ],
+  "ddl": [
+    {
+      "schema": "public",
+      "name": "module_content_version",
+      "isRlsEnabled": false,
+      "entityType": "tables"
+    },
+    {
+      "schema": "public",
+      "name": "module_progress",
+      "isRlsEnabled": false,
+      "entityType": "tables"
+    },
+    {
+      "schema": "public",
+      "name": "routine_item",
+      "isRlsEnabled": false,
+      "entityType": "tables"
+    },
+    {
+      "schema": "public",
+      "name": "module",
+      "isRlsEnabled": false,
+      "entityType": "tables"
+    },
+    {
+      "schema": "public",
+      "name": "import_batch",
+      "isRlsEnabled": false,
+      "entityType": "tables"
+    },
+    {
+      "schema": "public",
+      "name": "note",
+      "isRlsEnabled": false,
+      "entityType": "tables"
+    },
+    {
+      "schema": "public",
+      "name": "review_log",
+      "isRlsEnabled": false,
+      "entityType": "tables"
+    },
+    {
+      "schema": "public",
+      "name": "review_schedule",
+      "isRlsEnabled": false,
+      "entityType": "tables"
+    },
+    {
+      "schema": "public",
+      "name": "routine_check",
+      "isRlsEnabled": false,
+      "entityType": "tables"
+    },
+    {
+      "schema": "public",
+      "name": "study_session",
+      "isRlsEnabled": false,
+      "entityType": "tables"
+    },
+    {
+      "schema": "public",
+      "name": "cadence",
+      "values": [
+        "daily",
+        "weekly",
+        "monthly"
+      ],
+      "entityType": "enums"
+    },
+    {
+      "schema": "public",
+      "name": "note_source",
+      "values": [
+        "app",
+        "html_import"
+      ],
+      "entityType": "enums"
+    },
+    {
+      "schema": "public",
+      "name": "note_type",
+      "values": [
+        "summary",
+        "question",
+        "decision",
+        "evidence"
+      ],
+      "entityType": "enums"
+    },
+    {
+      "schema": "public",
+      "name": "review_result",
+      "values": [
+        "recalled",
+        "forgot"
+      ],
+      "entityType": "enums"
+    },
+    {
+      "schema": "public",
+      "name": "session_status",
+      "values": [
+        "running",
+        "completed",
+        "cancelled"
+      ],
+      "entityType": "enums"
+    },
+    {
+      "schema": "public",
+      "table": "module_content_version",
+      "name": "id",
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "gen_random_uuid()",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "module_content_version",
+      "name": "module_id",
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "module_content_version",
+      "name": "hash",
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "module_content_version",
+      "name": "content",
+      "type": "jsonb",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "module_content_version",
+      "name": "created_at",
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "module_progress",
+      "name": "module_id",
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "module_progress",
+      "name": "mastery_level",
+      "type": "smallint",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "0",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "module_progress",
+      "name": "last_seen_content_hash",
+      "type": "text",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "module_progress",
+      "name": "updated_at",
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "routine_item",
+      "name": "id",
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "gen_random_uuid()",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "routine_item",
+      "name": "slug",
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "routine_item",
+      "name": "cadence",
+      "type": "cadence",
+      "typeSchema": "public",
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "routine_item",
+      "name": "order",
+      "type": "smallint",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "routine_item",
+      "name": "label",
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "routine_item",
+      "name": "hint",
+      "type": "text",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "routine_item",
+      "name": "archived_at",
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "routine_item",
+      "name": "created_at",
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "routine_item",
+      "name": "updated_at",
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "module",
+      "name": "id",
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "gen_random_uuid()",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "module",
+      "name": "slug",
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "module",
+      "name": "key",
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "module",
+      "name": "part",
+      "type": "smallint",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "module",
+      "name": "order",
+      "type": "smallint",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "module",
+      "name": "title",
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "module",
+      "name": "content",
+      "type": "jsonb",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "module",
+      "name": "content_hash",
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "module",
+      "name": "archived_at",
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "module",
+      "name": "created_at",
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "module",
+      "name": "updated_at",
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "import_batch",
+      "name": "id",
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "gen_random_uuid()",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "import_batch",
+      "name": "file_name",
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "import_batch",
+      "name": "format",
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "import_batch",
+      "name": "file_hash",
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "import_batch",
+      "name": "notes_created",
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "import_batch",
+      "name": "notes_skipped",
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "import_batch",
+      "name": "created_at",
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "note",
+      "name": "id",
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "gen_random_uuid()",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "note",
+      "name": "module_id",
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "note",
+      "name": "session_id",
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "note",
+      "name": "type",
+      "type": "note_type",
+      "typeSchema": "public",
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "note",
+      "name": "title",
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "note",
+      "name": "body",
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "note",
+      "name": "recall_prompt",
+      "type": "text",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "note",
+      "name": "evidence_grade",
+      "type": "char(1)",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "note",
+      "name": "source_url",
+      "type": "text",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "note",
+      "name": "source",
+      "type": "note_source",
+      "typeSchema": "public",
+      "notNull": true,
+      "dimensions": 0,
+      "default": "'app'",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "note",
+      "name": "import_batch_id",
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "note",
+      "name": "created_at",
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "note",
+      "name": "updated_at",
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "review_log",
+      "name": "id",
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "gen_random_uuid()",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "review_log",
+      "name": "note_id",
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "review_log",
+      "name": "step_before",
+      "type": "smallint",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "review_log",
+      "name": "result",
+      "type": "review_result",
+      "typeSchema": "public",
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "review_log",
+      "name": "reviewed_at",
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "review_schedule",
+      "name": "note_id",
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "review_schedule",
+      "name": "step",
+      "type": "smallint",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "0",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "review_schedule",
+      "name": "due_on",
+      "type": "date",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "review_schedule",
+      "name": "graduated_at",
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "review_schedule",
+      "name": "created_at",
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "review_schedule",
+      "name": "updated_at",
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "routine_check",
+      "name": "id",
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "gen_random_uuid()",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "routine_check",
+      "name": "routine_item_id",
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "routine_check",
+      "name": "period_key",
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "routine_check",
+      "name": "checked_at",
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "study_session",
+      "name": "id",
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "gen_random_uuid()",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "study_session",
+      "name": "module_id",
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "study_session",
+      "name": "planned_minutes",
+      "type": "smallint",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "study_session",
+      "name": "started_at",
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "study_session",
+      "name": "ends_at",
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "study_session",
+      "name": "ended_at",
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "study_session",
+      "name": "duration_seconds",
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": false,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "study_session",
+      "name": "status",
+      "type": "session_status",
+      "typeSchema": "public",
+      "notNull": true,
+      "dimensions": 0,
+      "default": "'running'",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "note",
+      "name": "note_module_created_idx",
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "module_id",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        },
+        {
+          "value": "created_at",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "with": "",
+      "method": "btree",
+      "concurrently": false,
+      "entityType": "indexes"
+    },
+    {
+      "schema": "public",
+      "table": "note",
+      "name": "note_type_idx",
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "type",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "with": "",
+      "method": "btree",
+      "concurrently": false,
+      "entityType": "indexes"
+    },
+    {
+      "schema": "public",
+      "table": "review_log",
+      "name": "review_log_note_idx",
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "note_id",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "with": "",
+      "method": "btree",
+      "concurrently": false,
+      "entityType": "indexes"
+    },
+    {
+      "schema": "public",
+      "table": "review_schedule",
+      "name": "review_schedule_due_on_idx",
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "due_on",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "with": "",
+      "method": "btree",
+      "concurrently": false,
+      "entityType": "indexes"
+    },
+    {
+      "schema": "public",
+      "table": "study_session",
+      "name": "study_session_single_running_idx",
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "status",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": true,
+      "where": "\"status\" = 'running'",
+      "with": "",
+      "method": "btree",
+      "concurrently": false,
+      "entityType": "indexes"
+    },
+    {
+      "schema": "public",
+      "table": "study_session",
+      "name": "study_session_module_idx",
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "module_id",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        },
+        {
+          "value": "started_at",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "with": "",
+      "method": "btree",
+      "concurrently": false,
+      "entityType": "indexes"
+    },
+    {
+      "schema": "public",
+      "table": "module_content_version",
+      "name": "module_content_version_module_id_module_id_fkey",
+      "nameExplicit": false,
+      "columns": [
+        "module_id"
+      ],
+      "schemaTo": "public",
+      "tableTo": "module",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "RESTRICT",
+      "entityType": "fks"
+    },
+    {
+      "schema": "public",
+      "table": "module_progress",
+      "name": "module_progress_module_id_module_id_fkey",
+      "nameExplicit": false,
+      "columns": [
+        "module_id"
+      ],
+      "schemaTo": "public",
+      "tableTo": "module",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "RESTRICT",
+      "entityType": "fks"
+    },
+    {
+      "schema": "public",
+      "table": "note",
+      "name": "note_module_id_module_id_fkey",
+      "nameExplicit": false,
+      "columns": [
+        "module_id"
+      ],
+      "schemaTo": "public",
+      "tableTo": "module",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "RESTRICT",
+      "entityType": "fks"
+    },
+    {
+      "schema": "public",
+      "table": "note",
+      "name": "note_session_id_study_session_id_fkey",
+      "nameExplicit": false,
+      "columns": [
+        "session_id"
+      ],
+      "schemaTo": "public",
+      "tableTo": "study_session",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "SET NULL",
+      "entityType": "fks"
+    },
+    {
+      "schema": "public",
+      "table": "note",
+      "name": "note_import_batch_id_import_batch_id_fkey",
+      "nameExplicit": false,
+      "columns": [
+        "import_batch_id"
+      ],
+      "schemaTo": "public",
+      "tableTo": "import_batch",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "SET NULL",
+      "entityType": "fks"
+    },
+    {
+      "schema": "public",
+      "table": "review_log",
+      "name": "review_log_note_id_note_id_fkey",
+      "nameExplicit": false,
+      "columns": [
+        "note_id"
+      ],
+      "schemaTo": "public",
+      "tableTo": "note",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "CASCADE",
+      "entityType": "fks"
+    },
+    {
+      "schema": "public",
+      "table": "review_schedule",
+      "name": "review_schedule_note_id_note_id_fkey",
+      "nameExplicit": false,
+      "columns": [
+        "note_id"
+      ],
+      "schemaTo": "public",
+      "tableTo": "note",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "CASCADE",
+      "entityType": "fks"
+    },
+    {
+      "schema": "public",
+      "table": "routine_check",
+      "name": "routine_check_routine_item_id_routine_item_id_fkey",
+      "nameExplicit": false,
+      "columns": [
+        "routine_item_id"
+      ],
+      "schemaTo": "public",
+      "tableTo": "routine_item",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "RESTRICT",
+      "entityType": "fks"
+    },
+    {
+      "schema": "public",
+      "table": "study_session",
+      "name": "study_session_module_id_module_id_fkey",
+      "nameExplicit": false,
+      "columns": [
+        "module_id"
+      ],
+      "schemaTo": "public",
+      "tableTo": "module",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "RESTRICT",
+      "entityType": "fks"
+    },
+    {
+      "schema": "public",
+      "table": "module_content_version",
+      "name": "module_content_version_pkey",
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "entityType": "pks"
+    },
+    {
+      "schema": "public",
+      "table": "module_progress",
+      "name": "module_progress_pkey",
+      "columns": [
+        "module_id"
+      ],
+      "nameExplicit": false,
+      "entityType": "pks"
+    },
+    {
+      "schema": "public",
+      "table": "routine_item",
+      "name": "routine_item_pkey",
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "entityType": "pks"
+    },
+    {
+      "schema": "public",
+      "table": "module",
+      "name": "module_pkey",
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "entityType": "pks"
+    },
+    {
+      "schema": "public",
+      "table": "import_batch",
+      "name": "import_batch_pkey",
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "entityType": "pks"
+    },
+    {
+      "schema": "public",
+      "table": "note",
+      "name": "note_pkey",
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "entityType": "pks"
+    },
+    {
+      "schema": "public",
+      "table": "review_log",
+      "name": "review_log_pkey",
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "entityType": "pks"
+    },
+    {
+      "schema": "public",
+      "table": "review_schedule",
+      "name": "review_schedule_pkey",
+      "columns": [
+        "note_id"
+      ],
+      "nameExplicit": false,
+      "entityType": "pks"
+    },
+    {
+      "schema": "public",
+      "table": "routine_check",
+      "name": "routine_check_pkey",
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "entityType": "pks"
+    },
+    {
+      "schema": "public",
+      "table": "study_session",
+      "name": "study_session_pkey",
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "entityType": "pks"
+    },
+    {
+      "schema": "public",
+      "table": "module_content_version",
+      "name": "module_content_version_module_hash_unique",
+      "nameExplicit": true,
+      "columns": [
+        "module_id",
+        "hash"
+      ],
+      "nullsNotDistinct": false,
+      "entityType": "uniques"
+    },
+    {
+      "schema": "public",
+      "table": "routine_item",
+      "name": "routine_item_slug_unique",
+      "nameExplicit": true,
+      "columns": [
+        "slug"
+      ],
+      "nullsNotDistinct": false,
+      "entityType": "uniques"
+    },
+    {
+      "schema": "public",
+      "table": "module",
+      "name": "module_slug_unique",
+      "nameExplicit": true,
+      "columns": [
+        "slug"
+      ],
+      "nullsNotDistinct": false,
+      "entityType": "uniques"
+    },
+    {
+      "schema": "public",
+      "table": "module",
+      "name": "module_key_unique",
+      "nameExplicit": true,
+      "columns": [
+        "key"
+      ],
+      "nullsNotDistinct": false,
+      "entityType": "uniques"
+    },
+    {
+      "schema": "public",
+      "table": "routine_check",
+      "name": "routine_check_item_period_unique",
+      "nameExplicit": true,
+      "columns": [
+        "routine_item_id",
+        "period_key"
+      ],
+      "nullsNotDistinct": false,
+      "entityType": "uniques"
+    },
+    {
+      "schema": "public",
+      "table": "module_progress",
+      "name": "module_progress_mastery_level_check",
+      "value": "\"mastery_level\" between 0 and 5",
+      "entityType": "checks"
+    },
+    {
+      "schema": "public",
+      "table": "note",
+      "name": "note_evidence_grade_check",
+      "value": "\"evidence_grade\" is null or \"evidence_grade\" in ('A', 'B', 'C', 'D', 'E')",
+      "entityType": "checks"
+    }
+  ]
+}
